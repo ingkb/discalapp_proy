@@ -41,12 +41,12 @@ class _InitialPageState extends State<InitialPage> {
              child:topImage(size),
            ),
            AnimatedPositioned(
-             duration: Duration(milliseconds: 350),
+             duration: Duration(milliseconds: 300),
              top: size.height * _bottomPos,
              child:bottomImage(size),
            ),
            AnimatedPositioned(
-             duration: Duration(milliseconds: 350),
+             duration: Duration(milliseconds: 300),
              top:size.height * _logoPos,
              child:logoImage(size),
            ),
