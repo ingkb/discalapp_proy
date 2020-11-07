@@ -21,7 +21,12 @@ class _InitialPageState extends State<InitialPage> {
     double _bottomPos = 0.45; 
     double _buttonsOpacity=1.0;
     double _backButtonOpacity = 0.0;
-    bool _isBackDisabled=false;
+    double _menuOpacity=0.0;
+    double _menuPosition = -1;
+
+    bool _isLogin = false;
+
+    bool _isBackDisabled=true;
     bool _isButtonDisabled=false;
 
   @override
@@ -31,7 +36,7 @@ class _InitialPageState extends State<InitialPage> {
     
 
     return Scaffold(
-      backgroundColor: kPrimaryColor,
+      backgroundColor: kColorVerdeClaro,
       
        body: Stack(
          fit: StackFit.expand,
@@ -59,8 +64,14 @@ class _InitialPageState extends State<InitialPage> {
              child:buttonRegister(size),
            ),
            Positioned(
-             bottom: 10,
+             bottom: 20,
+             left: 20,
              child: backButton()
+           ),
+           Positioned(
+             top:size.height * 0.3,
+             right: size.width * _menuPosition,
+             child:loginOptions(size),
            )
     
          ],
@@ -69,27 +80,109 @@ class _InitialPageState extends State<InitialPage> {
     );
   }
 
+Widget loginOptions(Size size){
+  return  AnimatedOpacity(
+    duration: Duration(milliseconds: 500),
+    opacity: _menuOpacity,
+    child: Container(
+      width: size.width,
+      child: Column(
+        children: [
+          optionAlumno(),
+          Divider(height: 20),
+          optionDocente(),
+        ],
+      ),
+    ),
+  );
+}
+
+Widget optionDocente(){
+  return RaisedButton(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+            elevation: 20,
+            color: kTeacherColor,
+            onPressed: (){
+               if(_isLogin){
+                Navigator.pushNamed(context, 'loginTeacher');
+              }else{
+                Navigator.pushNamed(context, 'registerTeacher');
+              }
+            },
+            child: Column(
+              children: [
+                Text('Docente',style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),),
+                Image(
+                  height: 150,
+                  image:AssetImage('assets/images/avatar1.png')
+                ),
+              ],
+            ),
+    );
+}
+
+Widget optionAlumno(){
+  return RaisedButton(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(20))),
+            elevation: 20,
+            color: kAlumnColor,
+            onPressed: (){
+              if(_isLogin){
+                Navigator.pushNamed(context, 'loginStudent');
+              }else{
+                Navigator.pushNamed(context, 'registerStudent');
+              }
+            },
+            child: Column(
+              children: [
+                Text('Alumno',style: TextStyle(
+                  fontSize: 20,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),),
+                Image(
+                  height: 150,
+                  image:AssetImage('assets/images/avatar1.png')
+                ),
+              ],
+            ),
+    );
+}
+
 Widget backButton(){
 
   return AnimatedOpacity(
     duration: Duration(milliseconds: 300),
     opacity: _backButtonOpacity,
-    child: RaisedButton(
-      shape: CircleBorder(),
-      padding: EdgeInsets.all(10),
-      child: Icon(Icons.arrow_back),
-      elevation: 10,
-      onPressed: _isBackDisabled ? null :  () => {
-            setState(() {
-              _buttonsOpacity = 1.0;
-              _backButtonOpacity = 0.0;
-              _isBackDisabled = true;
-              _isButtonDisabled = false;
-              _logoPos = _initLogoPos;
-              _bottomPos = _initBottomPos;
-            })
-          }
+    child: ButtonTheme(
+      minWidth: 50.0,
+      height: 50.0,
+      child:RaisedButton(
+        shape: CircleBorder(),
+        padding: EdgeInsets.all(10),
+        child: Icon(Icons.arrow_back),
+        color: Colors.white,
+        elevation: 10,
+        onPressed: _isBackDisabled ? null :  () => {
+              setState(() {
+                _buttonsOpacity = 1.0;
+                _backButtonOpacity = 0.0;
+                _isBackDisabled = true;
+                _isButtonDisabled = false;
+                _logoPos = _initLogoPos;
+                _bottomPos = _initBottomPos;
+                _menuOpacity = 0.0;
+                _menuPosition = -1;
+              })
+            }
       ),
+    )
+    
+    
   );
 }
 
@@ -144,16 +237,19 @@ Widget backButton(){
           color: Colors.white,
           onPressed:_isButtonDisabled ? null :  () => {
             setState(() {
+              _isLogin=true;
               _buttonsOpacity = 0.0;
               _backButtonOpacity = 1.0;
               _isBackDisabled = false;
               _isButtonDisabled = true;
               _logoPos = _finalLogoPos;
               _bottomPos = _finalBottomPos;
+              _menuOpacity = 1.0;
+              _menuPosition = 0;
             })
           }
           , child: Text('Entrar',style: TextStyle(
-            color: kPrimaryColor,
+            color: kColorVerdeClaro,
             fontWeight: FontWeight.bold,
             fontSize: 25,
           ),
@@ -176,12 +272,15 @@ Widget backButton(){
           padding: EdgeInsets.symmetric(horizontal: 10, vertical: 8),
           onPressed:_isButtonDisabled ? null :  () => {
             setState(() {
+              _isLogin = false;
              _buttonsOpacity = 0.0;
               _backButtonOpacity = 1.0;
               _isBackDisabled = false;
               _isButtonDisabled = true;
               _logoPos = _finalLogoPos;
               _bottomPos = _finalBottomPos;
+              _menuOpacity = 1.0;
+              _menuPosition = 0;
             })
           }, child: Text('Registrarse',style: TextStyle(
             color: Colors.white,
