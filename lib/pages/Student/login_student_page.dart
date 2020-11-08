@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:discalapp_proy/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -13,6 +15,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
   String _userId = '';
   String _password='';
 
+  bool userVerified = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,13 +26,15 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
       body: Center(
         child:Container(
           child: ListView(
-             padding: EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+             padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
             children: [
               avatarImage(),
               SizedBox(height: 40),
               inputUserId(),
               SizedBox(height: 30),
-              inputPassword()
+              inputPassword(),
+              SizedBox(height: 30),
+              submitLogin()
             ],
           ),
         )
@@ -60,7 +65,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
         hintText: 'Usuario',
         labelText: 'Usuario',
         helperText: 'Ingrese su usuario',
-        suffixIcon: Icon(Icons.verified_user),
+        suffixIcon: userVerified?Icon(Icons.verified_user):null,
         icon: Icon(Icons.person)
       ),
       onChanged: (valor){
@@ -84,8 +89,8 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
         hintText: 'Contraseña',
         labelText: 'Contraseña',
         helperText: 'Ingrese su usuario',
-        suffixIcon: Icon(Icons.verified_user),
-        icon: Icon(Icons.person)
+        suffixIcon:  Icon(Icons.verified_user),
+        icon: Icon(Icons.lock)
       ),
       onChanged: (valor){
         setState(() {
@@ -94,5 +99,29 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
       }
       ,
     );
+  }
+
+
+  Widget submitLogin(){
+    return 
+    
+     Container(
+       height: 50,
+       margin: EdgeInsets.symmetric(horizontal: 50),
+       child: RaisedButton(
+         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+         color: kAlumnColor,
+          onPressed: (){
+
+          },
+          child: Text('Entrar', style: TextStyle(
+            fontSize: 25,
+            color: Colors.white
+          )
+          )
+        ),
+     )
+      ;
+    
   }
 }

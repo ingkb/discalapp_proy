@@ -8,10 +8,13 @@ import '../enviroment.dart';
 class RegisterService{
 
   Future<StudentRegisterResponse> registerStudent(Student student) async{
-    final http.Response response = await http.post(BaseUrl+'/student', 
-      body: student.toJson()
+    final http.Response response = await http.post(BaseUrl+'/students', 
+      body: json.encode(student.toJson()),
+      headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      }
     );
-
+    print(response);
     if(response.statusCode == 201){
       return StudentRegisterResponse.fromJson(jsonDecode(response.body));
     }else{
@@ -20,8 +23,11 @@ class RegisterService{
   }
 
   Future<TeacherRegisterResponse> registerTeacher(Teacher teacher) async{
-    final http.Response response = await http.post(BaseUrl+'/teacher', 
-      body: teacher.toJson()
+    final http.Response response = await http.post(BaseUrl+'/teachers', 
+      body: json.encode(teacher.toJson()),
+       headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      }
     );
 
     if(response.statusCode == 201){

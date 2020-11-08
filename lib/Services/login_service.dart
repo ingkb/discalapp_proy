@@ -8,11 +8,14 @@ import '../enviroment.dart';
 class LoginService{
 
   Future<StudentLoginResponse> loginStudent(String userId, String password) async{
-    final http.Response response = await http.post(BaseUrl+'/student', 
+    final http.Response response = await http.post(BaseUrl+'/students', 
       body: jsonEncode(<String, String>{
         'userId': userId,
         'password':password
-      })
+      }),
+       headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      }
     );
 
     if(response.statusCode == 201){
@@ -23,11 +26,14 @@ class LoginService{
   }
 
   Future<TeacherLoginResponse> loginTeacher(String userId, String password) async{
-    final http.Response response = await http.post(BaseUrl+'/teacher', 
+    final http.Response response = await http.post(BaseUrl+'/teachers', 
       body: jsonEncode(<String, String>{
         'userId': userId,
         'password':password
-      })
+      }),
+       headers: <String, String>{
+      'Content-Type': 'application/json; charset=UTF-8',
+      }
     );
 
     if(response.statusCode == 201){

@@ -89,7 +89,7 @@ Widget loginOptions(Size size){
       child: Column(
         children: [
           optionAlumno(),
-          Divider(height: 20),
+          SizedBox(height: 30),
           optionDocente(),
         ],
       ),
