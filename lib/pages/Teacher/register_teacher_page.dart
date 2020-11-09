@@ -134,7 +134,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
        margin: EdgeInsets.symmetric(horizontal: 50),
        child: RaisedButton(
          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-         color: kAlumnColor,
+         color: kTeacherColor,
           onPressed: (){
             _registrarDocente();
           },
@@ -164,7 +164,7 @@ Widget avatarImage(){
       height: 100,
       child: CircleAvatar(
         child: Image(
-          image: AssetImage('assets/iconoProfesor.png'),
+          image: AssetImage('assets/images/iconoProfesor.png'),
         ) 
       )
     );

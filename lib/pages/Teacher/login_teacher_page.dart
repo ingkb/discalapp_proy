@@ -113,7 +113,7 @@ Widget submitLogin(){
        margin: EdgeInsets.symmetric(horizontal: 50),
        child: RaisedButton(
          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-         color: kAlumnColor,
+         color: kTeacherColor,
           onPressed: (){
             loguear();
           },
@@ -134,7 +134,7 @@ loguear(){
     loginService.loginTeacher(_userId, _password).then((res) {
 
       if(res.teacher != null){
-          Navigator.pushNamed(context, 'inprogess');
+          Navigator.pushNamed(context, 'classes');
       }else{
         userVerified = false;
       }
