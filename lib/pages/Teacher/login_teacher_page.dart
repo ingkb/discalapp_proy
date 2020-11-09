@@ -39,9 +39,9 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
               SizedBox(height: 40),
               inputUserId(),
               SizedBox(height: 30),
-              //inputPassword(),
-              //SizedBox(height: 30),
-              //submitLogin()
+              inputPassword(),
+              SizedBox(height: 30),
+              submitLogin()
             ],
           ),
         )

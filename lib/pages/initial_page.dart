@@ -126,7 +126,7 @@ Widget optionDocente(){
                 ),),
                 Image(
                   height: 150,
-                  image:AssetImage('assets/images/avatar1.png')
+                  image:AssetImage('assets/images/iconoProfesor.png')
                 ),
               ],
             ),

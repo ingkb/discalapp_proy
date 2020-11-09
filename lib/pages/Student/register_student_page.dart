@@ -181,7 +181,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
           onPressed: (){
             _registrarEstudiante();
           },
-          child: Text('Entrar', style: TextStyle(
+          child: Text('Registrar', style: TextStyle(
             fontSize: 25,
             color: Colors.white
           )
@@ -199,4 +199,5 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
    );
         
   }
+
 }
