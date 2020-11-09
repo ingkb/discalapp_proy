@@ -14,7 +14,6 @@ class RegisterService{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-    print(response);
     if(response.statusCode == 201){
       return StudentRegisterResponse.fromJson(jsonDecode(response.body));
     }else{

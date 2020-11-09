@@ -60,7 +60,6 @@ class DBProvider {
 
       if (resMap != null && resMap.isNotEmpty) {
         student = new Student(
-            id: resMap['id'],
             userId: resMap['user'],
             password: resMap['password'],
             );

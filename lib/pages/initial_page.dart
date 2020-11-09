@@ -24,6 +24,8 @@ class _InitialPageState extends State<InitialPage> {
     double _menuOpacity=0.0;
     double _menuPosition = -1;
 
+    String _menuLabel='';
+
     bool _isLogin = false;
 
     bool _isBackDisabled=true;
@@ -88,8 +90,14 @@ Widget loginOptions(Size size){
       width: size.width,
       child: Column(
         children: [
+          Text(_menuLabel, style: TextStyle(
+            fontSize: 25,
+            fontWeight: FontWeight.bold,
+            color: Colors.white
+          ),),
+          SizedBox(height: 40),
           optionAlumno(),
-          SizedBox(height: 30),
+          SizedBox(height: 20),
           optionDocente(),
         ],
       ),
@@ -246,6 +254,7 @@ Widget backButton(){
               _bottomPos = _finalBottomPos;
               _menuOpacity = 1.0;
               _menuPosition = 0;
+              _menuLabel = 'Entrar como...';
             })
           }
           , child: Text('Entrar',style: TextStyle(
@@ -281,6 +290,7 @@ Widget backButton(){
               _bottomPos = _finalBottomPos;
               _menuOpacity = 1.0;
               _menuPosition = 0;
+              _menuLabel = 'Registrarse como...';
             })
           }, child: Text('Registrarse',style: TextStyle(
             color: Colors.white,

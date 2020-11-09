@@ -1,3 +1,4 @@
+import 'package:discalapp_proy/pages/inProgress_page.dart';
 import 'package:discalapp_proy/pages/Student/login_student_page.dart';
 import 'package:discalapp_proy/pages/Student/register_student_page.dart';
 import 'package:discalapp_proy/pages/Teacher/login_teacher_page.dart';
@@ -13,5 +14,6 @@ Map<String, WidgetBuilder> getRoutes(){
     'registerTeacher' :(BuildContext context) => RegisterTeacherPage(),
     'loginStudent'    :(BuildContext context) => LoginStudentPage(), 
     'loginTeacher'    :(BuildContext context) => LoginTeacherPage(), 
+    'inprogess'       :(BuildContext context) => InProgressPage(), 
   };
 }

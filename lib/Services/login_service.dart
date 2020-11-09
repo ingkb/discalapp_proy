@@ -8,7 +8,7 @@ import '../enviroment.dart';
 class LoginService{
 
   Future<StudentLoginResponse> loginStudent(String userId, String password) async{
-    final http.Response response = await http.post(BaseUrl+'/students', 
+    final http.Response response = await http.post(BaseUrl+'/students/login', 
       body: jsonEncode(<String, String>{
         'userId': userId,
         'password':password
@@ -26,7 +26,7 @@ class LoginService{
   }
 
   Future<TeacherLoginResponse> loginTeacher(String userId, String password) async{
-    final http.Response response = await http.post(BaseUrl+'/teachers', 
+    final http.Response response = await http.post(BaseUrl+'/teachers/login', 
       body: jsonEncode(<String, String>{
         'userId': userId,
         'password':password

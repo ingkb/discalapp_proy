@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:discalapp_proy/Services/login_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:flutter/material.dart';
 
@@ -14,8 +15,16 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
 
   String _userId = '';
   String _password='';
+  LoginService loginService;
 
   bool userVerified = false;
+
+  @override
+  void initState() {
+
+    super.initState();
+    loginService = new LoginService();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,16 +112,14 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
 
 
   Widget submitLogin(){
-    return 
-    
-     Container(
+    return  Container(
        height: 50,
        margin: EdgeInsets.symmetric(horizontal: 50),
        child: RaisedButton(
          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
          color: kAlumnColor,
           onPressed: (){
-
+            loguear();
           },
           child: Text('Entrar', style: TextStyle(
             fontSize: 25,
@@ -122,6 +129,20 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
         ),
      )
       ;
+    
+  }
+
+  loguear(){
+
+
+    loginService.loginStudent(_userId, _password).then((res) {
+
+      if(res.student != null){
+          Navigator.pushNamed(context, 'inprogess');
+      }else{
+        userVerified = false;
+      }
+    });
     
   }
 }

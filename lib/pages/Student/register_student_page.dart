@@ -59,12 +59,15 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     return TextField(
        keyboardType: TextInputType.number,
       decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0)
+          borderRadius: BorderRadius.circular(20.0),
         ),
         hintText: 'Edad',
         labelText: 'Edad',
-        helperText: 'Ingrese su edad',
         suffixIcon: userVerified?Icon(Icons.verified_user):null,
         icon: Icon(Icons.cake)
       ),
@@ -79,14 +82,17 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
   Widget inputNombre(){
      return TextField(
-       
       decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0)
+          borderRadius: BorderRadius.circular(20.0),
         ),
         hintText: 'Nombre',
         labelText: 'Nombre',
-        helperText: 'Ingrese su nombre',
+ 
         suffixIcon: userVerified?Icon(Icons.verified_user):null,
         icon: Icon(Icons.person)
       ),
@@ -116,14 +122,17 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
      return TextField(
        
       decoration: InputDecoration(
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0)
+          borderRadius: BorderRadius.circular(20.0),
         ),
         hintText: 'Usuario',
         labelText: 'Usuario',
-        helperText: 'Ingrese su usuario',
         suffixIcon: userVerified?Icon(Icons.verified_user):null,
-        icon: Icon(Icons.person)
+        icon: Icon(Icons.account_circle)
       ),
       onChanged: (valor){
         setState(() {
@@ -138,14 +147,15 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
      return TextField(
        obscureText: true,
       decoration: InputDecoration(
-        fillColor: kAlumnColor,
-        focusColor: kTeacherColor,
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(20.0),
+          borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+        ),
         border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0)
+          borderRadius: BorderRadius.circular(20.0),
         ),
         hintText: 'Contraseña',
         labelText: 'Contraseña',
-        helperText: 'Ingrese su usuario',
         suffixIcon:  Icon(Icons.verified_user),
         icon: Icon(Icons.lock)
       ),
