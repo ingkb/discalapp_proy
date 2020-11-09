@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:discalapp_proy/Services/login_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:flutter/material.dart';
@@ -110,7 +109,6 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
     );
   }
 
-
   Widget submitLogin(){
     return  Container(
        height: 50,
@@ -133,7 +131,6 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
   }
 
   loguear(){
-
 
     loginService.loginStudent(_userId, _password).then((res) {
 

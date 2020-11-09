@@ -28,7 +28,7 @@ class RegisterService{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-
+    print(response.body);
     if(response.statusCode == 201){
       return TeacherRegisterResponse.fromJson(jsonDecode(response.body));
     }else{
