@@ -148,10 +148,32 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
       ;
   }
 
+  Widget alerta(String msg){
+    return AlertDialog(
+      content: Text(msg),
+      actions: [
+        FlatButton(
+          onPressed: (){},
+          child: Text('OK'),
+          autofocus: true,
+          clipBehavior: Clip.antiAlias)
+      ],
+      elevation: 20,
+    );
+  }
+
   _registrarDocente() {
 
     registerService.registerTeacher(teacher).then((value){
      print(value.message + ' Respuestaa');
+     if(value.message=='Estudiante registrado'){
+        Navigator.pushNamed(context, 'classes');
+     }else{
+       showDialog(
+         context: context,
+         builder:(_)=>alerta(value.message),
+       );
+     }
     }
    );
         
