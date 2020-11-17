@@ -32,8 +32,8 @@ class ClassgroupService{
     }
   }
 
-  Future<SearchAllClassgroupResponse> getAllClassgroup() async{
-    final response = await http.get(BaseUrl+'/classgroups');
+  Future<SearchAllClassgroupResponse> getAllClassgroup(String teacherId) async{
+    final response = await http.get(BaseUrl+'/classgroups/teacher/'+teacherId);
 
     if(response.statusCode == 200){
       return SearchAllClassgroupResponse.fromJson(jsonDecode(response.body));
@@ -71,27 +71,33 @@ class ClassgroupService{
 }
 
 class SearchAllClassgroupResponse {
-     SearchAllClassgroupResponse({
+    SearchAllClassgroupResponse({
+        this.state,
         this.classgroups,
     });
 
+    int state;
     List<Classgroup> classgroups;
 
     factory SearchAllClassgroupResponse.fromJson(Map<String, dynamic> json) => SearchAllClassgroupResponse(
+        state: json["state"],
         classgroups: List<Classgroup>.from(json["classgroups"].map((x) => Classgroup.fromJson(x))),
     );
 }
 
 class SearchClassgroupResponse {
     SearchClassgroupResponse({
+        this.state,
         this.message,
         this.classgroup,
     });
 
+    int state;
     String message;
     Classgroup classgroup;
 
     factory SearchClassgroupResponse.fromJson(Map<String, dynamic> json) => SearchClassgroupResponse(
+        state: json["state"],
         message: json["message"],
         classgroup: Classgroup.fromJson(json["classgroup"]),
     );

@@ -4,7 +4,9 @@ import 'package:discalapp_proy/Services/classes_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/classgroup_model.dart';
 import 'package:discalapp_proy/pages/Teacher/Clases/class_detail_page.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ClassesPage extends StatefulWidget {
   ClassesPage({Key key}) : super(key: key);
@@ -14,16 +16,23 @@ class ClassesPage extends StatefulWidget {
 }
 
 class _ClassesPageState extends State<ClassesPage> {
+  
   ClassgroupService classgroupService;
-
+  ActiveUser user;
+  
   @override
   void initState() {
     super.initState();
     classgroupService = new ClassgroupService();
+   
   }
 
   @override
   Widget build(BuildContext context) {
+
+     user = Provider.of<ActiveUser>(context);
+    
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kTeacherColor,
@@ -55,6 +64,7 @@ class _ClassesPageState extends State<ClassesPage> {
             ),
           );
         }
+         print(snapshot);
         if (snapshot.data != null) {
           return ListView(
             children: listaClassgroups(snapshot.data.classgroups),
@@ -63,7 +73,7 @@ class _ClassesPageState extends State<ClassesPage> {
           return Container();
         }
       },
-      future: classgroupService.getAllClassgroup(),
+      future: classgroupService.getAllClassgroup(user.userId),
     );
   }
 

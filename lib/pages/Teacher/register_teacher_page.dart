@@ -167,7 +167,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
     registerService.registerTeacher(teacher).then((value){
      print(value.message + ' Respuestaa');
      if(value.message=='Estudiante registrado'){
-        Navigator.pushNamed(context, 'classes');
+        Navigator.pushReplacementNamed(context, 'classes');
      }else{
        showDialog(
          context: context,

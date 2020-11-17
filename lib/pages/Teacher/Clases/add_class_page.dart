@@ -1,8 +1,9 @@
 import 'package:discalapp_proy/Services/classes_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/classgroup_model.dart';
-import 'package:discalapp_proy/pages/Teacher/Clases/classes_page.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AddClassgroup extends StatefulWidget {
   AddClassgroup({Key key}) : super(key: key);
@@ -16,6 +17,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
   Classgroup classgroup;
   ClassgroupService classesService;
   bool userVerified = false;
+  ActiveUser user;
 
   @override
   void initState() {
@@ -26,6 +28,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<ActiveUser>(context);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kTeacherColor,
@@ -139,16 +142,13 @@ class _AddClassgroupState extends State<AddClassgroup> {
   }
 
   _registrarClase() {
-    classgroup.teacher = '123';
+    classgroup.teacher = user.userId;
     classesService.addClassgroup(classgroup).then((value){
      setState(() {
-       Navigator.push(context, MaterialPageRoute(
-            builder: (context) => ClassesPage(),
-          )).then((value){
-            setState(() {
-              
-            });
-          });
+       Navigator.pushReplacementNamed(context, 'classes').then((value){setState(() {
+         
+       });});
+      //  Navigator.pop(context);
      });
     }
    );

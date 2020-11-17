@@ -1,7 +1,11 @@
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:discalapp_proy/Services/login_service.dart';
+
 import 'dart:ui';
+
+import 'package:provider/provider.dart';
 
 class LoginTeacherPage extends StatefulWidget {
   LoginTeacherPage({Key key}) : super(key: key);
@@ -16,15 +20,17 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
   String _password='';
   LoginService loginService;
   bool userVerified = false;
-  
+  ActiveUser user;
   @override
     void initState() {
-
-    super.initState();
-    loginService = new LoginService();
+      super.initState();
+      loginService = new LoginService();
+      
   }
   @override
   Widget build(BuildContext context) {
+
+    user = Provider.of<ActiveUser>(context);
     return Scaffold(
        appBar: AppBar(
          backgroundColor: kTeacherColor,
@@ -134,10 +140,14 @@ loguear(){
     loginService.loginTeacher(_userId, _password).then((res) {
 
       if(res.teacher != null){
+          user.userId = _userId;
           Navigator.pushNamed(context, 'classes');
       }else{
-        userVerified = false;
+        setState(() {
+          userVerified = false;
+        });
       }
+
     });
     
   }

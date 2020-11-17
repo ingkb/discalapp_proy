@@ -1,7 +1,9 @@
 import 'package:discalapp_proy/pages/initial_page.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main(){
   WidgetsFlutterBinding.ensureInitialized();
@@ -14,15 +16,18 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'DiscalApp',
-      initialRoute: '/',
-      routes: getRoutes(),
-      onGenerateRoute: (RouteSettings routeSettings){
-        return MaterialPageRoute(
-          builder: (BuildContext context)=>InitialPage()
-        );
-      },
+    return Provider(
+      create: (context)=>ActiveUser(),
+      child: MaterialApp(
+          title: 'DiscalApp',
+          initialRoute: '/',
+          routes: getRoutes(),
+          onGenerateRoute: (RouteSettings routeSettings){
+            return MaterialPageRoute(
+              builder: (BuildContext context)=>InitialPage()
+            );
+        },
+      ),
     );
   }
 }
