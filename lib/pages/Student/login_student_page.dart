@@ -135,7 +135,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
     loginService.loginStudent(_userId, _password).then((res) {
 
       if(res.student != null){
-          Navigator.pushNamed(context, 'selectclass');
+          Navigator.pushReplacementNamed(context, 'selectclass');
       }else{
         setState(() {
           userVerified = false;

@@ -195,7 +195,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
     registerService.registerStudent(student).then((value){
       if(value.state == 0){
-        Navigator.pushNamed(context, 'selectclass');
+        Navigator.pushReplacementNamed(context, 'selectclass');
       }else{
         Navigator.pop(context);
       }
