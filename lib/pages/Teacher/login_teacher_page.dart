@@ -140,7 +140,7 @@ loguear(){
     loginService.loginTeacher(_userId, _password).then((res) {
 
       if(res.teacher != null){
-          user.userId = _userId;
+          user.teacherUserId = _userId;
           Navigator.pushNamed(context, 'classes');
       }else{
         setState(() {

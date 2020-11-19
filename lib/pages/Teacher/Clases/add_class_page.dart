@@ -142,7 +142,8 @@ class _AddClassgroupState extends State<AddClassgroup> {
   }
 
   _registrarClase() {
-    classgroup.teacher = user.userId;
+    classgroup.teacher = user.teacherUserId;
+    print('usuario ' + user.teacherUserId);
     classesService.addClassgroup(classgroup).then((value){
      setState(() {
        Navigator.pushReplacementNamed(context, 'classes').then((value){setState(() {

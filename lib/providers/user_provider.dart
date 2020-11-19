@@ -1,7 +1,28 @@
 
+import 'package:flutter/material.dart';
+
+class ActiveUser with ChangeNotifier{
+
+  String _userId;
+  String _teacherUserId;
 
 
-class ActiveUser{
+  get userId {
+    return _userId;
+  }
 
-  String userId;
+  get teacherUserId {
+    return _teacherUserId;
+  }
+
+  set teacherUserId(String teacherId){
+    this._teacherUserId = teacherId;
+    notifyListeners();
+  }
+
+ set userId(String userId){
+    this._userId = userId;
+    notifyListeners();
+  }
+
 }

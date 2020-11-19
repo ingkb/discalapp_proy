@@ -1,7 +1,9 @@
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:discalapp_proy/Services/register_service.dart';
 import 'package:discalapp_proy/models/teacher_model.dart';
+import 'package:provider/provider.dart';
 
 class RegisterTeacherPage extends StatefulWidget {
   RegisterTeacherPage({Key key}) : super(key: key);
@@ -14,6 +16,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
   Teacher teacher;
   RegisterService registerService;
   bool userVerified = false;
+  ActiveUser user;
   
   @override
     void initState() {
@@ -24,6 +27,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
 
   @override
   Widget build(BuildContext context) {
+    user = Provider.of<ActiveUser>(context);
     return Scaffold(
        appBar: AppBar(
          backgroundColor: kTeacherColor,
@@ -167,7 +171,8 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
     registerService.registerTeacher(teacher).then((value){
      print(value.message + ' Respuestaa');
      if(value.message=='Estudiante registrado'){
-        Navigator.pushReplacementNamed(context, 'classes');
+       user.teacherUserId = teacher.userId;
+      Navigator.pushReplacementNamed(context, 'classes');
      }else{
        showDialog(
          context: context,

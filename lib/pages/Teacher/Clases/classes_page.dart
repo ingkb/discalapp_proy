@@ -19,7 +19,14 @@ class _ClassesPageState extends State<ClassesPage> {
   
   ClassgroupService classgroupService;
   ActiveUser user;
-  
+
+  @override
+  void initState() {
+    super.initState();
+    setState(() {
+      
+    });
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -59,16 +66,18 @@ class _ClassesPageState extends State<ClassesPage> {
         }
         if (snapshot.data != null) {
           if(snapshot.connectionState == ConnectionState.done && snapshot.data.classgroups.isEmpty){
+            print('lista empty');
             return emptyList();
           }
           return ListView(
             children: listaClassgroups(snapshot.data.classgroups),
           );
         } else {
+          print('data null');
           return Container();
         }
       },
-      future: classgroupService.getAllClassgroup(user.userId),
+      future: classgroupService.getAllClassgroup(user.teacherUserId),
     );
   }
 
