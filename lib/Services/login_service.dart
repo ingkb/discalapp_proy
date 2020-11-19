@@ -56,7 +56,7 @@ class StudentLoginResponse {
 
     factory StudentLoginResponse.fromJson(Map<String, dynamic> json) => StudentLoginResponse(
         message: json["message"],
-        student: Student.fromJson(json["student"]),
+        student: json["student"] == null ? null :Student.fromJson(json["student"]),
     );
 }
 
@@ -71,7 +71,7 @@ class TeacherLoginResponse {
 
     factory TeacherLoginResponse.fromJson(Map<String, dynamic> json) => TeacherLoginResponse(
         message: json["message"],
-        teacher: Teacher.fromJson(json["teacher"]),
+        teacher: json["teacher"] == null ? null :Teacher.fromJson(json["teacher"]),
     );
 }
 

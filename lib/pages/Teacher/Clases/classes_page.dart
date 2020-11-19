@@ -21,18 +21,11 @@ class _ClassesPageState extends State<ClassesPage> {
   ActiveUser user;
   
   @override
-  void initState() {
-    super.initState();
-    classgroupService = new ClassgroupService();
-   
-  }
-
-  @override
   Widget build(BuildContext context) {
 
+    classgroupService = new ClassgroupService();
      user = Provider.of<ActiveUser>(context);
     
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kTeacherColor,
@@ -64,8 +57,10 @@ class _ClassesPageState extends State<ClassesPage> {
             ),
           );
         }
-         print(snapshot);
         if (snapshot.data != null) {
+          if(snapshot.connectionState == ConnectionState.done && snapshot.data.classgroups.isEmpty){
+            return emptyList();
+          }
           return ListView(
             children: listaClassgroups(snapshot.data.classgroups),
           );
@@ -167,5 +162,13 @@ class _ClassesPageState extends State<ClassesPage> {
       clases..add(widgetCard)..add(Divider());
     });
     return clases;
+  }
+
+  Widget emptyList(){
+    return Container(
+      child: Center(
+        child: Text('...'),
+      ),
+    );
   }
 }

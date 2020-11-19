@@ -99,7 +99,8 @@ class SearchClassgroupResponse {
     factory SearchClassgroupResponse.fromJson(Map<String, dynamic> json) => SearchClassgroupResponse(
         state: json["state"],
         message: json["message"],
-        classgroup: Classgroup.fromJson(json["classgroup"]),
+        classgroup: json["classgroup"] == null ? null : Classgroup.fromJson(json["classgroup"]),
+    
     );
 }
 

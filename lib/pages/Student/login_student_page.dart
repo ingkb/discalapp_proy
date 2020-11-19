@@ -73,7 +73,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
         hintText: 'Usuario',
         labelText: 'Usuario',
         helperText: 'Ingrese su usuario',
-        suffixIcon: userVerified?Icon(Icons.verified_user):null,
+        suffixIcon: userVerified?Icon(Icons.verified_user):Icon(Icons.visibility_off),
         icon: Icon(Icons.person)
       ),
       onChanged: (valor){
@@ -135,9 +135,11 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
     loginService.loginStudent(_userId, _password).then((res) {
 
       if(res.student != null){
-          Navigator.pushNamed(context, 'inprogress');
+          Navigator.pushNamed(context, 'selectclass');
       }else{
-        userVerified = false;
+        setState(() {
+          userVerified = false;
+        });
       }
     });
     

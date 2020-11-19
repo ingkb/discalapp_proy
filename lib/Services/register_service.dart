@@ -40,25 +40,29 @@ class RegisterService{
 
 class StudentRegisterResponse {
     StudentRegisterResponse({
+        this.state,
         this.message,
     });
 
+    int state;
     String message;
-
     factory StudentRegisterResponse.fromJson(Map<String, dynamic> json) => StudentRegisterResponse(
-        message: json["message"],
+        state: json["state"],
+        message: json["message"]
     );
 }
 
 class TeacherRegisterResponse {
     TeacherRegisterResponse({
+        this.state,
         this.message,
     });
-
+    int state;
     String message;
 
     factory TeacherRegisterResponse.fromJson(Map<String, dynamic> json) => TeacherRegisterResponse(
-        message: json["message"],
+        state: json["state"],
+        message: json["message"]
     );
 }
 
