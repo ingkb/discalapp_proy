@@ -1,11 +1,10 @@
 import 'package:discalapp_proy/constants.dart';
-import 'package:discalapp_proy/providers/user_provider.dart';
-import 'package:flutter/material.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/Services/login_service.dart';
+import 'package:flutter/material.dart';
 
 import 'dart:ui';
 
-import 'package:provider/provider.dart';
 
 class LoginTeacherPage extends StatefulWidget {
   LoginTeacherPage({Key key}) : super(key: key);
@@ -20,7 +19,8 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
   String _password='';
   LoginService loginService;
   bool userVerified = false;
-  ActiveUser user;
+  final prefs = new PreferenciasUsuario();
+
   @override
     void initState() {
       super.initState();
@@ -30,7 +30,6 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
   @override
   Widget build(BuildContext context) {
 
-    user = Provider.of<ActiveUser>(context);
     return Scaffold(
        appBar: AppBar(
          backgroundColor: kTeacherColor,
@@ -140,7 +139,7 @@ loguear(){
     loginService.loginTeacher(_userId, _password).then((res) {
 
       if(res.teacher != null){
-          user.teacherUserId = _userId;
+          prefs.teacherUserId = _userId;
           Navigator.pushNamed(context, 'classes');
       }else{
         setState(() {

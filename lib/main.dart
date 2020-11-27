@@ -1,12 +1,15 @@
 import 'package:discalapp_proy/pages/initial_page.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main(){
+void main() async{
   WidgetsFlutterBinding.ensureInitialized();
+  final prefs = new PreferenciasUsuario();
+  await prefs.initPrefs();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => 
    runApp(MyApp()));
  

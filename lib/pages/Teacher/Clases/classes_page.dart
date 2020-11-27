@@ -4,9 +4,8 @@ import 'package:discalapp_proy/Services/classes_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/classgroup_model.dart';
 import 'package:discalapp_proy/pages/Teacher/Clases/class_detail_page.dart';
-import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class ClassesPage extends StatefulWidget {
   ClassesPage({Key key}) : super(key: key);
@@ -18,7 +17,7 @@ class ClassesPage extends StatefulWidget {
 class _ClassesPageState extends State<ClassesPage> {
   
   ClassgroupService classgroupService;
-  ActiveUser user;
+  final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
@@ -31,7 +30,6 @@ class _ClassesPageState extends State<ClassesPage> {
   Widget build(BuildContext context) {
 
     classgroupService = new ClassgroupService();
-     user = Provider.of<ActiveUser>(context);
     
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +75,7 @@ class _ClassesPageState extends State<ClassesPage> {
           return Container();
         }
       },
-      future: classgroupService.getAllClassgroup(user.teacherUserId),
+      future: classgroupService.getAllClassgroup(prefs.teacherUserId),
     );
   }
 
