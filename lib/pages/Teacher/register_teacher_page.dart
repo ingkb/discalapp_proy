@@ -1,8 +1,10 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:discalapp_proy/Services/register_service.dart';
 import 'package:discalapp_proy/models/teacher_model.dart';
+import 'package:provider/provider.dart';
 
 class RegisterTeacherPage extends StatefulWidget {
   RegisterTeacherPage({Key key}) : super(key: key);
@@ -178,9 +180,10 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
   }
 
   _registrarDocente() {
-
+    final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
     registerService.registerTeacher(teacher).then((value){
-     if(value.message=='Estudiante registrado'){
+     if(value.state==0){
+       usuarioTemporal.teacher = teacher;
        prefs.teacherUserId = teacher.userId;
       Navigator.pushReplacementNamed(context, 'classes');
      }else{

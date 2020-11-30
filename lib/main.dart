@@ -19,8 +19,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider.value(
-      value: ActiveUser(),
+    return ChangeNotifierProvider(
+      create:(_)=> new ActiveUser(),
       child: MaterialApp(
           title: 'DiscalApp',
           initialRoute: '/',

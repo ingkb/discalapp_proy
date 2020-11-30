@@ -1,8 +1,12 @@
 import 'dart:ui';
 
 import 'package:discalapp_proy/Services/classes_service.dart';
+import 'package:discalapp_proy/Services/student_service.dart';
 import 'package:discalapp_proy/models/classgroup_model.dart';
+import 'package:discalapp_proy/models/student_model.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../../constants.dart';
 
@@ -16,12 +20,14 @@ class SelectClassPage extends StatefulWidget {
 class _SelectClassPageState extends State<SelectClassPage> {
 
   ClassgroupService classgroupService;
+  StudentService studentService;
   String codigoClase = '';
 
   @override
   Widget build(BuildContext context) {
 
     classgroupService = new ClassgroupService();
+    studentService = new StudentService();
     return Scaffold(
        appBar: AppBar(
         backgroundColor: kAlumnColor,
@@ -152,7 +158,14 @@ class _SelectClassPageState extends State<SelectClassPage> {
                       style:
                           TextStyle(fontSize: 20)),
                   Expanded(child: SizedBox()),
-                  
+                  RaisedButton(
+                    elevation: 5,
+                    onPressed: (){
+                      asignarClase(clase.code);
+                    },
+                    child: Text('Unirse',style: TextStyle(fontSize:20, color: Colors.white)),
+                    color: Colors.green,
+                  )
                 ],
               ),
             ),
@@ -161,5 +174,21 @@ class _SelectClassPageState extends State<SelectClassPage> {
       );
   }
 
+  asignarClase(String code){
+    final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
+    Student temp = usuarioTemporal.student;
+    temp.classgroup = code;
+    usuarioTemporal.student = temp;
+
+    studentService.upadateStudent(temp).then((res){
+      if(res.state==0){
+      Navigator.pushReplacementNamed(context, 'initialTest');
+      }else{
+        print('Error modificando al estudiante');
+      }
+    });
+
+
+  }
 
 }

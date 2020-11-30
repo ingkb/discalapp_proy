@@ -1,27 +1,30 @@
 
+import 'package:discalapp_proy/models/student_model.dart';
+import 'package:discalapp_proy/models/teacher_model.dart';
 import 'package:flutter/material.dart';
 
 class ActiveUser with ChangeNotifier{
 
-  String _userId;
-  String _teacherUserId;
+
+  Teacher _teacher;
+  Student _student;
 
 
-  get userId {
-    return _userId;
+  get teacher {
+    return _teacher;
   }
 
-  get teacherUserId {
-    return _teacherUserId;
+  get student {
+    return _student;
   }
 
-  set teacherUserId(String teacherId){
-    this._teacherUserId = teacherId;
+  set teacher(Teacher teach){
+    this._teacher = teach;
     notifyListeners();
   }
 
- set userId(String userId){
-    this._userId = userId;
+ set student(Student stud){
+    this._student = stud;
     notifyListeners();
   }
 

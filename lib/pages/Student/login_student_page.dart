@@ -1,7 +1,10 @@
 import 'dart:ui';
 import 'package:discalapp_proy/Services/login_service.dart';
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class LoginStudentPage extends StatefulWidget {
  LoginStudentPage({Key key}) : super(key: key);
@@ -131,11 +134,20 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
   }
 
   loguear(){
-
+    final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
+    final prefs = new PreferenciasUsuario();
     loginService.loginStudent(_userId, _password).then((res) {
 
       if(res.student != null){
+        usuarioTemporal.student = res.student;
+        prefs.userId = _userId;
+
+        if(res.student.classgroup != null){
+          Navigator.pushReplacementNamed(context, 'initialTest');
+        }else{
           Navigator.pushReplacementNamed(context, 'selectclass');
+        }
+        
       }else{
         setState(() {
           userVerified = false;

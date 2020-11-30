@@ -1,9 +1,12 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/Services/login_service.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 
 import 'dart:ui';
+
+import 'package:provider/provider.dart';
 
 
 class LoginTeacherPage extends StatefulWidget {
@@ -29,7 +32,6 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
   }
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
        appBar: AppBar(
          backgroundColor: kTeacherColor,
@@ -134,12 +136,13 @@ Widget submitLogin(){
   }
 
 
-loguear(){
-
-    loginService.loginTeacher(_userId, _password).then((res) {
+  loguear(){
+  final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
+  loginService.loginTeacher(_userId, _password).then((res) {
 
       if(res.teacher != null){
           prefs.teacherUserId = _userId;
+          usuarioTemporal.teacher = res.teacher;
           Navigator.pushNamed(context, 'classes');
       }else{
         setState(() {

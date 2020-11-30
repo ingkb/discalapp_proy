@@ -1,3 +1,4 @@
+import 'package:discalapp_proy/pages/Student/Tests/inicial_test_page.dart';
 import 'package:discalapp_proy/pages/Student/select_class_page.dart';
 import 'package:discalapp_proy/pages/Teacher/Clases/add_class_page.dart';
 import 'package:discalapp_proy/pages/Teacher/Clases/class_detail_page.dart';
@@ -22,6 +23,7 @@ Map<String, WidgetBuilder> getRoutes(){
     'classes'         :(BuildContext context) => ClassesPage(),
     'addclasses'      :(BuildContext context) => AddClassgroup(),
     'classdetail'     :(BuildContext context) => ClassDetailPage(),
-    'selectclass'     :(BuildContext context) => SelectClassPage()
+    'selectclass'     :(BuildContext context) => SelectClassPage(),
+    'initialTest'     :(BuildContext context) => InitialTestPage()
   };
 }

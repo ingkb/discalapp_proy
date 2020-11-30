@@ -5,16 +5,16 @@ import 'package:http/http.dart' as http;
 import '../enviroment.dart';
 
 
-class RegisterService{
+class StudentService{
 
-  Future<DefaultResponse> registerStudent(Student student) async{
-    final http.Response response = await http.post(BaseUrl+'/students', 
+  Future<DefaultResponse> upadateStudent(Student student) async{
+    final http.Response response = await http.patch(BaseUrl+'/students/'+student.userId, 
       body: json.encode(student.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-    if(response.statusCode == 201){
+    if(response.statusCode == 200){
       return DefaultResponse.fromJson(jsonDecode(response.body));
     }else{
       throw Exception('Fallo al iniciar sesion');

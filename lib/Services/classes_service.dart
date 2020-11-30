@@ -106,12 +106,14 @@ class SearchClassgroupResponse {
 
 class RegisterClassgroupResponse {
     RegisterClassgroupResponse({
+        this.state,
         this.message,
     });
-
+    int state;
     String message;
 
     factory RegisterClassgroupResponse.fromJson(Map<String, dynamic> json) => RegisterClassgroupResponse(
+       state: json["state"],
         message: json["message"],
     );
 }

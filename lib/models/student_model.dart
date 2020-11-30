@@ -18,7 +18,7 @@ class Student {
         name: json["name"],
         password: json["password"],
         age: json["age"],
-        classgroup: json["classroom"]
+        classgroup: json["classgroup"]
     );
 
     Map<String, dynamic> toJson() => {
@@ -26,6 +26,6 @@ class Student {
         "name": name,
         "password": password,
         "age": age,
-        "classroom": classgroup
+        "classgroup": classgroup
     };
 }
