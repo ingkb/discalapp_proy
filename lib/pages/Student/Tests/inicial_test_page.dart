@@ -15,8 +15,14 @@ class _InitialTestPageState extends State<InitialTestPage> {
       appBar: AppBar(title: Text('Test Inicial'),),
       body: Column(
         children: [
+          progress(),
+          SizedBox(height: 10,),
           getActivities()
         ],
+      ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.navigate_next),
+        onPressed: (){},
       ),
 
 
@@ -24,6 +30,13 @@ class _InitialTestPageState extends State<InitialTestPage> {
   }
 
 
+  Widget progress(){
+    return Container(
+      height: 100,
+      decoration: BoxDecoration(
+        color: Colors.blueGrey
+      ),);
+  }
   Widget getActivities(){
     return compare1();
   }
