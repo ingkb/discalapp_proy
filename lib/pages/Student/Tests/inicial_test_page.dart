@@ -1,5 +1,8 @@
+import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/pages/Student/Tests/Activities/CompareQuantities/compare1_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'Activities/progress_barr_widget.dart';
 
 class InitialTestPage extends StatefulWidget {
   InitialTestPage({Key key}) : super(key: key);
@@ -13,9 +16,10 @@ class _InitialTestPageState extends State<InitialTestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text('Test Inicial'),),
+      backgroundColor: kAlumnColor,
       body: Column(
         children: [
-          progress(),
+          ProgressBar(porcentaje: 0.8),
           SizedBox(height: 10,),
           getActivities()
         ],
@@ -30,14 +34,9 @@ class _InitialTestPageState extends State<InitialTestPage> {
   }
 
 
-  Widget progress(){
-    return Container(
-      height: 100,
-      decoration: BoxDecoration(
-        color: Colors.blueGrey
-      ),);
-  }
+  
   Widget getActivities(){
-    return compare1();
+    
+    return CompareActivity1();
   }
 }
