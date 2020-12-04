@@ -43,6 +43,7 @@ class _CompareActivity1State extends State<CompareActivity1> {
               color: colorOPT1
             )
           ),
+          
           child: FlatButton(
             
            onPressed: (){
@@ -57,6 +58,7 @@ class _CompareActivity1State extends State<CompareActivity1> {
               image: AssetImage('assets/images/puntos.jpg'),),
           ),
         ), 
+       
         SizedBox(height: 30),
         Container(
           decoration: BoxDecoration(
