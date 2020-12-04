@@ -30,7 +30,19 @@ class _MultipliActivity1State extends StatelessWidget {
           ),
          ),
       )
-      
+
+      decoration: BoxDecoration(
+      color: Colors.white,
+      borderRadius: BorderRadius.all(Radius.circular(10)),
+      boxShadow: [
+        BoxShadow(
+          color: Colors.blue[900].withOpacity(0.5),
+          spreadRadius: 5,
+          blurRadius: 7,
+          offset: Offset(2, 5), // changes position of shadow
+        ),
+      ],
+    ),
       )
     );
   }
