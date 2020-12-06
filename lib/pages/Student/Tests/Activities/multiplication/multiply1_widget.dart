@@ -9,7 +9,7 @@ class MultipliActivity1 extends StatefulWidget {
   @override
   _MultipliActivity1State createState() => _MultipliActivity1State();
 }
-class _MultipliActivity1State extends StatelessWidget {
+class _MultipliActivity1State extends State<MultipliActivity1> {
  
   Color colorOPT1 = kAlumnColor;
   Color colorOPT2 = kAlumnColor;
@@ -22,15 +22,15 @@ class _MultipliActivity1State extends StatelessWidget {
       child: Container(
         margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
         width: double.infinity,
-        child:Column(
-         Container(
+        child:Column(children: [
+          Container(
             margin: EdgeInsets.symmetric(horizontal: 10,vertical: 10),
             child: Text("Realiza la siguiente multiplicacion",textAlign:TextAlign.center,
             style: TextStyle(fontSize: 22, color: Colors.blue[700], fontWeight: FontWeight.w500)
           ),
-         ),
-      )
+         )
 
+        ],),
       decoration: BoxDecoration(
       color: Colors.white,
       borderRadius: BorderRadius.all(Radius.circular(10)),
@@ -43,7 +43,7 @@ class _MultipliActivity1State extends StatelessWidget {
         ),
       ],
     ),
-      )
+    )
     );
   }
 }

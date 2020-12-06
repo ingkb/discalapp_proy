@@ -22,6 +22,7 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create:(_)=> new ActiveUser(),
       child: MaterialApp(
+          debugShowCheckedModeBanner: false,
           title: 'DiscalApp',
           initialRoute: '/',
           routes: getRoutes(),
