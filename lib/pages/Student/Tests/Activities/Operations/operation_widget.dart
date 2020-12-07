@@ -2,19 +2,30 @@ import 'package:flutter/material.dart';
 import 'dart:ui';
 import 'package:discalapp_proy/constants.dart';
 import 'dart:math';
+import 'operation1_list.dart';
 
-class MultipliActivity1 extends StatefulWidget {
-  MultipliActivity1({Key key}) : super(key: key);
+class OperationActivity extends StatefulWidget {
 
+  OperationActivity({Key key, @required this.numero}) : super(key: key);
+  int numero;
   @override
-  _MultipliActivity1State createState() => _MultipliActivity1State();
+  _OperationActivityState createState() => _OperationActivityState();
 }
 
-class _MultipliActivity1State extends State<MultipliActivity1> {
+class _OperationActivityState extends State<OperationActivity> {
   int n1, n2, resultado;
+  String multiplicacion;
+  String suma;
+  String resta;
+  String division;
+
   @override
   Widget build(BuildContext context) {
     _generarNumeros();
+    multiplicacion = operationsActivities[widget.numero][1];
+    suma = operationsActivities[widget.numero][2];
+    resta = operationsActivities[widget.numero][3];
+    multiplicacion = operationsActivities[widget.numero][4];
     return Expanded(
         child: Container(
       margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
@@ -82,10 +93,11 @@ class _MultipliActivity1State extends State<MultipliActivity1> {
     n2 = new Random().nextInt(MAX);
   }
 
-  bool _validarRespuesta(){
-    int repuesta_correcta=n1*n2;
-    if(repuesta_correcta==resultado)
-    return true;
-    else return false;
+  bool _validarRespuesta() {
+    int repuesta_correcta = n1 * n2;
+    if (repuesta_correcta == resultado)
+      return true;
+    else
+      return false;
   }
 }
