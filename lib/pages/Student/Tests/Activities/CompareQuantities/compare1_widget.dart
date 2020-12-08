@@ -1,21 +1,27 @@
 import 'dart:ui';
 
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'compare1_list.dart';
 
 class CompareActivity1 extends StatefulWidget {
-  CompareActivity1({Key key, @required this.numero}) : super(key: key);
+  CompareActivity1({Key key, @required this.numero, this.pasarActividad}) : super(key: key);
   final int numero;
+  final ValueChanged<int> pasarActividad;
   @override
-  _CompareActivity1State createState() => _CompareActivity1State();
+  CompareActivity1State createState() => CompareActivity1State();
 }
 
-class _CompareActivity1State extends State<CompareActivity1> {
+class CompareActivity1State extends State<CompareActivity1> {
   Color colorOPT1 = kAlumnColor;
   Color colorOPT2 = kAlumnColor;
   double borderOPT1 = 1;
   double borderOPT2 = 1;
+
+  int selectedOption = 1;
 
   String imagen1;
   String imagen2;
@@ -29,10 +35,10 @@ class _CompareActivity1State extends State<CompareActivity1> {
   Widget build(BuildContext context) {
     imagen1 = compareActivities[widget.numero][1];
     imagen2 = compareActivities[widget.numero][2];
-    return Expanded(
-      child: Container(
+    return Container(
         margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
         width: double.infinity,
+        height: 540,
         child: Column(
           children: [
             Container(
@@ -93,7 +99,7 @@ class _CompareActivity1State extends State<CompareActivity1> {
             ),
           ],
         ),
-      ),
+      
     );
   }
 
@@ -104,14 +110,60 @@ class _CompareActivity1State extends State<CompareActivity1> {
         borderOPT1 = 5;
         colorOPT2 = kAlumnColor;
         borderOPT2 = 1;
-
+        selectedOption = 1;
         break;
       case 2:
         colorOPT1 = kAlumnColor;
         borderOPT1 = 1;
         colorOPT2 = kTeacherColor;
         borderOPT2 = 5;
+        selectedOption = 2;
         break;
     }
+  }
+
+  validarResultado(){
+
+    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
+
+    if(selectedOption == int.parse(compareActivities[widget.numero][3])){
+      
+      usuarioResultados.addResults(new ActivityResult(area: "Comparar",resultado: true, tiempo: 1));
+      showAlertDialog(context,"Respuesta correcta","¡Genial!");
+    }else{
+      usuarioResultados.addResults(new ActivityResult(area: "Comparar",resultado: false, tiempo: 1));
+       showAlertDialog(context,"Respuesta inccorrecta","Ups...");
+    }
+    
+  }
+
+  showAlertDialog(BuildContext context, String mensaje, String titulo) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("Siguiente",),
+    onPressed: () { 
+        widget.pasarActividad(0);
+        Navigator.of(context).pop();
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(titulo,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
+    content: Text(mensaje, style: TextStyle(fontSize: 18),),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
   }
 }
