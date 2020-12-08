@@ -4,29 +4,31 @@ import 'package:discalapp_proy/constants.dart';
 import 'dart:math';
 import 'operation1_list.dart';
 
-
 class OperationActivity extends StatefulWidget {
-
-  OperationActivity({Key key}) : super(key: key);
- // final int numero;
+  OperationActivity({Key key, @required this.numero,this.pasarActividad}) : super(key: key);
+  final int numero;
+  final ValueChanged<int> pasarActividad;
   @override
   _OperationActivityState createState() => _OperationActivityState();
 }
 
 class _OperationActivityState extends State<OperationActivity> {
   int n1, n2, resultado;
-  String multiplicacion;
-  String suma;
-  String resta;
-  String division;
+  String operacion;
+  String texto;
+  int valorOperacion;
+  @override
+
+  void initState() {
+    super.initState();
+    _generarNumeros();
+  }
 
   @override
   Widget build(BuildContext context) {
-    _generarNumeros();
-   // multiplicacion = operationsActivities[widget.numero][1];
-    //suma = operationsActivities[widget.numero][2];
-    //resta = operationsActivities[widget.numero][3];
-    //multiplicacion = operationsActivities[widget.numero][4];
+    operacion = operationsActivities[widget.numero][1];
+    texto = operationsActivities[widget.numero][0];
+    valorOperacion=int.parse(operationsActivities[widget.numero][2]);
     return Expanded(
         child: Container(
       margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
@@ -35,7 +37,7 @@ class _OperationActivityState extends State<OperationActivity> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text("Realiza la siguiente multiplicacion",
+            child: Text("$texto",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 22,
@@ -45,7 +47,7 @@ class _OperationActivityState extends State<OperationActivity> {
           Container(
               margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
               child: Text(
-                "$n1 X $n2",
+                "$n1 $operacion $n2",
                 style: TextStyle(
                     fontSize: 22,
                     color: Colors.blue[700],
@@ -93,15 +95,44 @@ class _OperationActivityState extends State<OperationActivity> {
     n1 = new Random().nextInt(MAX);
     n2 = new Random().nextInt(MAX);
   }
-/*
-  bool _validarRespuesta() {
-    int repuesta_correcta = n1 * n2;
-    if (repuesta_correcta == resultado){
-     print("respuesta correcta")
-      return true;
+
+//aun falta terminar la cuestion
+  validarResultado() {
+    switch (valorOperacion) {
+      case 1:
+        print("sirve op bro");
+        break;
+      default:print("ta sirviendo we");
     }
-    else
-      return false;
   }
-  */
+
+  showAlertDialog(BuildContext context, String mensaje, String titulo) {
+
+  // set up the button
+  Widget okButton = FlatButton(
+    child: Text("Siguiente",),
+    onPressed: () { 
+        widget.pasarActividad(0);
+        Navigator.of(context).pop();
+    },
+  );
+
+  // set up the AlertDialog
+  AlertDialog alert = AlertDialog(
+    title: Text(titulo,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
+    content: Text(mensaje, style: TextStyle(fontSize: 18),),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    actions: [
+      okButton,
+    ],
+  );
+
+  // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+  }
 }
