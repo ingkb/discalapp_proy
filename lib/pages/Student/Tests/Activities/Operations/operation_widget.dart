@@ -4,10 +4,11 @@ import 'package:discalapp_proy/constants.dart';
 import 'dart:math';
 import 'operation1_list.dart';
 
+
 class OperationActivity extends StatefulWidget {
 
-  OperationActivity({Key key, @required this.numero}) : super(key: key);
-  int numero;
+  OperationActivity({Key key}) : super(key: key);
+ // final int numero;
   @override
   _OperationActivityState createState() => _OperationActivityState();
 }
@@ -22,10 +23,10 @@ class _OperationActivityState extends State<OperationActivity> {
   @override
   Widget build(BuildContext context) {
     _generarNumeros();
-    multiplicacion = operationsActivities[widget.numero][1];
-    suma = operationsActivities[widget.numero][2];
-    resta = operationsActivities[widget.numero][3];
-    multiplicacion = operationsActivities[widget.numero][4];
+   // multiplicacion = operationsActivities[widget.numero][1];
+    //suma = operationsActivities[widget.numero][2];
+    //resta = operationsActivities[widget.numero][3];
+    //multiplicacion = operationsActivities[widget.numero][4];
     return Expanded(
         child: Container(
       margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
@@ -92,12 +93,15 @@ class _OperationActivityState extends State<OperationActivity> {
     n1 = new Random().nextInt(MAX);
     n2 = new Random().nextInt(MAX);
   }
-
+/*
   bool _validarRespuesta() {
     int repuesta_correcta = n1 * n2;
-    if (repuesta_correcta == resultado)
+    if (repuesta_correcta == resultado){
+     print("respuesta correcta")
       return true;
+    }
     else
       return false;
   }
+  */
 }

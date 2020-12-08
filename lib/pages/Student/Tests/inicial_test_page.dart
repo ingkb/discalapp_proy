@@ -1,5 +1,6 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/pages/Student/Tests/Activities/SetInLine/setInLine1_widget.dart';
+import 'Activities/CompareQuantities/compare1_widget.dart';
 import 'Activities/Operations/operation_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -43,6 +44,6 @@ class _InitialTestPageState extends State<InitialTestPage> {
     
    // return SetInLine1();
     //return CompareActivity1(numero: 2);
-    return OperationActivity();
+    return OperationActivity( );
   }
 }
