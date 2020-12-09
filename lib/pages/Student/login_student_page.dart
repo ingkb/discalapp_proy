@@ -135,6 +135,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
 
   loguear(){
     final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
+    usuarioTemporal.resultados = [];
     final prefs = new PreferenciasUsuario();
     loginService.loginStudent(_userId, _password).then((res) {
 

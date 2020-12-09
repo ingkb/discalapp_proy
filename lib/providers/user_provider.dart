@@ -21,7 +21,7 @@ class ActiveUser with ChangeNotifier{
     return _student;
   }
 
-  get restultados {
+  get resultados {
     return _resultados;
   }
 
@@ -46,6 +46,21 @@ class ActiveUser with ChangeNotifier{
     }
     this._resultados.add(result);
     notifyListeners();
+  }
+
+  getResultArea(String area){
+    int aciertos=0;
+    int totalArea = 0;
+    for (ActivityResult result in _resultados) {
+      if(result.area == area ){
+        totalArea++;
+        if(result.resultado){
+          aciertos++;
+        }
+      }
+    }
+
+    return "$aciertos/$totalArea";
   }
 
 }

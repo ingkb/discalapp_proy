@@ -25,6 +25,7 @@ class CompareActivity1State extends State<CompareActivity1> {
 
   String imagen1;
   String imagen2;
+  
 
   @override
   void initState() {
@@ -35,6 +36,7 @@ class CompareActivity1State extends State<CompareActivity1> {
   Widget build(BuildContext context) {
     imagen1 = compareActivities[widget.numero][1];
     imagen2 = compareActivities[widget.numero][2];
+
     return Container(
         margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
         width: double.infinity,
@@ -43,7 +45,7 @@ class CompareActivity1State extends State<CompareActivity1> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Text(compareActivities[widget.numero][0],
+              child: Text("Selecciona la imagen con mas ${compareActivities[widget.numero][0]}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 22,
@@ -128,11 +130,11 @@ class CompareActivity1State extends State<CompareActivity1> {
 
     if(selectedOption == int.parse(compareActivities[widget.numero][3])){
       
-      usuarioResultados.addResults(new ActivityResult(area: "Comparar",resultado: true, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero][0],resultado: true, tiempo: 1));
       showAlertDialog(context,"Respuesta correcta","¡Genial!");
     }else{
-      usuarioResultados.addResults(new ActivityResult(area: "Comparar",resultado: false, tiempo: 1));
-       showAlertDialog(context,"Respuesta inccorrecta","Ups...");
+      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero][0],resultado: false, tiempo: 1));
+       showAlertDialog(context,"Respuesta incorrecta","Ups...");
     }
     
   }

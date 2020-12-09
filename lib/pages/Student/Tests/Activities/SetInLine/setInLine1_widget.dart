@@ -265,9 +265,10 @@ class SetInLine1State extends State<SetInLine1> {
 
     if(check1 && check2 && check3){
       
-      usuarioResultados.addResults(new ActivityResult(area: "Linea",resultado: true, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area: "UbicarLinea",resultado: true, tiempo: 1));
       showAlertDialog(context,"Los ubicaste correctamente","¡Genial!");
     }else{
+      usuarioResultados.addResults(new ActivityResult(area: "UbicarLinea",resultado: false, tiempo: 1));
       showAlertDialog(context,"No los ubicaste correctamente","Ups...");
     }
     //
