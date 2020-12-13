@@ -2,6 +2,10 @@ import 'dart:ui';
 
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/pages/Student/Tests/Activities/SetInLine/setInLine1_widget.dart';
+
+import 'Activities/CompareQuantities/compare1_widget.dart';
+import 'Activities/Operations/operation_widget.dart';
+
 import 'package:flutter/material.dart';
 import 'Activities/CompareQuantities/compare1_widget.dart';
 import 'Activities/progress_barr_widget.dart';
@@ -100,7 +104,7 @@ class _InitialTestPageState extends State<InitialTestPage> {
       case 10: _keyCompareLine4.currentState.validarResultado(); break;
       case 11: _keyCompareLine5.currentState.validarResultado(); break;
       default:
-        print("default validdar res");
+        print("default validar res");
         break;
     }
     if (actividadActual >= numActividades) {
@@ -108,7 +112,8 @@ class _InitialTestPageState extends State<InitialTestPage> {
     }
   }
 
-  //Funcion para traer la actividad actual
+ //Funcion para traer la actividad actual
+/*
   Widget getActivities() {
     switch (actividadActual) {
       case 1:  return SetInLine1(key: _keySetInLine, pasarActividad: _pasarActividad);break;
@@ -123,9 +128,17 @@ class _InitialTestPageState extends State<InitialTestPage> {
       case 10: return CompareActivity1(numero: 9, key: _keyCompareLine4, pasarActividad: _pasarActividad);break;
       case 11: return CompareActivity1(numero: 10, key: _keyCompareLine5, pasarActividad: _pasarActividad);break;
 
-      default:
-        return SizedBox();
-        break;
+}*/
+  Widget getActivities(){
+    
+   // return SetInLine1();
+    //return CompareActivity1(numero: 2);
+    return OperationActivity( numero: 1);
     }
-  }
+    
 }
+      
+    
+
+
+
