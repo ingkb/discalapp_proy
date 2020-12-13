@@ -18,9 +18,17 @@ class _InicialResultState extends State<InicialResult> {
   @override
   Widget build(BuildContext context) {
     usuarioResultados = Provider.of<ActiveUser>(context);
+   
+   
     String comparePointsResults = usuarioResultados.getResultArea('puntos');
     String compareLinesResults = usuarioResultados.getResultArea('lineas');
     String setLineResults = usuarioResultados.getResultArea('UbicarLinea');
+    String sumaResults = usuarioResultados.getResultArea('suma');
+    String restaResults = usuarioResultados.getResultArea('resta');
+    String multiplicaResults = usuarioResultados.getResultArea('multiplicacion');
+    
+    
+    
     return Container(
       color: kAlumnColor,
        child: Center(
@@ -39,6 +47,9 @@ class _InicialResultState extends State<InicialResult> {
                    Text("Resultados",textAlign: TextAlign.center,style: TextStyle(color: kAlumnColor,fontSize: 25,fontWeight: FontWeight.w600),),
                    Divider(thickness: 3,),
                    SizedBox(height: 20),
+                   Text("Sumas: $sumaResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
+                   Text("Restas: $restaResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
+                   Text("Multiplicacion: $multiplicaResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Text("Ubicar en la linea: $setLineResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Text("Comparación de puntos: $comparePointsResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Text("Comparación de lineas: $compareLinesResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
