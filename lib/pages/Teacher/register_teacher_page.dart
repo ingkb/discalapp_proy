@@ -156,7 +156,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
     return AlertDialog(
       content: Text(msg),
       actions: [
-        FlatButton(
+        TextButton(
           onPressed: (){},
           child: Text('OK'),
           autofocus: true,

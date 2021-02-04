@@ -171,7 +171,7 @@ class OperationActivityState extends State<OperationActivity> {
 
   showAlertDialog(BuildContext context, String mensaje, String titulo) {
     // set up the button
-    Widget okButton = FlatButton(
+    Widget okButton = TextButton(
       child: Text(
         "Siguiente",
       ),

@@ -56,7 +56,7 @@ class CompareActivity1State extends State<CompareActivity1> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(width: borderOPT1, color: colorOPT1)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   setState(() {
                     seleccionarOPT(1);
@@ -64,7 +64,7 @@ class CompareActivity1State extends State<CompareActivity1> {
                 },
                 child: Image(
                   fit: BoxFit.fill,
-                  height: 200,
+                  height: 180,
                   image: AssetImage(imagen1),
                 ),
               ),
@@ -74,7 +74,7 @@ class CompareActivity1State extends State<CompareActivity1> {
               decoration: BoxDecoration(
                   color: Colors.white,
                   border: Border.all(width: borderOPT2, color: colorOPT2)),
-              child: FlatButton(
+              child: TextButton(
                 onPressed: () {
                   setState(() {
                     seleccionarOPT(2);
@@ -82,7 +82,7 @@ class CompareActivity1State extends State<CompareActivity1> {
                 },
                 child: Image(
                   fit: BoxFit.fill,
-                  height: 200,
+                  height: 180,
                   image: AssetImage(imagen2),
                 ),
               ),
@@ -142,7 +142,7 @@ class CompareActivity1State extends State<CompareActivity1> {
   showAlertDialog(BuildContext context, String mensaje, String titulo) {
 
   // set up the button
-  Widget okButton = FlatButton(
+  Widget okButton = TextButton(
     child: Text("Siguiente",),
     onPressed: () { 
         widget.pasarActividad(0);

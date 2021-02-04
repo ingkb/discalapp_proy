@@ -54,7 +54,9 @@ class _InicialResultState extends State<InicialResult> {
                    Text("Comparación de puntos: $comparePointsResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Text("Comparación de lineas: $compareLinesResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Spacer(),
-                   FlatButton(child: Text("salir",style: TextStyle(color:Colors.white),), color:kAlumnColor, onPressed: (){Navigator.pushReplacementNamed(context, '/');},)
+                   TextButton(child: Text("salir",style: TextStyle(color:Colors.white),), style:TextButton.styleFrom(primary:kAlumnColor), onPressed: (){
+                      Navigator.pushNamedAndRemoveUntil(context, 'menuStudent', (_) => false);}
+                     ,)
                  ],
                ),
              ),),
