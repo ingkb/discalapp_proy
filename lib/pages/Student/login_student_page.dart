@@ -1,5 +1,6 @@
 import 'dart:ui';
 import 'package:discalapp_proy/Services/login_service.dart';
+import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
@@ -17,13 +18,17 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
   String _userId = '';
   String _password = '';
   LoginService loginService;
-
+  SesionService sesionService;
+  bool _isButtonDisabled = false;
   bool userVerified = false;
 
   @override
   void initState() {
     super.initState();
     loginService = new LoginService();
+    sesionService = new SesionService();
+
+
   }
 
   @override
@@ -105,10 +110,8 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
       child: RaisedButton(
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: kAlumnColor,
-          onPressed: () {
-            loguear();
-          },
+          color: _isButtonDisabled ? Colors.grey: kAlumnColor,
+          onPressed: _isButtonDisabled ? null: loguear,
           child: Text('Entrar',
               style: TextStyle(fontSize: 25, color: Colors.white))),
     );
@@ -118,13 +121,33 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
     final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
     usuarioTemporal.resultados = [];
     final prefs = new PreferenciasUsuario();
+    
+    //Desactiva el boton de entrar mientras busca el usuario
+    setState(() {
+      _isButtonDisabled = true;
+    });
+
+    //Llama al servicio para loguear
     loginService.loginStudent(_userId, _password).then((res) {
+      setState(() {
+      _isButtonDisabled = false;
+      });
       if (res.student != null) {
+
+      //si el estudiante existe lo pone en las preferencias para que cuando vuelva a entrar no tenga que iniciar sesion
         usuarioTemporal.student = res.student;
         prefs.userId = _userId;
+        prefs.userPasw = _password;
 
         if (res.student.classgroup != null) {
-          Navigator.pushReplacementNamed(context, 'initialTest');
+          //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
+          sesionService.getAllSesion(_userId).then((respuesta){
+            if(respuesta.state == 0 && respuesta.sesions.isEmpty){
+               Navigator.pushReplacementNamed(context, 'initialTest');
+            }else{
+                Navigator.pushReplacementNamed(context, 'menuStudent');
+            }
+          });
         } else {
           Navigator.pushReplacementNamed(context, 'selectclass');
         }

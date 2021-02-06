@@ -1,7 +1,12 @@
 import 'dart:ui';
 
+import 'package:discalapp_proy/Services/login_service.dart';
+import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class InitialPage extends StatefulWidget {
   InitialPage({Key key}) : super(key: key);
@@ -11,6 +16,10 @@ class InitialPage extends StatefulWidget {
 }
 
 class _InitialPageState extends State<InitialPage> {
+
+  
+  bool intentandoLoguear = false;
+  bool buscando = true;
   ButtonStyle style = ElevatedButton.styleFrom(
       primary: kTeacherColor,
       elevation: 20,
@@ -34,6 +43,13 @@ class _InitialPageState extends State<InitialPage> {
   bool _isBackDisabled = true;
   bool _isButtonDisabled = false;
 
+  SesionService sesionService;
+  @override
+  void initState() {
+    super.initState();
+    sesionService = new SesionService();
+    buscarUsuario();
+  }
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -137,7 +153,7 @@ class _InitialPageState extends State<InitialPage> {
       ),
       onPressed: () {
         if (_isLogin) {
-          Navigator.pushNamed(context, 'loginStudent');
+         loguearEstudiante();
         } else {
           Navigator.pushNamed(context, 'registerStudent');
         }
@@ -303,5 +319,52 @@ class _InitialPageState extends State<InitialPage> {
                 ),
               )),
         ));
+  }
+  buscarUsuario(){
+    final prefs = new PreferenciasUsuario();
+    final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
+
+    debugPrint("contraseña:" + prefs.userPasw);
+    if(prefs.userId!=''){
+      LoginService loginService = new LoginService();
+      loginService.loginStudent(prefs.userId, prefs.userPasw).then((value){
+        usuarioTemporal.student = value.student;
+        buscando=false;
+        if(intentandoLoguear){
+          loguearEstudiante();
+        }
+      });
+    }else{
+      usuarioTemporal.student = null;
+      buscando = false;
+      if(intentandoLoguear){
+        loguearEstudiante();
+      }
+    }
+  }
+  loguearEstudiante(){
+    final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
+    usuarioTemporal.resultados = [];
+    intentandoLoguear = true;
+
+    if(usuarioTemporal.student!=null && !buscando){
+      final student = usuarioTemporal.student;
+    debugPrint("alog");
+
+      if (student.classgroup != null) {
+          //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
+          sesionService.getAllSesion(student.userId).then((respuesta){
+            if(respuesta.state == 0 && respuesta.sesions.isEmpty){
+               Navigator.pushReplacementNamed(context, 'initialTest');
+            }else{
+                Navigator.pushReplacementNamed(context, 'menuStudent');
+            }
+          });
+        } else {
+          Navigator.pushReplacementNamed(context, 'selectclass');
+        } 
+    }else{
+      Navigator.pushNamed(context, 'loginStudent');
+    }
   }
 }

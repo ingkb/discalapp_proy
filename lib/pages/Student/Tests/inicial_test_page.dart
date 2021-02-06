@@ -1,7 +1,11 @@
 import 'dart:ui';
 
+import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/models/sesion_model.dart';
 import 'package:discalapp_proy/pages/Student/Tests/Activities/SetInLine/setInLine1_widget.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
+
 
 import 'Activities/CompareQuantities/compare1_widget.dart';
 import 'Activities/Operations/operation_widget.dart';
@@ -43,7 +47,13 @@ class _InitialTestPageState extends State<InitialTestPage> {
 
   int actividadActual = 1;
   int numActividades = 23;
+  SesionService sesionService;
 
+  @override
+  void initState() {
+    super.initState();
+    sesionService = new SesionService();
+  }
   @override
   Widget build(BuildContext context) {
 
@@ -134,7 +144,11 @@ class _InitialTestPageState extends State<InitialTestPage> {
     }
     //Si ya se cumplieron todas las actividades ve al resultado
     if (actividadActual >= numActividades) {
-      Navigator.pushReplacementNamed(context, 'initialResult');
+       final prefs = new PreferenciasUsuario();
+      sesionService.addSesion(
+        new Sesion(student: prefs.userId, tipo: 0, fecha: DateTime.now())
+        ).then((value) => Navigator.pushReplacementNamed(context, 'initialResult'));
+      
     }
   }
 
