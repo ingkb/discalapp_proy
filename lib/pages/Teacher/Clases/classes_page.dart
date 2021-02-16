@@ -22,9 +22,6 @@ class _ClassesPageState extends State<ClassesPage> {
   @override
   void initState() {
     super.initState();
-    setState(() {
-      
-    });
   }
   @override
   Widget build(BuildContext context) {
@@ -38,8 +35,11 @@ class _ClassesPageState extends State<ClassesPage> {
       ),
       body: crearListaClases(),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.pushNamed(context, 'addclasses');
+        onPressed: () async {
+          await Navigator.pushNamed(context, 'addclasses');
+         setState(() {
+           
+         });
         },
         backgroundColor: kTeacherColor,
         child: Icon(Icons.add),
@@ -124,14 +124,17 @@ class _ClassesPageState extends State<ClassesPage> {
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
                     child: RaisedButton(
-                      onPressed: () {
-                        Navigator.push(
+                      onPressed: () async {
+                        await Navigator.push(
                           context,
                           MaterialPageRoute(
                             builder: (context) =>
                                 ClassDetailPage(code: clase.code),
                           ),
                         );
+                        setState(() {
+                          
+                        });
                       },
                       child: Icon(Icons.edit, color: Colors.blue),
                       color: Colors.white,
@@ -174,7 +177,8 @@ class _ClassesPageState extends State<ClassesPage> {
   Widget emptyList(){
     return Container(
       child: Center(
-        child: Text('...'),
+        child:Image(
+              image: AssetImage('assets/images/emptygif.gif'),)
       ),
     );
   }

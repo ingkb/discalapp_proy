@@ -1,10 +1,14 @@
 import 'dart:ui';
 
+import 'package:discalapp_proy/Services/areaResult_service.dart';
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/models/areaResult_model.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
 import 'package:discalapp_proy/pages/Student/Tests/Activities/SetInLine/setInLine1_widget.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:provider/provider.dart';
 
 
 import 'Activities/CompareQuantities/compare1_widget.dart';
@@ -82,12 +86,6 @@ class _InitialTestPageState extends State<InitialTestPage> {
         floatingActionButton: btnValidar());
   }
 
-  _pasarActividad(int n) {
-    setState(() {
-      actividadActual++;
-    });
-  }
-
   Widget btnValidar() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
@@ -111,6 +109,11 @@ class _InitialTestPageState extends State<InitialTestPage> {
     );
   }
 
+ _pasarActividad(int n) {
+    setState(() {
+      actividadActual++;
+    });
+  }
   //Se llama a la funcion de cada actividad para evaluar
   validarActividad() {
     switch (actividadActual) {
@@ -144,12 +147,41 @@ class _InitialTestPageState extends State<InitialTestPage> {
     }
     //Si ya se cumplieron todas las actividades ve al resultado
     if (actividadActual >= numActividades) {
-       final prefs = new PreferenciasUsuario();
+       acabarSesionActividad();
+    }
+  }
+
+  acabarSesionActividad(){
+    final prefs = new PreferenciasUsuario();
+    AreaResultService areaService = new AreaResultService();
+    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context, listen: false);
       sesionService.addSesion(
         new Sesion(student: prefs.userId, tipo: 0, fecha: DateTime.now())
-        ).then((value) => Navigator.pushReplacementNamed(context, 'initialResult'));
+        ).then((value) {
+          if(value.state==0){
+            AreaResult comparePoints= usuarioResultados.getArea('puntos',value.sesionId);
+            AreaResult compareLineas= usuarioResultados.getArea('lineas',value.sesionId);
+            AreaResult setLine = usuarioResultados.getArea('UbicarLinea',value.sesionId);
+            AreaResult sumas= usuarioResultados.getArea('suma',value.sesionId);
+            AreaResult restas= usuarioResultados.getArea('resta',value.sesionId);
+            AreaResult multiplica = usuarioResultados.getArea('multiplicacion',value.sesionId);
+
+            areaService.addAreaResult(comparePoints).then((value) => null);
+            areaService.addAreaResult(compareLineas).then((value) => null);
+            areaService.addAreaResult(setLine).then((value) => null);
+            areaService.addAreaResult(sumas).then((value) => null);
+            areaService.addAreaResult(restas).then((value) => null);
+            areaService.addAreaResult(multiplica).then((value) => null);
+
+            
+          }
+          
+          }
+        
+        );
+    
+    Navigator.pushReplacementNamed(context, 'initialResult');
       
-    }
   }
 
  //Funcion para traer la actividad actual
@@ -184,13 +216,7 @@ class _InitialTestPageState extends State<InitialTestPage> {
       default: return SetInLine1(key: _keySetInLine, pasarActividad: _pasarActividad);break;
     }
 }
-  // Widget getActivities(){
-    
-  //  // return SetInLine1();
-  //   //return CompareActivity1(numero: 2);
-  //   return OperationActivity( numero: 1);
-  //   }
-    
+
 }
       
     

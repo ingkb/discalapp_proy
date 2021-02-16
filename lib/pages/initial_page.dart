@@ -324,7 +324,6 @@ class _InitialPageState extends State<InitialPage> {
     final prefs = new PreferenciasUsuario();
     final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
 
-    debugPrint("contraseña:" + prefs.userPasw);
     if(prefs.userId!=''){
       LoginService loginService = new LoginService();
       loginService.loginStudent(prefs.userId, prefs.userPasw).then((value){
@@ -349,7 +348,6 @@ class _InitialPageState extends State<InitialPage> {
 
     if(usuarioTemporal.student!=null && !buscando){
       final student = usuarioTemporal.student;
-    debugPrint("alog");
 
       if (student.classgroup != null) {
           //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test

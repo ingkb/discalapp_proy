@@ -1,5 +1,6 @@
 
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/models/areaResult_model.dart';
 import 'package:discalapp_proy/models/student_model.dart';
 import 'package:discalapp_proy/models/teacher_model.dart';
 import 'package:flutter/material.dart';
@@ -48,19 +49,29 @@ class ActiveUser with ChangeNotifier{
     notifyListeners();
   }
 
-  getResultArea(String area){
+  getAciertosArea(String area){
     int aciertos=0;
-    int totalArea = 0;
     for (ActivityResult result in _resultados) {
       if(result.area == area ){
-        totalArea++;
         if(result.resultado){
           aciertos++;
         }
       }
     }
-
-    return "$aciertos/$totalArea";
+    return aciertos;
   }
 
+  getTotalArea(String area){
+    int totalArea = 0;
+    for (ActivityResult result in _resultados) {
+      if(result.area == area ){
+        totalArea++;
+      }
+    }
+    return totalArea;
+  }
+
+  AreaResult getArea(String area, String sesionId){
+    return new AreaResult(sesionId: sesionId,area: area ,aciertos: getAciertosArea(area), preguntas:getTotalArea(area),tiempo:0);
+  }
 }

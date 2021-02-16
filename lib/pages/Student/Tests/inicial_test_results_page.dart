@@ -20,12 +20,12 @@ class _InicialResultState extends State<InicialResult> {
     usuarioResultados = Provider.of<ActiveUser>(context);
    
    
-    String comparePointsResults = usuarioResultados.getResultArea('puntos');
-    String compareLinesResults = usuarioResultados.getResultArea('lineas');
-    String setLineResults = usuarioResultados.getResultArea('UbicarLinea');
-    String sumaResults = usuarioResultados.getResultArea('suma');
-    String restaResults = usuarioResultados.getResultArea('resta');
-    String multiplicaResults = usuarioResultados.getResultArea('multiplicacion');
+    String comparePointsResults = usuarioResultados.getAciertosArea('puntos').toString();
+    String compareLinesResults = usuarioResultados.getAciertosArea('lineas').toString();
+    String setLineResults = usuarioResultados.getAciertosArea('UbicarLinea').toString();
+    String sumaResults = usuarioResultados.getAciertosArea('suma').toString();
+    String restaResults = usuarioResultados.getAciertosArea('resta').toString();
+    String multiplicaResults = usuarioResultados.getAciertosArea('multiplicacion').toString();
     
     
     
@@ -54,7 +54,7 @@ class _InicialResultState extends State<InicialResult> {
                    Text("Comparación de puntos: $comparePointsResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Text("Comparación de lineas: $compareLinesResults",textAlign: TextAlign.left,style: TextStyle(fontSize:20),),
                    Spacer(),
-                   TextButton(child: Text("salir",style: TextStyle(color:Colors.white),), style:TextButton.styleFrom(primary:kAlumnColor), onPressed: (){
+                   TextButton(child: Text("salir",style: TextStyle(color:Colors.blue),), style:TextButton.styleFrom(primary:kAlumnColor), onPressed: (){
                       Navigator.pushNamedAndRemoveUntil(context, 'menuStudent', (_) => false);}
                      ,)
                  ],

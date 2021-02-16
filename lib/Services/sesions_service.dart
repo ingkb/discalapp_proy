@@ -108,13 +108,16 @@ class RegisterSesionResponse {
     RegisterSesionResponse({
         this.state,
         this.message,
+        this.sesionId
     });
     int state;
     String message;
+    String sesionId;
 
     factory RegisterSesionResponse.fromJson(Map<String, dynamic> json) => RegisterSesionResponse(
        state: json["state"],
-        message: json["message"],
+       message: json["message"],
+       sesionId: json["sesionId"],
     );
 }
 
