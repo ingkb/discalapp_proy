@@ -144,9 +144,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
     print('usuario ' + prefs.teacherUserId);
     classesService.addClassgroup(classgroup).then((value){
      setState(() {
-       Navigator.pushReplacementNamed(context, 'classes').then((value){setState(() {
-         
-       });});
+       Navigator.pop(context, 'classes');
       //  Navigator.pop(context);
      });
     }
