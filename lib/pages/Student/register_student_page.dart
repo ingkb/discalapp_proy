@@ -32,7 +32,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kAlumnColor,
-        title:Text('Resgistro estudiante')
+        title:Text('Registro estudiante')
       ),
       body: Center(
         child:Container(

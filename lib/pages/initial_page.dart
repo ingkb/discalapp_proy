@@ -355,7 +355,7 @@ class _InitialPageState extends State<InitialPage> {
             if(respuesta.state == 0 && respuesta.sesions.isEmpty){
                Navigator.pushReplacementNamed(context, 'initialTest');
             }else{
-                Navigator.pushReplacementNamed(context, 'menuStudent');
+                Navigator.pushNamed(context, 'menuStudent');
             }
           });
         } else {
