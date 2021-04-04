@@ -136,7 +136,7 @@ class MathOperationState extends State<MathOperation> {
   _generarNumeros() {
     var rng = new Random();
 
-    var operation = rng.nextInt(4);
+    var operation = rng.nextInt(3);
 
     n1 = rng.nextInt(100);
     n2 = rng.nextInt(100);
