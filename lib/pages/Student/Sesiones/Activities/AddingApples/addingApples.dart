@@ -1,68 +1,70 @@
+import 'dart:math';
+
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui';
-import 'operation1_list.dart';
+import 'casilla.dart';
 
-class OperationActivity extends StatefulWidget {
-  OperationActivity({Key key, @required this.numero, this.pasarActividad})
-      : super(key: key);
-  final int numero;
+class AddingApplesActivity extends StatefulWidget {
+  AddingApplesActivity({Key key, this.pasarActividad}) : super(key: key);
   final ValueChanged<int> pasarActividad;
+
   @override
-  OperationActivityState createState() => OperationActivityState();
+  AddingApplesActivityState createState() => AddingApplesActivityState();
 }
 
-class OperationActivityState extends State<OperationActivity> {
-  int n1, n2, resultado;
-  String operacion;
-  String texto;
-  int valorOperacion;
+class AddingApplesActivityState extends State<AddingApplesActivity> {
+
+  int n1;
+  int n2;
+  int resultado;
+
   @override
   void initState() {
     super.initState();
-    _generarNumeros();
+    generarNumeros();
   }
-
   @override
   Widget build(BuildContext context) {
     return Center(
-        child: Container(
-      margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
-      padding: EdgeInsets.only(bottom: 20),
-      width: double.infinity,
-      child: Column(
-        children: [
-          Container(
-            margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text("$texto",
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                    fontSize: 22,
-                    color: Colors.blue[700],
-                    fontWeight: FontWeight.w500)),
-          ),
-          operacionText(),
-          respuestaInput()
-        ],
-      ),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.blue[900].withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: Offset(2, 5), // changes position of shadow
-          ),
-        ],
-      ),
-    ));
+      child: Container(
+        margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
+        padding: EdgeInsets.only(bottom: 20),
+        width: double.infinity,
+        child: Column(
+          children: [
+            Container(
+              margin: EdgeInsets.only(left: 20, right: 20, top: 10,bottom: 30),
+              child: Text("Completa el espacio para que se cumpla la igualdad",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontSize: 22,
+                      color: Colors.blue[700],
+                      fontWeight: FontWeight.w500)),
+            ),
+            numbersRow(),
+            operacionText(),
+            
+          ],
+        ),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.blue[900].withOpacity(0.5),
+              spreadRadius: 5,
+              blurRadius: 7,
+              offset: Offset(2, 5), // changes position of shadow
+            ),
+          ],
+        ),
+      )
+    );
   }
 
-  Widget operacionText() {
+   Widget operacionText() {
     return Column(
       children: [
         Row(
@@ -71,7 +73,7 @@ class OperationActivityState extends State<OperationActivity> {
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  "$operacion",
+                  "+",
                   style: TextStyle(
                       fontSize: 35,
                       color: Colors.red,
@@ -85,13 +87,21 @@ class OperationActivityState extends State<OperationActivity> {
                       "$n1",
                       style: TextStyle(
                           fontSize: 40,
-                          color: Colors.black,
+                          color: Colors.red,
                           fontWeight: FontWeight.w500),
                     )),
+                respuestaInput(),
+                Container(
+                  width: 200,
+                  child: Divider(
+                    thickness: 3,
+                    color: Colors.orange,
+                  )
+                ),
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                     child: Text(
-                      "$n2",
+                      "$resultado",
                       style: TextStyle(
                           fontSize: 40,
                           color: Colors.black,
@@ -101,74 +111,79 @@ class OperationActivityState extends State<OperationActivity> {
             ),
           ],
         ),
-        Container(
-            width: 200,
-            child: Divider(
-              thickness: 3,
-              color: Colors.orange,
-            ))
       ],
     );
   }
 
-  Widget respuestaInput() {
+  generarNumeros(){
+    var rng = new Random();
+    
+    n1 = rng.nextInt(3)+1;
+    var num2 = rng.nextInt(4)+1;
+    resultado = n1 + num2;
+  }
+
+   Widget respuestaInput() {
     return Container(
         width: 100,
-        margin: EdgeInsets.only(right: 15, top: 10),
+        margin: EdgeInsets.only(right: 10, top: 10),
+        padding: EdgeInsets.only(right: 30),
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.end,
           style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+              color: Colors.green[400], fontSize: 40, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
-              //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
-              hintText: 'Respuesta',
-              hintStyle: TextStyle(fontSize: 20)),
+              hintText: '?',
+              hintStyle: TextStyle(fontSize: 30, color: Colors.green[400])),
           onChanged: (valor) {
             setState(() {
-              resultado = int.parse(valor);
+              n2 = int.parse(valor);
             });
           },
         ));
   }
 
-  _generarNumeros() {
-    n1 = int.parse(operationsActivities[widget.numero][1]);
-    n2 = int.parse(operationsActivities[widget.numero][2]);
+  Widget numbersRow(){
 
-    switch (operationsActivities[widget.numero][0]) {
-      case 'suma':
-        operacion = "+";
-        texto = "Realiza la siguiente SUMA";
-        break;
-      case 'resta':
-        operacion = "-";
-        texto = "Realiza la siguiente RESTA";
-        break;
-      case 'multiplicacion':
-        operacion = "x";
-        texto = "Realiza la siguiente MULTIPLICACIÓN";
-        break;
-      default:
-        operacion = ".";
-        texto = "...";
+    List<Widget> casillas = [];
+    for(int i=1;i<=n1;i++){
+      casillas.add(casilla("$i","roja"));
     }
+
+    for(int i=n1+1;i<=resultado;i++){
+      casillas.add(casilla("$i","verde"));
+    }
+
+    for(int i=resultado+1;i<=7;i++){
+      casillas.add(casilla("$i",""));
+    }
+
+    return Container(
+      margin: EdgeInsets.only(bottom:20),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        
+        children: casillas,
+      ),
+    );
   }
 
+  
 
   validarResultado() {
-    int resultadoCorrecto = int.parse(operationsActivities[widget.numero][3]);
-    ActiveUser usuarioResultados =
+
+     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
-    if (resultado == resultadoCorrecto) {
+    if (n2 == resultado-n1) {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: "Suma",
           resultado: true,
           tiempo: 1));
       showAlertDialog(context, "Respuesta correcta", "¡Genial!");
     } else {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: "Suma",
           resultado: false,
           tiempo: 1));
       showAlertDialog(context, "Respuesta incorrecta", "Ups...");

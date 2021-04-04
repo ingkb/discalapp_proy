@@ -280,8 +280,8 @@ class SetInLine1State extends State<SetInLine1> {
   Widget okButton = TextButton(
     child: Text("Siguiente",),
     onPressed: () { 
-        widget.pasarActividad(0);
         Navigator.of(context).pop();
+        widget.pasarActividad(0);
     },
   );
 

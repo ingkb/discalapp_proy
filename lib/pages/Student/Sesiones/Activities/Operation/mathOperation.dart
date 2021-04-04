@@ -1,24 +1,25 @@
+import 'dart:math';
+
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'dart:ui';
-import 'operation1_list.dart';
 
-class OperationActivity extends StatefulWidget {
-  OperationActivity({Key key, @required this.numero, this.pasarActividad})
-      : super(key: key);
-  final int numero;
+
+class MathOperation extends StatefulWidget {
+  MathOperation({Key key, this.pasarActividad}) : super(key: key);
   final ValueChanged<int> pasarActividad;
   @override
-  OperationActivityState createState() => OperationActivityState();
+  MathOperationState createState() => MathOperationState();
 }
 
-class OperationActivityState extends State<OperationActivity> {
-  int n1, n2, resultado;
+class MathOperationState extends State<MathOperation> {
+  int n1, n2, resultado, respuestaCorrecta;
   String operacion;
+  String area;
   String texto;
   int valorOperacion;
+
   @override
   void initState() {
     super.initState();
@@ -36,7 +37,7 @@ class OperationActivityState extends State<OperationActivity> {
         children: [
           Container(
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-            child: Text("$texto",
+            child: Text("Actividad",
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     fontSize: 22,
@@ -133,21 +134,38 @@ class OperationActivityState extends State<OperationActivity> {
   }
 
   _generarNumeros() {
-    n1 = int.parse(operationsActivities[widget.numero][1]);
-    n2 = int.parse(operationsActivities[widget.numero][2]);
+    var rng = new Random();
 
-    switch (operationsActivities[widget.numero][0]) {
-      case 'suma':
+    var operation = rng.nextInt(4);
+
+    n1 = rng.nextInt(100);
+    n2 = rng.nextInt(100);
+
+    switch (operation) {
+      case 0:
+        area = "suma";
         operacion = "+";
         texto = "Realiza la siguiente SUMA";
+        respuestaCorrecta = n1 + n2;
         break;
-      case 'resta':
+      case 1:
+        area = "resta";
         operacion = "-";
         texto = "Realiza la siguiente RESTA";
+        if (n1 < n2) {
+          var temp = n1;
+          n1 = n2;
+          n2 = temp;
+        }
+        respuestaCorrecta = n1 - n2;
         break;
-      case 'multiplicacion':
+      case 2:
+        n1 = rng.nextInt(10);
+        n2 = rng.nextInt(10);
+        area = "multiplicacion";
         operacion = "x";
         texto = "Realiza la siguiente MULTIPLICACIÓN";
+        respuestaCorrecta = n1 * n2;
         break;
       default:
         operacion = ".";
@@ -155,20 +173,18 @@ class OperationActivityState extends State<OperationActivity> {
     }
   }
 
-
   validarResultado() {
-    int resultadoCorrecto = int.parse(operationsActivities[widget.numero][3]);
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
-    if (resultado == resultadoCorrecto) {
+    if (resultado == respuestaCorrecta) {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: area,
           resultado: true,
           tiempo: 1));
       showAlertDialog(context, "Respuesta correcta", "¡Genial!");
     } else {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: area,
           resultado: false,
           tiempo: 1));
       showAlertDialog(context, "Respuesta incorrecta", "Ups...");

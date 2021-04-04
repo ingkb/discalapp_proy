@@ -13,22 +13,30 @@ class Sesion1 extends StatefulWidget {
 
 class Sesion1State extends State<Sesion1> {
 
-  int numActividades = 5;
-  int actividadActual =1;
-
+  int numActividades;
+  int actividadActual;
+  List<Widget> listaActividades;
   Actividades actividades;
 
   @override
   void initState() {
+    actividadActual = 1;
+    numActividades = 6;
+    actividades = new Actividades(2,2,2,pasarActividad);
+    listaActividades = actividades.getActivities();
+
     super.initState();
-    actividades = new Actividades(pasarActividad);
   }
   @override
   Widget build(BuildContext context) {
     double porcent = 0;
+    int actividadMostrar;
     if(actividadActual!=null){porcent = actividadActual/numActividades;}
-    
-
+    if(actividadActual-1<listaActividades.length){
+      actividadMostrar =actividadActual-1;
+    }else{
+      actividadMostrar=listaActividades.length-1;
+    }
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -46,7 +54,7 @@ class Sesion1State extends State<Sesion1> {
                 transitionBuilder: (child, animation) {
                   return ScaleTransition(scale: animation, child: child);
                 },
-               child: actividades.activities[actividadActual],
+               child: listaActividades[actividadMostrar],
             )
           ],
         ),
@@ -79,17 +87,20 @@ class Sesion1State extends State<Sesion1> {
   }
 
   validarActividad() {
-    if (actividadActual >= numActividades) {
-      Navigator.pushReplacementNamed(context, 'initialResult');
-      return;
-    }
+    actividades.validarResultado(actividadActual);
+  }
 
-    comparekeys[actividadActual].currentState.validarResultado();  
+  validarNumActividad(){
+    if (actividadActual > numActividades) {
+      Navigator.pushReplacementNamed(this.context, 'menuStudent');
+    }
   }
 
    pasarActividad(int n) {
      setState(() {
       actividadActual++; 
+      validarNumActividad();
+     
      });
   }
 }

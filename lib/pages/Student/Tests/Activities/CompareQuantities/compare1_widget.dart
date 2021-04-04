@@ -145,8 +145,8 @@ class CompareActivity1State extends State<CompareActivity1> {
   Widget okButton = TextButton(
     child: Text("Siguiente",),
     onPressed: () { 
-        widget.pasarActividad(0);
         Navigator.of(context).pop();
+        widget.pasarActividad(0);
     },
   );
 

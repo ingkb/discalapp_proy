@@ -1,37 +1,59 @@
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/CountImages/CountImages.dart';
 import 'package:flutter/material.dart';
-import 'package:discalapp_proy/pages/Student/Tests/Activities/CompareQuantities/compare1_widget.dart';
 
-import 'Activities/mathOperation.dart';
+import 'Activities/AddingApples/addingApples.dart';
+import 'Activities/Operation/mathOperation.dart';
 
-Map<int, GlobalKey<MathOperationState>> comparekeys = {
-  1: GlobalKey<MathOperationState>(),
-  2: GlobalKey<MathOperationState>(),
-  3: GlobalKey<MathOperationState>(),
-  4: GlobalKey<MathOperationState>(),
-  5: GlobalKey<MathOperationState>(),
-};
 
 class Actividades {
 
-  Map<int, Widget> activities;
+  ValueChanged<int> pasarActividad;
+  Map<int, GlobalKey<MathOperationState>> mathkeys;
+  Map<int, GlobalKey<AddingApplesActivityState>> applekeys;
+  Map<int, GlobalKey<CountImagesState>> countImgkeys;
+  int mathOper;
+  int appleActi;
+  int countImg;
 
-  Actividades(ValueChanged<int> pasarActividad){
-    activities = {
-      1: MathOperation(numero: 1, key: comparekeys[1], pasarActividad: pasarActividad),
-      2: MathOperation(numero: 2, key: comparekeys[2], pasarActividad: pasarActividad),
-      3: MathOperation(numero: 3, key: comparekeys[3], pasarActividad: pasarActividad),
-      4: MathOperation(numero: 4, key: comparekeys[4], pasarActividad: pasarActividad),
-      5: MathOperation(numero: 5, key: comparekeys[5], pasarActividad: pasarActividad)
-    };
+  //ACTIVIDADES EN ORDEN
+  Actividades(int math, int apple,int countim, ValueChanged<int> pasarActividad){
+    mathkeys = new Map<int,GlobalKey<MathOperationState>>();
+    applekeys = new Map<int, GlobalKey<AddingApplesActivityState>>();
+    countImgkeys = new Map<int, GlobalKey<CountImagesState>>();
+    this.pasarActividad = pasarActividad;
+    this.mathOper = math;
+    this.appleActi = apple;
+    this.countImg = countim;
   }
 
- 
-
   List<Widget> getActivities() {
+
     List<Widget> actividades = [];
-    for (int i = 1; i < 4; i++) {
-      actividades.add(activities[i]);
+    for (int i = 1; i <= mathOper; i++) {
+      mathkeys[i] = GlobalKey<MathOperationState>();
+      actividades.add(MathOperation( key: mathkeys[i], pasarActividad: pasarActividad));
+    }
+    for (int i = 1; i <= appleActi; i++) {
+      applekeys[i] = GlobalKey<AddingApplesActivityState>();
+      actividades.add(AddingApplesActivity( key: applekeys[i], pasarActividad: pasarActividad));
+    }
+    for (int i = 1; i <= countImg; i++) {
+      countImgkeys[i] = GlobalKey<CountImagesState>();
+      actividades.add(CountImages( key: countImgkeys[i], pasarActividad: pasarActividad));
     }
     return actividades;
+  }
+  
+  validarResultado(int numero){
+
+    if(numero>0 && numero<=mathOper){
+      return mathkeys[numero].currentState.validarResultado();
+    }else if(numero<=appleActi+mathOper){
+      var numer = numero-mathOper;
+      return applekeys[numer].currentState.validarResultado();
+    }else if(numero<=countImg+appleActi+mathOper){
+      var numer = numero-mathOper-appleActi;
+      return countImgkeys[numer].currentState.validarResultado();
+    }
   }
 }
