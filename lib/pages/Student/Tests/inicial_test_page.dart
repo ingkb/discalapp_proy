@@ -69,7 +69,7 @@ class _InitialTestPageState extends State<InitialTestPage> {
           ],
         ),
         backgroundColor: kAlumnColor,
-        body: Column(
+        body: ListView(
           children: [
             SizedBox(
               height: 10,

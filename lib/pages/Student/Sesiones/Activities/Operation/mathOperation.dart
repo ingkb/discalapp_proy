@@ -127,7 +127,7 @@ class MathOperationState extends State<MathOperation> {
               hintStyle: TextStyle(fontSize: 20)),
           onChanged: (valor) {
             setState(() {
-              resultado = int.parse(valor);
+              resultado = int.tryParse(valor);
             });
           },
         ));
@@ -139,7 +139,7 @@ class MathOperationState extends State<MathOperation> {
     var operation = rng.nextInt(3);
 
     n1 = rng.nextInt(100);
-    n2 = rng.nextInt(100);
+    n2 = rng.nextInt(10);
 
     switch (operation) {
       case 0:

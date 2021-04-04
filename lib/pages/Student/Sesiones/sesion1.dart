@@ -44,7 +44,7 @@ class Sesion1State extends State<Sesion1> {
           ],
         ),
         backgroundColor: kAlumnColor,
-        body: Column(
+        body: ListView(
           children: [
             SizedBox(
               height: 10,

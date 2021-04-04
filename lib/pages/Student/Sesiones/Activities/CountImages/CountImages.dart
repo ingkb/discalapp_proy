@@ -13,7 +13,7 @@ class CountImages extends StatefulWidget {
   CountImagesState createState() => CountImagesState();
 }
 
-class CountImagesState extends State<CountImages> {
+class CountImagesState extends State<CountImages>{
 
   int n1;
   int resultado;
@@ -76,7 +76,7 @@ class CountImagesState extends State<CountImages> {
               hintStyle: TextStyle(fontSize: 35)),
           onChanged: (valor) {
             setState(() {
-              resultado = int.parse(valor);
+              resultado = int.tryParse(valor);
             });
           },
         ));

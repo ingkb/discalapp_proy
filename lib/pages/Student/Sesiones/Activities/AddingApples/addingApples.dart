@@ -138,7 +138,7 @@ class AddingApplesActivityState extends State<AddingApplesActivity> {
               hintStyle: TextStyle(fontSize: 30, color: Colors.green[400])),
           onChanged: (valor) {
             setState(() {
-              n2 = int.parse(valor);
+              n2 = int.tryParse(valor);
             });
           },
         ));

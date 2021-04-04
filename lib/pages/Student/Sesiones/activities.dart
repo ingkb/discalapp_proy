@@ -16,7 +16,7 @@ class Actividades {
   int countImg;
 
   //ACTIVIDADES EN ORDEN
-  Actividades(int math, int apple,int countim, ValueChanged<int> pasarActividad){
+  Actividades(int math, int apple,int countim, ValueChanged<int> pasarActividad){ 
     mathkeys = new Map<int,GlobalKey<MathOperationState>>();
     applekeys = new Map<int, GlobalKey<AddingApplesActivityState>>();
     countImgkeys = new Map<int, GlobalKey<CountImagesState>>();
