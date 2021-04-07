@@ -158,13 +158,15 @@ class _SelectClassPageState extends State<SelectClassPage> {
                       style:
                           TextStyle(fontSize: 20)),
                   Expanded(child: SizedBox()),
-                  RaisedButton(
-                    elevation: 5,
+                  ElevatedButton(
+                    style:ElevatedButton.styleFrom(
+                      elevation: 5,
+                      primary: Colors.green,
+                    ),
                     onPressed: (){
                       asignarClase(clase.code);
                     },
                     child: Text('Unirse',style: TextStyle(fontSize:20, color: Colors.white)),
-                    color: Colors.green,
                   )
                 ],
               ),

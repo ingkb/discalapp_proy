@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InitialPage extends StatefulWidget {
-  InitialPage({Key key}) : super(key: key);
+  InitialPage({ Key key}) : super(key: key);
 
   @override
   _InitialPageState createState() => _InitialPageState();

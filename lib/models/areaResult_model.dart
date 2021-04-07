@@ -1,10 +1,10 @@
 class AreaResult {
     AreaResult({
-        this.preguntas,
-        this.aciertos,
-        this.tiempo,
-        this.area,
-        this.sesionId
+         this.preguntas,
+         this.aciertos,
+         this.tiempo,
+         this.area,
+         this.sesionId
     });
 
     int preguntas;

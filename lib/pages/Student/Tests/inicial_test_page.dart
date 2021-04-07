@@ -89,17 +89,21 @@ class _InitialTestPageState extends State<InitialTestPage> {
   Widget btnValidar() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
-      child: RaisedButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
         elevation: 10,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        primary: kTeacherColor,
+        ),
+
         child: Text(
           "Validar",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-        color: kTeacherColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+      
         onPressed: () {
           setState(() {
             validarActividad();

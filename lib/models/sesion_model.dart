@@ -3,7 +3,7 @@ class Sesion {
     Sesion({
         this.student,
         this.tipo,
-        this.fecha,
+       this.fecha,
     });
 
     int tipo;

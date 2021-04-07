@@ -1,11 +1,11 @@
 class ActivityResult {
     ActivityResult({
-        this.resultado,
-        this.tiempo,
-        this.area,
+         this.resultado,
+         this.tiempo,
+         this.area,
     });
 
-    bool resultado;
+     bool resultado;
     double tiempo;
     String area;
 

@@ -1,8 +1,8 @@
 class Classgroup {
    Classgroup({
-        this.code,
-        this.name,
-        this.teacher,
+         this.code,
+         this.name,
+         this.teacher,
     });
     String code;
     String name;

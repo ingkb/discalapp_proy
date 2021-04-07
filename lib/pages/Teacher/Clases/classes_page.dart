@@ -123,7 +123,7 @@ class _ClassesPageState extends State<ClassesPage> {
                   ButtonTheme(
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -136,17 +136,20 @@ class _ClassesPageState extends State<ClassesPage> {
                           
                         });
                       },
-                      child: Icon(Icons.edit, color: Colors.blue),
-                      color: Colors.white,
+                      style: ElevatedButton.styleFrom(
                       elevation: 10,
+                      primary: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
+                      ),
+                      child: Icon(Icons.edit, color: Colors.blue),
+                
                     ),
                   ),
                   ButtonTheme(
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: RaisedButton(
+                    child: ElevatedButton(
                       onPressed: () {
                         classgroupService
                             .deleteClassgroup(clase.code)
@@ -155,11 +158,14 @@ class _ClassesPageState extends State<ClassesPage> {
                         });
                       },
                       child: Icon(Icons.delete, color: Colors.red),
-                      color: Colors.white,
+                      style: ElevatedButton.styleFrom(
+                      primary: Colors.white,
                       elevation: 10,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                    ),
+                    )
+                      ),
+                      
                   )
                 ],
               ),

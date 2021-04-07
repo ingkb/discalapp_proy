@@ -1,10 +1,10 @@
 class Student {
   Student({
-        this.userId,
-        this.name,
-        this.password,
-        this.age,
-        this.classgroup
+         this.userId,
+         this.name,
+         this.password,
+         this.age,
+         this.classgroup
     });
 
     String userId;

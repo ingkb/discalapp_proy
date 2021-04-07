@@ -7,7 +7,8 @@ import '../enviroment.dart';
 class AreaResultService{
 
   Future<RegisterAreaResultResponse> addAreaResult(AreaResult areaResult) async{
-    final http.Response response = await http.post(BaseUrl+'/areaResults', 
+    var url = Uri.parse(BaseUrl+'/areaResults');
+    final http.Response response = await http.post(url, 
       body: json.encode(areaResult.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -22,9 +23,8 @@ class AreaResultService{
   }
 
    Future<SearchAreaResultResponse> getAreaResult(String code) async{
-    final response = await http.get(BaseUrl+'/areaResults/'+code);
-
-
+     var url = Uri.parse(BaseUrl+'/areaResults/'+code);
+    final response = await http.get(url);
     if(response.statusCode == 200){
       return SearchAreaResultResponse.fromJson(jsonDecode(response.body));
     }else{
@@ -33,7 +33,8 @@ class AreaResultService{
   }
 
   Future<SearchAllAreaResultResponse> getAllAreaResult(String studentId) async{
-    final response = await http.get(BaseUrl+'/areaResults/student/'+studentId);
+    var url = Uri.parse(BaseUrl+'/areaResults/student/'+studentId);
+    final response = await http.get(url);
 
     if(response.statusCode == 200){
       return SearchAllAreaResultResponse.fromJson(jsonDecode(response.body));
@@ -43,7 +44,8 @@ class AreaResultService{
   }
 
   Future<RegisterAreaResultResponse> deleteAreaResult(String code) async{
-    final http.Response response = await http.delete(BaseUrl+'/areaResults/'+code, 
+    var url = Uri.parse(BaseUrl+'/areaResults/'+code);
+    final http.Response response = await http.delete(url, 
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       }
@@ -56,7 +58,8 @@ class AreaResultService{
   }
 
   Future<RegisterAreaResultResponse> updateAreaResult(String code, AreaResult areaResult) async{
-    final http.Response response = await http.patch(BaseUrl+'/areaResults/'+code, 
+    var url = Uri.parse(BaseUrl+'/areaResults/'+code);
+    final http.Response response = await http.patch(url, 
      body: json.encode(areaResult.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',

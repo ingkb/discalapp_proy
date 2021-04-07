@@ -177,9 +177,11 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
      Container(
        height: 50,
        margin: EdgeInsets.symmetric(horizontal: 50),
-       child: RaisedButton(
+       child: ElevatedButton(
+         style: ElevatedButton.styleFrom(
          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-         color: kAlumnColor,
+         primary: kAlumnColor,
+         ),
           onPressed: (){
             _registrarEstudiante();
           },

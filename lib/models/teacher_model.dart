@@ -1,9 +1,9 @@
 class Teacher {
    Teacher({
-        this.userId,
-        this.name,
-        this.password,
-        this.id,
+         this.userId,
+         this.name,
+         this.password,
+         this.id,
     });
     String id;
     String userId;

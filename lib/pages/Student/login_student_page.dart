@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginStudentPage extends StatefulWidget {
-  LoginStudentPage({Key key}) : super(key: key);
+  LoginStudentPage({ Key key}) : super(key: key);
 
   @override
   _LoginStudentPageState createState() => _LoginStudentPageState();
@@ -107,10 +107,12 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
     return Container(
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 50),
-      child: RaisedButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          primary:_isButtonDisabled ? Colors.grey: kAlumnColor,
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-          color: _isButtonDisabled ? Colors.grey: kAlumnColor,
+        ),
           onPressed: _isButtonDisabled ? null: loguear,
           child: Text('Entrar',
               style: TextStyle(fontSize: 25, color: Colors.white))),

@@ -66,17 +66,20 @@ class Sesion1State extends State<Sesion1> {
   Widget btnValidar() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
-      child: RaisedButton(
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
         elevation: 10,
         padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+        primary: kTeacherColor,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(12),
+        ),
+        ),
         child: Text(
           "Validar",
           style: TextStyle(fontSize: 20, color: Colors.white),
         ),
-        color: kTeacherColor,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
+        
         onPressed: () {
           setState(() {
             validarActividad();

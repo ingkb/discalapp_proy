@@ -123,9 +123,12 @@ class _AddClassgroupState extends State<AddClassgroup> {
      Container(
        height: 50,
        margin: EdgeInsets.symmetric(horizontal: 50),
-       child: RaisedButton(
+       child: ElevatedButton(
+         style: ElevatedButton.styleFrom(
          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-         color: kTeacherColor,
+         primary: kTeacherColor,
+
+         ),
           onPressed: (){
             _registrarClase();
           },

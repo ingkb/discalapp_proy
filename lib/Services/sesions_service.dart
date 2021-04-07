@@ -7,7 +7,8 @@ import '../enviroment.dart';
 class SesionService{
 
   Future<RegisterSesionResponse> addSesion(Sesion sesion) async{
-    final http.Response response = await http.post(BaseUrl+'/sesions', 
+    var url = Uri.parse(BaseUrl+'/sesions');
+    final http.Response response = await http.post(url, 
       body: json.encode(sesion.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -22,7 +23,8 @@ class SesionService{
   }
 
    Future<SearchSesionResponse> getSesion(String code) async{
-    final response = await http.get(BaseUrl+'/sesions/'+code);
+    var url = Uri.parse(BaseUrl+'/sesions/'+code);
+    final response = await http.get(url);
 
 
     if(response.statusCode == 200){
@@ -33,7 +35,8 @@ class SesionService{
   }
 
   Future<SearchAllSesionResponse> getAllSesion(String studentId) async{
-    final response = await http.get(BaseUrl+'/sesions/student/'+studentId);
+    var url = Uri.parse(BaseUrl+'/sesions/student/'+studentId);
+    final response = await http.get(url);
 
     if(response.statusCode == 200){
       return SearchAllSesionResponse.fromJson(jsonDecode(response.body));
@@ -43,7 +46,8 @@ class SesionService{
   }
 
   Future<RegisterSesionResponse> deleteSesion(String code) async{
-    final http.Response response = await http.delete(BaseUrl+'/sesions/'+code, 
+    var url = Uri.parse(BaseUrl+'/sesions/'+code);
+    final http.Response response = await http.delete(url, 
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       }
@@ -56,7 +60,8 @@ class SesionService{
   }
 
   Future<RegisterSesionResponse> updateSesion(String code, Sesion sesion) async{
-    final http.Response response = await http.patch(BaseUrl+'/sesions/'+code, 
+    var url = Uri.parse(BaseUrl+'/sesions/'+code);
+    final http.Response response = await http.patch(url, 
      body: json.encode(sesion.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',

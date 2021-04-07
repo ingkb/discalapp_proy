@@ -136,9 +136,11 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
      Container(
        height: 50,
        margin: EdgeInsets.symmetric(horizontal: 50),
-       child: RaisedButton(
-         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-         color: kTeacherColor,
+       child: ElevatedButton(
+         style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+            primary: kTeacherColor
+         ),
           onPressed: (){
             _registrarDocente();
           },

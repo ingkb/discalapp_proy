@@ -8,7 +8,8 @@ import '../enviroment.dart';
 class RegisterService{
 
   Future<DefaultResponse> registerStudent(Student student) async{
-    final http.Response response = await http.post(BaseUrl+'/students', 
+    var url = Uri.parse(BaseUrl+'/students');
+    final http.Response response = await http.post(url, 
       body: json.encode(student.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -22,7 +23,8 @@ class RegisterService{
   }
 
   Future<DefaultResponse> registerTeacher(Teacher teacher) async{
-    final http.Response response = await http.post(BaseUrl+'/teachers', 
+    var url = Uri.parse(BaseUrl+'/teachers');
+    final http.Response response = await http.post(url, 
       body: json.encode(teacher.toJson()),
        headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',

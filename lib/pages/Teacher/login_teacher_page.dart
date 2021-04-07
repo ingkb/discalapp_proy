@@ -121,9 +121,9 @@ Widget submitLogin(){
     return  Container(
        height: 50,
        margin: EdgeInsets.symmetric(horizontal: 50),
-       child: RaisedButton(
-         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        color: _isButtonDisabled ? Colors.grey: kTeacherColor,
+       child: ElevatedButton(
+         style: ElevatedButton.styleFrom(primary:_isButtonDisabled ? Colors.grey: kTeacherColor,
+         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)) ),
           onPressed: _isButtonDisabled ? null: loguear,
           child: Text('Entrar', style: TextStyle(
             fontSize: 25,

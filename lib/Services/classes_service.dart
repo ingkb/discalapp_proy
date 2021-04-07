@@ -7,7 +7,8 @@ import '../enviroment.dart';
 class ClassgroupService{
 
   Future<RegisterClassgroupResponse> addClassgroup(Classgroup classgroup) async{
-    final http.Response response = await http.post(BaseUrl+'/classgroups', 
+    var url = Uri.parse(BaseUrl+'/classgroups');
+    final http.Response response = await http.post(url, 
       body: json.encode(classgroup.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
@@ -22,7 +23,8 @@ class ClassgroupService{
   }
 
    Future<SearchClassgroupResponse> getClassgroup(String code) async{
-    final response = await http.get(BaseUrl+'/classgroups/'+code);
+     var url = Uri.parse(BaseUrl+'/classgroups/'+code);
+    final response = await http.get(url);
 
 
     if(response.statusCode == 200){
@@ -33,7 +35,8 @@ class ClassgroupService{
   }
 
   Future<SearchAllClassgroupResponse> getAllClassgroup(String teacherId) async{
-    final response = await http.get(BaseUrl+'/classgroups/teacher/'+teacherId);
+    var url = Uri.parse(BaseUrl+'/classgroups/teacher/'+teacherId);
+    final response = await http.get(url);
 
     if(response.statusCode == 200){
       return SearchAllClassgroupResponse.fromJson(jsonDecode(response.body));
@@ -43,7 +46,8 @@ class ClassgroupService{
   }
 
   Future<RegisterClassgroupResponse> deleteClassgroup(String code) async{
-    final http.Response response = await http.delete(BaseUrl+'/classgroups/'+code, 
+    var url = Uri.parse(BaseUrl+'/classgroups/'+code);
+    final http.Response response = await http.delete(url, 
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       }
@@ -56,7 +60,8 @@ class ClassgroupService{
   }
 
   Future<RegisterClassgroupResponse> updateClassgroup(String code, Classgroup classgroup) async{
-    final http.Response response = await http.patch(BaseUrl+'/classgroups/'+code, 
+    var url = Uri.parse(BaseUrl+'/classgroups/'+code);
+    final http.Response response = await http.patch(url, 
      body: json.encode(classgroup.toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
