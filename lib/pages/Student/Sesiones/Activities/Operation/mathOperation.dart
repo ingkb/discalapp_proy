@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
+import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +15,7 @@ class MathOperation extends StatefulWidget {
   MathOperationState createState() => MathOperationState();
 }
 
-class MathOperationState extends State<MathOperation> {
+class MathOperationState extends BaseActivity<MathOperation> {
   int n1, n2, resultado, respuestaCorrecta;
   String operacion;
   String area;
@@ -181,50 +183,13 @@ class MathOperationState extends State<MathOperation> {
           area: area,
           resultado: true,
           tiempo: 1));
-      showAlertDialog(context, "Respuesta correcta", "¡Genial!");
+      showCorrectAnsDialog(context,widget.pasarActividad);
     } else {
       usuarioResultados.addResults(new ActivityResult(
           area: area,
           resultado: false,
           tiempo: 1));
-      showAlertDialog(context, "Respuesta incorrecta", "Ups...");
+      showWrongAnsDialog(context, widget.pasarActividad);
     }
-  }
-
-  showAlertDialog(BuildContext context, String mensaje, String titulo) {
-    // set up the button
-    Widget okButton = TextButton(
-      child: Text(
-        "Siguiente",
-      ),
-      onPressed: () {
-        Navigator.of(context).pop();
-        widget.pasarActividad(0);
-      },
-    );
-
-    // set up the AlertDialog
-    AlertDialog alert = AlertDialog(
-      title: Text(
-        titulo,
-        style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
-      ),
-      content: Text(
-        mensaje,
-        style: TextStyle(fontSize: 18),
-      ),
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-      actions: [
-        okButton,
-      ],
-    );
-
-    // show the dialog
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
 }

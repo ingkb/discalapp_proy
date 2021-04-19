@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'compare1_list.dart';
@@ -131,41 +132,11 @@ class CompareActivity1State extends State<CompareActivity1> {
     if(selectedOption == int.parse(compareActivities[widget.numero][3])){
       
       usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero][0],resultado: true, tiempo: 1));
-      showAlertDialog(context,"Respuesta correcta","¡Genial!");
+       showCorrectAnsDialog(context, widget.pasarActividad);
     }else{
       usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero][0],resultado: false, tiempo: 1));
-       showAlertDialog(context,"Respuesta incorrecta","Ups...");
+       showWrongAnsDialog(context,  widget.pasarActividad);
     }
     
-  }
-
-  showAlertDialog(BuildContext context, String mensaje, String titulo) {
-
-  // set up the button
-  Widget okButton = TextButton(
-    child: Text("Siguiente",),
-    onPressed: () { 
-        Navigator.of(context).pop();
-        widget.pasarActividad(0);
-    },
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(titulo,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
-    content: Text(mensaje, style: TextStyle(fontSize: 18),),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
   }
 }

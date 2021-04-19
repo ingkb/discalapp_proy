@@ -1,4 +1,5 @@
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/CountImages/CountImages.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
 import 'package:flutter/material.dart';
 
 import 'Activities/AddingApples/addingApples.dart';
@@ -7,53 +8,61 @@ import 'Activities/Operation/mathOperation.dart';
 
 class Actividades {
 
-  ValueChanged<int> pasarActividad;
-  Map<int, GlobalKey<MathOperationState>> mathkeys;
-  Map<int, GlobalKey<AddingApplesActivityState>> applekeys;
-  Map<int, GlobalKey<CountImagesState>> countImgkeys;
+  ValueChanged<int> pasarActividadfn;
+  Map<int, GlobalKey<BaseActivity>> keys;
+
   int mathOper;
   int appleActi;
   int countImg;
+  //int nuevaActividad;
+  
+
+  List<Widget> actividades;
+  int numActual;
 
   //ACTIVIDADES EN ORDEN
+  //Agregar aqui el numero de actividades nueva
   Actividades(int math, int apple,int countim, ValueChanged<int> pasarActividad){ 
-    mathkeys = new Map<int,GlobalKey<MathOperationState>>();
-    applekeys = new Map<int, GlobalKey<AddingApplesActivityState>>();
-    countImgkeys = new Map<int, GlobalKey<CountImagesState>>();
-    this.pasarActividad = pasarActividad;
+    keys = new Map<int,GlobalKey<BaseActivity>>();
+    this.pasarActividadfn = pasarActividad;
     this.mathOper = math;
     this.appleActi = apple;
     this.countImg = countim;
+    this.numActual = 0;
+    this._crearActividades();
+  }
+
+  _crearActividades(){
+    actividades = [];
+
+    for (int i = 1; i <= mathOper; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<MathOperationState>();
+      actividades.add(MathOperation( key: keys[numActual], pasarActividad: pasarActividadfn));
+    }
+    for (int i = 1; i <= appleActi; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<AddingApplesActivityState>();
+      actividades.add(AddingApplesActivity( key: keys[numActual], pasarActividad: pasarActividadfn));
+    }
+    for (int i = 1; i <= countImg; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<CountImagesState>();
+      actividades.add(CountImages( key: keys[numActual], pasarActividad: pasarActividadfn));
+    }
+    //Copiar un for y reemplazar los campos
+    // for (int i = 1; i <= nuevaActividadInt; i++) {
+    //   this.numActual++;
+    //   keys[numActual] = GlobalKey<NuevaActividadState>();
+    //   actividades.add(NuevaActividad( key: keys[numActual], pasarActividad: pasarActividadfn));
+    // }
   }
 
   List<Widget> getActivities() {
-
-    List<Widget> actividades = [];
-    for (int i = 1; i <= mathOper; i++) {
-      mathkeys[i] = GlobalKey<MathOperationState>();
-      actividades.add(MathOperation( key: mathkeys[i], pasarActividad: pasarActividad));
-    }
-    for (int i = 1; i <= appleActi; i++) {
-      applekeys[i] = GlobalKey<AddingApplesActivityState>();
-      actividades.add(AddingApplesActivity( key: applekeys[i], pasarActividad: pasarActividad));
-    }
-    for (int i = 1; i <= countImg; i++) {
-      countImgkeys[i] = GlobalKey<CountImagesState>();
-      actividades.add(CountImages( key: countImgkeys[i], pasarActividad: pasarActividad));
-    }
     return actividades;
   }
   
   validarResultado(int numero){
-
-    if(numero>0 && numero<=mathOper){
-      return mathkeys[numero].currentState.validarResultado();
-    }else if(numero<=appleActi+mathOper){
-      var numer = numero-mathOper;
-      return applekeys[numer].currentState.validarResultado();
-    }else if(numero<=countImg+appleActi+mathOper){
-      var numer = numero-mathOper-appleActi;
-      return countImgkeys[numer].currentState.validarResultado();
-    }
+    return keys[numero].currentState.validarResultado();
   }
 }

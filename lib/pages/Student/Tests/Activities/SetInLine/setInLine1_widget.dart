@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -266,10 +267,10 @@ class SetInLine1State extends State<SetInLine1> {
     if(check1 && check2 && check3){
       
       usuarioResultados.addResults(new ActivityResult(area: "UbicarLinea",resultado: true, tiempo: 1));
-      showAlertDialog(context,"Los ubicaste correctamente","¡Genial!");
+      showCorrectAnsDialog(context, widget.pasarActividad);
     }else{
       usuarioResultados.addResults(new ActivityResult(area: "UbicarLinea",resultado: false, tiempo: 1));
-      showAlertDialog(context,"No los ubicaste correctamente","Ups...");
+      showWrongAnsDialog(context,  widget.pasarActividad);
     }
     //
   }
