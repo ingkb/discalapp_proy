@@ -22,7 +22,7 @@ class Sesion1State extends State<Sesion1> {
   void initState() {
     actividadActual = 1;
     numActividades = 6;
-    actividades = new Actividades(2,2,2,pasarActividad);
+    actividades = new Actividades(0,0,0,1,pasarActividad);
     listaActividades = actividades.getActivities();
 
     super.initState();

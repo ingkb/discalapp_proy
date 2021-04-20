@@ -3,6 +3,7 @@ import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
 import 'package:flutter/material.dart';
 
 import 'Activities/AddingApples/addingApples.dart';
+import 'Activities/NumbersWritting/numberWrite.dart';
 import 'Activities/Operation/mathOperation.dart';
 
 
@@ -14,6 +15,7 @@ class Actividades {
   int mathOper;
   int appleActi;
   int countImg;
+  int numWrite;
   //int nuevaActividad;
   
 
@@ -22,12 +24,13 @@ class Actividades {
 
   //ACTIVIDADES EN ORDEN
   //Agregar aqui el numero de actividades nueva
-  Actividades(int math, int apple,int countim, ValueChanged<int> pasarActividad){ 
+  Actividades(int math, int apple,int countim, int numWrite, ValueChanged<int> pasarActividad){ 
     keys = new Map<int,GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.mathOper = math;
     this.appleActi = apple;
     this.countImg = countim;
+    this.numWrite = numWrite;
     this.numActual = 0;
     this._crearActividades();
   }
@@ -49,6 +52,11 @@ class Actividades {
       this.numActual++;
       keys[numActual] = GlobalKey<CountImagesState>();
       actividades.add(CountImages( key: keys[numActual], pasarActividad: pasarActividadfn));
+    }
+    for (int i = 1; i <= numWrite; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<NumberWriteState>();
+      actividades.add(NumberWrite( key: keys[numActual], pasarActividad: pasarActividadfn));
     }
     //Copiar un for y reemplazar los campos
     // for (int i = 1; i <= nuevaActividadInt; i++) {
