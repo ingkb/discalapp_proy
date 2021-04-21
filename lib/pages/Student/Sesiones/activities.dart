@@ -22,8 +22,9 @@ class Actividades {
 
   //ACTIVIDADES EN ORDEN
   //Agregar aqui el numero de actividades nueva
-  Actividades(int asociativeCount, int math, int apple,int countim, int numWrite, ValueChanged<int> pasarActividad){ 
-    keys = new Map<int,GlobalKey<BaseActivity>>();
+  Actividades(int asociativeCount, int math, int apple, int countim,
+      int numWrite, ValueChanged<int> pasarActividad) {
+    keys = new Map<int, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.mathOper = math;
     this.appleActi = apple;
@@ -59,7 +60,8 @@ class Actividades {
     for (int i = 1; i <= numWrite; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<NumberWriteState>();
-      actividades.add(NumberWrite( key: keys[numActual], pasarActividad: pasarActividadfn));
+      actividades.add(
+          NumberWrite(key: keys[numActual], pasarActividad: pasarActividadfn));
     }
 
     for (int i = 1; i <= asociative; i++) {
