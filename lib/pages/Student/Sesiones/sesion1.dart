@@ -20,8 +20,8 @@ class Sesion1State extends State<Sesion1> {
   @override
   void initState() {
     actividadActual = 1;
-    numActividades = 6;
-    actividades = new Actividades(1, 0, 0, 0, 0, pasarActividad);
+    numActividades = 2;
+    actividades = new Actividades(1, 0, 0, 0, 1, pasarActividad);
     listaActividades = actividades.getActivities();
 
     super.initState();

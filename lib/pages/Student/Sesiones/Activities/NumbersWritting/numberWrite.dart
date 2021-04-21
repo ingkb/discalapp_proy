@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/NumbersWritting/textBox.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
@@ -5,7 +7,10 @@ import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
+
+import 'numerosARepresentar.dart';
 
 class NumberWrite extends StatefulWidget {
   NumberWrite({Key key,  this.pasarActividad}) : super(key: key);
@@ -20,15 +25,14 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   double borderWidth1;
   double borderWidth2;
   double borderWidth3;
+  int numeroActivi;
   int selectedOption;
   int respuesta;
 
   @override
   void initState() {
-    selectedOption = 0;
-    borderWidth1 = 1;
-    borderWidth2 = 2;
-    borderWidth3 = 3;
+    
+    inicializar();
     super.initState();
   }
 
@@ -36,10 +40,33 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   Widget build(BuildContext context) {
     return marcoActividad("Selecciona la forma correcta de escribir el siguiente número",
       [
-        textBox(1,'Ochocientos nueve', borderWidth1, seleccionarTextbox),
-        textBox(2,'Novecientos ocho',borderWidth2, seleccionarTextbox),
-        textBox(3,'Novecientos ochenta',borderWidth3, seleccionarTextbox)
+        textBoxNumero(),
+        textBox(1,numerosARepresentar[numeroActivi][1], borderWidth1, seleccionarTextbox),
+        textBox(2,numerosARepresentar[numeroActivi][2],borderWidth2, seleccionarTextbox),
+        textBox(3,numerosARepresentar[numeroActivi][3],borderWidth3, seleccionarTextbox)
       ]
+    );
+  }
+
+
+  inicializar(){
+
+    this.selectedOption = 0;
+    this.borderWidth1 = 1;
+    this.borderWidth2 = 1;
+    this.borderWidth3 = 1;
+    
+    var rng = new Random();
+    this.numeroActivi = rng.nextInt(3);
+    this.respuesta = int.parse(numerosARepresentar[numeroActivi][4]);
+  
+  }
+
+  textBoxNumero(){
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal:30,vertical:10),
+      child: Text(numerosARepresentar[numeroActivi][0],style: GoogleFonts.getFont('Bubblegum Sans',
+              fontSize: 40, fontWeight: FontWeight.w700, color:Colors.deepOrange )),
     );
   }
 
@@ -49,13 +76,13 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
     borderWidth3 = 1;
     switch (n) {
       case 1:
-        borderWidth1 = 5;
+        borderWidth1 = 7;
         break;
        case 2:
-        borderWidth2 = 5;
+        borderWidth2 = 7;
         break;
        case 3:
-        borderWidth3 = 5;
+        borderWidth3 = 7;
         break;
       default:
     }

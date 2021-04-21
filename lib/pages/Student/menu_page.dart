@@ -124,7 +124,7 @@ class _MenuPageState extends State<MenuPage> {
         DrawerHeader(
           child: CircleAvatar(
             child: Image(
-              image: AssetImage('assets/images/iconoProfesor.png'),
+              image: AssetImage('assets/images/avatar1.png'),
             ),
           ),
           decoration: BoxDecoration(

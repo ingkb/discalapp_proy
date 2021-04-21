@@ -68,7 +68,7 @@ class Actividades {
       this.numActual++;
       keys[numActual] = GlobalKey<AsociativePropietState>();
       actividades.add(
-          CountImages(key: keys[numActual], pasarActividad: pasarActividadfn));
+          AsociativeProp(key: keys[numActual], pasarActividad: pasarActividadfn));
     }
 
     //Copiar un for y reemplazar los campos
