@@ -33,112 +33,78 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("hola", [
-      operacionText(),
-      respuesta1Input(),
-      respuesta2Input(),
-      respuesta3Input()
+    return marcoActividad("Propiedad asociativa", [
+      Column(children: [operacionText(), respuesta1Input(), respuesta3Input()])
     ]);
   }
 
   Widget operacionText() {
-    return Column(
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        Column(
           children: [
             Container(
                 margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Text(
-                  "hola",
+                  "$n1  +  $n2  +  $n3",
                   style: TextStyle(
                       fontSize: 35,
-                      color: Colors.red,
+                      color: Colors.black,
                       fontWeight: FontWeight.w500),
                 )),
-            Column(
-              children: [
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Text(
-                      "$n1",
-                      style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    )),
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Text(
-                      "$n2",
-                      style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    )),
-                Container(
-                    margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-                    child: Text(
-                      "$n3",
-                      style: TextStyle(
-                          fontSize: 40,
-                          color: Colors.black,
-                          fontWeight: FontWeight.w500),
-                    )),
-              ],
-            ),
           ],
         ),
-        Container(
-            width: 200,
-            child: Divider(
-              thickness: 3,
-              color: Colors.orange,
-            ))
       ],
     );
   }
 
   Widget respuesta1Input() {
-    return Container(
-        width: 100,
-        margin: EdgeInsets.only(right: 15, top: 10),
-        child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.end,
-          style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
-          decoration: InputDecoration(
-              //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
-              hintText: 'Respuesta',
-              hintStyle: TextStyle(fontSize: 20)),
-          onChanged: (valor) {
-            setState(() {
-              resultado1 = int.tryParse(valor);
-            });
-          },
-        ));
-  }
-
-  Widget respuesta2Input() {
-    return Container(
-        width: 100,
-        margin: EdgeInsets.only(right: 15, top: 10),
-        child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.end,
-          style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
-          decoration: InputDecoration(
-              //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
-              hintText: 'Respuesta',
-              hintStyle: TextStyle(fontSize: 20)),
-          onChanged: (valor) {
-            setState(() {
-              resultado2 = int.tryParse(valor);
-            });
-          },
-        ));
+    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Container(
+          width: 100,
+          margin: EdgeInsets.only(right: 15, top: 10),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.end,
+            style: TextStyle(
+                color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+            decoration: InputDecoration(
+                //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
+                hintText: '?',
+                hintStyle: TextStyle(fontSize: 20)),
+            onChanged: (valor) {
+              setState(() {
+                resultado1 = int.tryParse(valor);
+              });
+            },
+          )),
+      Container(
+          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+          child: Text(
+            "+",
+            style: TextStyle(
+                fontSize: 35, color: Colors.black, fontWeight: FontWeight.w500),
+          )),
+      Container(
+          width: 100,
+          margin: EdgeInsets.only(right: 15, top: 10),
+          child: TextField(
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+                color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+            decoration: InputDecoration(
+                //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
+                hintText: '?',
+                hintStyle: TextStyle(fontSize: 20)),
+            onChanged: (valor) {
+              setState(() {
+                resultado2 = int.tryParse(valor);
+              });
+            },
+          ))
+    ]);
   }
 
   Widget respuesta3Input() {
@@ -164,9 +130,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   _generarNumeros() {
     var rng = new Random();
-    n1 = rng.nextInt(100);
-    n2 = rng.nextInt(100);
-    n3 = rng.nextInt(100);
+    n1 = rng.nextInt(20);
+    n2 = rng.nextInt(20);
+    n3 = rng.nextInt(20);
     respuestacorrecta1 = n1 + n2;
     respuestacorrecta2 = n3;
     respuestacorrecta3 = respuestacorrecta1 + respuestacorrecta2;
