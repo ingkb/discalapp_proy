@@ -1,0 +1,132 @@
+import 'package:discalapp_proy/Services/activityResult_service.dart';
+import 'package:discalapp_proy/Services/sesions_service.dart';
+import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/models/sesion_model.dart';
+import 'package:discalapp_proy/shared/progress_barr_widget.dart';
+import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../../constants.dart';
+import 'activities_Test.dart';
+
+class SesionTestPage extends StatefulWidget {
+  SesionTestPage({Key key}) : super(key: key);
+
+  @override
+  Sesion1State createState() => Sesion1State();
+}
+
+class Sesion1State extends State<SesionTestPage> {
+  int numActividades;
+  int actividadActual;
+  List<Widget> listaActividades;
+  ActividadesTest actividades;
+
+  @override
+  void initState() {
+    actividadActual = 1;
+    numActividades = 2;
+    actividades = new ActividadesTest(10, 1, 12, pasarActividad);
+    listaActividades = actividades.getActivities();
+
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    double porcent = 0;
+    int actividadMostrar;
+    if (actividadActual != null) {
+      porcent = actividadActual / numActividades;
+    }
+    if (actividadActual - 1 < listaActividades.length) {
+      actividadMostrar = actividadActual - 1;
+    } else {
+      actividadMostrar = listaActividades.length - 1;
+    }
+    return Scaffold(
+        appBar: AppBar(
+          actions: [
+            ProgressBar(porcentaje: porcent),
+          ],
+        ),
+        backgroundColor: kAlumnColor,
+        body: ListView(
+          children: [
+            SizedBox(
+              height: 10,
+            ),
+            AnimatedSwitcher(
+              duration: Duration(milliseconds: 1000),
+              transitionBuilder: (child, animation) {
+                return ScaleTransition(scale: animation, child: child);
+              },
+              child: listaActividades[actividadMostrar],
+            )
+          ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButton: btnValidar());
+  }
+
+  Widget btnValidar() {
+    return Container(
+      margin: EdgeInsets.only(bottom: 30),
+      child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          elevation: 10,
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+          primary: kTeacherColor,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+        ),
+        child: Text(
+          "Validar",
+          style: TextStyle(fontSize: 20, color: Colors.white),
+        ),
+        onPressed: () {
+          setState(() {
+            validarActividad();
+          });
+        },
+      ),
+    );
+  }
+
+  validarActividad() {
+    actividades.validarResultado(actividadActual);
+  }
+
+  validarNumActividad() {
+    if (actividadActual > numActividades) {
+      acabarSesionActividad();
+      Navigator.pushReplacementNamed(this.context, 'menuStudent');
+    }
+  }
+
+  acabarSesionActividad(){
+    final prefs = new PreferenciasUsuario();
+    ActivityResultService activityService = new ActivityResultService();
+    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context, listen: false);
+    var sesionService = new SesionService();
+      sesionService.addSesion(
+        new Sesion(student: prefs.userId, tipo: 0, fecha: DateTime.now(), estado: true)
+        ).then((value) {
+          if(value.state==0){
+            List<ActivityResult> results = usuarioResultados.resultados;
+            results.forEach((element) {element.sesionId = value.sesionId;});
+            activityService.addGroupActivityResult(RegisterAcitivityGroupRequest(activities:results)).then((value) {print(value.message);});
+          }
+    });
+  }
+
+  pasarActividad(int n) {
+    setState(() {
+      actividadActual++;
+      validarNumActividad();
+    });
+  }
+}

@@ -1,6 +1,5 @@
 
 import 'package:discalapp_proy/models/activityResult_model.dart';
-import 'package:discalapp_proy/models/areaResult_model.dart';
 import 'package:discalapp_proy/models/student_model.dart';
 import 'package:discalapp_proy/models/teacher_model.dart';
 import 'package:flutter/material.dart';
@@ -11,14 +10,17 @@ class ActiveUser with ChangeNotifier{
   Teacher _teacher;
   Student _student;
   
+  String _sesionId;
   List<ActivityResult> _resultados;
 
-
+  get sesionId{
+    return _sesionId;
+  }
   get teacher {
     return _teacher;
   }
 
-  get student {
+  Student get student {
     return _student;
   }
 
@@ -33,6 +35,11 @@ class ActiveUser with ChangeNotifier{
 
  set student(Student stud){
     this._student = stud;
+    notifyListeners();
+  }
+
+  set sesionId(String id){
+    this._sesionId = id;
     notifyListeners();
   }
 
@@ -71,7 +78,4 @@ class ActiveUser with ChangeNotifier{
     return totalArea;
   }
 
-  AreaResult getArea(String area, String sesionId){
-    return new AreaResult(sesionId: sesionId,area: area ,aciertos: getAciertosArea(area), preguntas:getTotalArea(area),tiempo:0);
-  }
 }

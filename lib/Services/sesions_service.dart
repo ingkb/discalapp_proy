@@ -59,22 +59,36 @@ class SesionService{
     }
   }
 
-  Future<RegisterSesionResponse> updateSesion(String code, Sesion sesion) async{
-    var url = Uri.parse(BaseUrl+'/sesions/'+code);
+  Future<RegisterSesionResponse> updateSesion(String sesionid, bool estado) async{
+    var url = Uri.parse(BaseUrl+'/sesions');
     final http.Response response = await http.patch(url, 
-     body: json.encode(sesion.toJson()),
+     body: json.encode(new UpdateSesionRequest(sesionId: sesionid,estado:estado).toJson()),
       headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
+    print(response.body);
     if(response.statusCode == 200){
       return RegisterSesionResponse.fromJson(jsonDecode(response.body));
     }else{
-      throw Exception('Fallo al eliminar sesion');
+      throw Exception('Fallo al modificar sesion');
     }
   }
 }
 
+class UpdateSesionRequest{
+  UpdateSesionRequest({
+    this.estado,
+    this.sesionId
+  });
+  bool estado;
+  String sesionId;
+
+  Map toJson() => {
+    "sesionId": sesionId == null ? null : sesionId,
+    "estado": estado == null ? null : estado,
+  };
+}
 class SearchAllSesionResponse {
     SearchAllSesionResponse({
         this.state,

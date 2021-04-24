@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +14,7 @@ class SetInLine1 extends StatefulWidget {
   SetInLine1State createState() => SetInLine1State();
 }
 
-class SetInLine1State extends State<SetInLine1> {
+class SetInLine1State extends BaseActivity<SetInLine1> {
   Offset pos = Offset(30, 10);
   Offset pos2 = Offset(30, 110);
   Offset pos3 = Offset(30, 210);

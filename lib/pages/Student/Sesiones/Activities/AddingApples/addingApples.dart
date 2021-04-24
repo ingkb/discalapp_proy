@@ -1,7 +1,8 @@
 import 'dart:math';
 
+import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
-import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
@@ -10,9 +11,9 @@ import 'package:provider/provider.dart';
 import 'casilla.dart';
 
 class AddingApplesActivity extends StatefulWidget {
-  AddingApplesActivity({Key key, this.pasarActividad}) : super(key: key);
+  AddingApplesActivity({Key key, this.pasarActividad,this.indice}) : super(key: key);
   final ValueChanged<int> pasarActividad;
-
+  final int indice;
   @override
   AddingApplesActivityState createState() => AddingApplesActivityState();
 }
@@ -22,7 +23,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
   int n1;
   int n2;
   int resultado;
-
+  ActivityResultService activityResultService;
   @override
   void initState() {
     super.initState();
@@ -148,14 +149,19 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
 
      ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
+         activityResultService= new ActivityResultService();
     if (n2 == resultado-n1) {
-      usuarioResultados.addResults(new ActivityResult(
+      activityResultService.addActivityResult(new ActivityResult(
+         indice: widget.indice,
+          sesionId: usuarioResultados.sesionId,
           area: "Suma",
           resultado: true,
           tiempo: 1));
        showCorrectAnsDialog(context, widget.pasarActividad);
     } else {
-      usuarioResultados.addResults(new ActivityResult(
+      activityResultService.addActivityResult(new ActivityResult(
+          indice: widget.indice,
+          sesionId: usuarioResultados.sesionId,
           area: "Suma",
           resultado: false,
           tiempo: 1));

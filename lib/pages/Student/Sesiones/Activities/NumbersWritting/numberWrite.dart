@@ -1,8 +1,9 @@
 import 'dart:math';
 
+import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/NumbersWritting/textBox.dart';
-import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
@@ -13,9 +14,9 @@ import 'package:provider/provider.dart';
 import 'numerosARepresentar.dart';
 
 class NumberWrite extends StatefulWidget {
-  NumberWrite({Key key,  this.pasarActividad}) : super(key: key);
+  NumberWrite({Key key,  this.pasarActividad, this.indice}) : super(key: key);
   final ValueChanged<int> pasarActividad;
-
+  final int indice;
   @override
   NumberWriteState createState() => NumberWriteState();
 }
@@ -28,7 +29,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   int numeroActivi;
   int selectedOption;
   int respuesta;
-
+  ActivityResultService activityResultService;
   @override
   void initState() {
     
@@ -95,14 +96,19 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   validarResultado() {
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
+        activityResultService= new ActivityResultService();
     if (selectedOption == respuesta) {
-      usuarioResultados.addResults(new ActivityResult(
+      activityResultService.addActivityResult(new ActivityResult(
+          indice: widget.indice,
+          sesionId: usuarioResultados.sesionId,
           area: "Escritura",
           resultado: true,
           tiempo: 1));
       showCorrectAnsDialog(context, widget.pasarActividad);
     } else {
-      usuarioResultados.addResults(new ActivityResult(
+       activityResultService.addActivityResult(new ActivityResult(
+         indice: widget.indice,
+          sesionId: usuarioResultados.sesionId,
           area: "Escritura",
           resultado: false,
           tiempo: 1));

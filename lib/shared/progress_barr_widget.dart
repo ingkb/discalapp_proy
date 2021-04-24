@@ -13,7 +13,10 @@ class _ProgressBarState extends State<ProgressBar> {
   @override
   Widget build(BuildContext context) {
      double maxWidth =260;
-  double progressLenght = maxWidth * widget.porcentaje;
+    double progressLenght = (maxWidth * widget.porcentaje)-20;
+    if(progressLenght<0){
+      progressLenght=0;
+    }
    return Row(
      mainAxisAlignment: MainAxisAlignment.start,
      children: [

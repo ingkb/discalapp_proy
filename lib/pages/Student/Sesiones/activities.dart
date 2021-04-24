@@ -1,5 +1,5 @@
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/CountImages/CountImages.dart';
-import 'package:discalapp_proy/pages/Student/Sesiones/baseActivity.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:flutter/material.dart';
 import 'Activities/Proprieties/asociativeProprieties.dart';
 import 'Activities/AddingApples/addingApples.dart';
@@ -22,8 +22,8 @@ class Actividades {
 
   //ACTIVIDADES EN ORDEN
   //Agregar aqui el numero de actividades nueva
-  Actividades(int asociativeCount, int math, int apple, int countim,
-      int numWrite, ValueChanged<int> pasarActividad) {
+  Actividades(int math, int apple, int countim,
+      int numWrite, int asociativeCount, ValueChanged<int> pasarActividad) {
     keys = new Map<int, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.mathOper = math;
@@ -43,25 +43,25 @@ class Actividades {
       this.numActual++;
       keys[numActual] = GlobalKey<MathOperationState>();
       actividades.add(MathOperation(
-          key: keys[numActual], pasarActividad: pasarActividadfn));
+          key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
     for (int i = 1; i <= appleActi; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<AddingApplesActivityState>();
       actividades.add(AddingApplesActivity(
-          key: keys[numActual], pasarActividad: pasarActividadfn));
+          key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
     for (int i = 1; i <= countImg; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<CountImagesState>();
       actividades.add(
-          CountImages(key: keys[numActual], pasarActividad: pasarActividadfn));
+          CountImages(key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
     for (int i = 1; i <= numWrite; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<NumberWriteState>();
       actividades.add(
-          NumberWrite(key: keys[numActual], pasarActividad: pasarActividadfn));
+          NumberWrite(key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
 
     for (int i = 1; i <= asociative; i++) {
@@ -79,8 +79,16 @@ class Actividades {
     // }
   }
 
-  List<Widget> getActivities() {
-    return actividades;
+  List<Widget> getActivities(int n) {
+    
+    if(n==0){
+      return actividades;
+    }
+    List<Widget> newAcitivites = [];
+    for(int i=n;i<actividades.length;i++){
+      newAcitivites.add(actividades[i]);
+    }
+    return newAcitivites;
   }
 
   validarResultado(int numero) {

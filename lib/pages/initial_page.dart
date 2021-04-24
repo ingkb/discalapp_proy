@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:discalapp_proy/Services/login_service.dart';
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/models/student_model.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
@@ -44,14 +45,18 @@ class _InitialPageState extends State<InitialPage> {
   bool _isButtonDisabled = false;
 
   SesionService sesionService;
+  ActiveUser usuarioTemporal;
   @override
   void initState() {
-    super.initState();
     sesionService = new SesionService();
+    super.initState();
     buscarUsuario();
   }
   @override
   Widget build(BuildContext context) {
+    
+    
+
     Size size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -320,48 +325,46 @@ class _InitialPageState extends State<InitialPage> {
               )),
         ));
   }
+  Student estudiante;
   buscarUsuario(){
+    
     final prefs = new PreferenciasUsuario();
-    final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
-
     if(prefs.userId!=''){
       LoginService loginService = new LoginService();
       loginService.loginStudent(prefs.userId, prefs.userPasw).then((value){
-        usuarioTemporal.student = value.student;
+        estudiante = value.student;
         buscando=false;
         if(intentandoLoguear){
           loguearEstudiante();
         }
       });
     }else{
-      usuarioTemporal.student = null;
+      estudiante = null;
       buscando = false;
-      if(intentandoLoguear){
-        loguearEstudiante();
-      }
     }
   }
   loguearEstudiante(){
-    final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
+    usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
     usuarioTemporal.resultados = [];
+    usuarioTemporal.student = estudiante;
     intentandoLoguear = true;
 
-    if(usuarioTemporal.student!=null && !buscando){
-      final student = usuarioTemporal.student;
+    if(estudiante!=null && !buscando){
 
-      if (student.classgroup != null) {
+      if (estudiante.classgroup != null) {
           //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
-          sesionService.getAllSesion(student.userId).then((respuesta){
+          sesionService.getAllSesion(estudiante.userId).then((respuesta){
             if(respuesta.state == 0 && respuesta.sesions.isEmpty){
-               Navigator.pushReplacementNamed(context, 'initialTest');
+              Navigator.pushReplacementNamed(context, 'initialTest');
             }else{
-                Navigator.pushNamed(context, 'menuStudent');
+              Navigator.pushNamed(context, 'menuStudent');
             }
           });
         } else {
           Navigator.pushReplacementNamed(context, 'selectclass');
         } 
     }else{
+      intentandoLoguear=false;
       Navigator.pushNamed(context, 'loginStudent');
     }
   }

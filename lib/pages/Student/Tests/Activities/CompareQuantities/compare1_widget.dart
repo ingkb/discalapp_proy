@@ -2,6 +2,7 @@ import 'dart:ui';
 
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class CompareActivity1 extends StatefulWidget {
   CompareActivity1State createState() => CompareActivity1State();
 }
 
-class CompareActivity1State extends State<CompareActivity1> {
+class CompareActivity1State extends BaseActivity<CompareActivity1> {
   Color colorOPT1 = kAlumnColor;
   Color colorOPT2 = kAlumnColor;
   double borderOPT1 = 1;

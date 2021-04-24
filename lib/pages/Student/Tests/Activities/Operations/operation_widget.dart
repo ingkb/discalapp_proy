@@ -1,4 +1,5 @@
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +16,7 @@ class OperationActivity extends StatefulWidget {
   OperationActivityState createState() => OperationActivityState();
 }
 
-class OperationActivityState extends State<OperationActivity> {
+class OperationActivityState extends BaseActivity<OperationActivity> {
   int n1, n2, resultado;
   String operacion;
   String texto;
@@ -127,15 +128,15 @@ class OperationActivityState extends State<OperationActivity> {
               hintStyle: TextStyle(fontSize: 20)),
           onChanged: (valor) {
             setState(() {
-              resultado = int.parse(valor);
+              resultado = int.tryParse(valor);
             });
           },
         ));
   }
 
   _generarNumeros() {
-    n1 = int.parse(operationsActivities[widget.numero][1]);
-    n2 = int.parse(operationsActivities[widget.numero][2]);
+    n1 = int.tryParse(operationsActivities[widget.numero][1]);
+    n2 = int.tryParse(operationsActivities[widget.numero][2]);
 
     switch (operationsActivities[widget.numero][0]) {
       case 'suma':
