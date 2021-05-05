@@ -6,6 +6,7 @@ import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -120,13 +121,13 @@ class MathOperationState extends BaseActivity<MathOperation> {
 
     switch (operation) {
       case 0:
-        area = "suma";
+        area = Areas.suma;
         operacion = "+";
         texto = "Realiza la siguiente SUMA";
         respuestaCorrecta = n1 + n2;
         break;
       case 1:
-        area = "resta";
+        area = Areas.resta;
         operacion = "-";
         texto = "Realiza la siguiente RESTA";
         if (n1 < n2) {
@@ -139,7 +140,7 @@ class MathOperationState extends BaseActivity<MathOperation> {
       case 2:
         n1 = rng.nextInt(10);
         n2 = rng.nextInt(10);
-        area = "multiplicacion";
+        area = Areas.multiplicacion;
         operacion = "x";
         texto = "Realiza la siguiente MULTIPLICACIÓN";
         respuestaCorrecta = n1 * n2;

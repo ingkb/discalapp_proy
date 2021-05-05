@@ -145,4 +145,36 @@ class RegisterAcitivityGroupRequest{
   List<ActivityResult> activities;
 }
 
+class SearchSesionResultResponse{
+  SearchSesionResultResponse({
+    this.state,
+    this.suma,
+    this.resta,
+    this.multiplicacion,
+    this.escritura,
+    this.comparacion,
+    this.conteo,
+    this.rectaNumerica
+  });
+  int state;
+  double suma;
+  double resta;
+  double multiplicacion;
+  double escritura;
+  double comparacion;
+  double conteo;
+  double rectaNumerica;
+/* 
+  factory SearchSesionResultResponse.fromJson(Map<String, dynamic> json) => SearchSesionResultResponse(
+        state: json["state"],
+        suma: json["suma"],
+        resta: json["resta"],
+        multiplicacion: json["multiplicacion"],
+        escritura: json["escritura"],
+        comparacion: json["comparacion"],
+        conteo: json["conteo"],
+        rectaNumerica: json["rectaNumerica"],
+  ); */
+}
+
 

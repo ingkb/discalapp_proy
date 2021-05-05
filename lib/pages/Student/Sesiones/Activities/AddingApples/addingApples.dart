@@ -6,6 +6,7 @@ import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'casilla.dart';
@@ -154,7 +155,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
       activityResultService.addActivityResult(new ActivityResult(
          indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: "Suma",
+          area: Areas.suma,
           resultado: true,
           tiempo: 1));
        showCorrectAnsDialog(context, widget.pasarActividad);
@@ -162,7 +163,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
       activityResultService.addActivityResult(new ActivityResult(
           indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: "Suma",
+          area: Areas.suma,
           resultado: false,
           tiempo: 1));
       showWrongAnsDialog(context,  widget.pasarActividad);

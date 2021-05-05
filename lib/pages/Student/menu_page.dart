@@ -26,7 +26,7 @@ class _MenuPageState extends State<MenuPage> {
               image: DecorationImage(
                   image: AssetImage('assets/images/Menu_marco.jpg'),
                   fit: BoxFit.fill)),
-          child: Column(
+          child: ListView(
             children: [botonesTop(), listaNiveles(context)],
           )),
     );
@@ -45,7 +45,7 @@ class _MenuPageState extends State<MenuPage> {
   // child: Image(image: AssetImage('assets/images/botonBack.png')),
   Widget botonesTop() {
     return Container(
-      margin: EdgeInsets.only(top: 35, right: 15, left: 15, bottom: 20),
+      margin: EdgeInsets.only(top: 25, right: 15, left: 15, bottom: 20),
       child: Row(
         children: [
           ElevatedButton(

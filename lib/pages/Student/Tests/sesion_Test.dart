@@ -27,7 +27,7 @@ class Sesion1State extends State<SesionTestPage> {
   @override
   void initState() {
     actividadActual = 1;
-    numActividades = 2;
+    numActividades = 23;
     actividades = new ActividadesTest(10, 1, 12, pasarActividad);
     listaActividades = actividades.getActivities();
 

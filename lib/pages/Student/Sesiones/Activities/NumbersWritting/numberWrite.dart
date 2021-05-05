@@ -7,6 +7,7 @@ import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
@@ -101,7 +102,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
       activityResultService.addActivityResult(new ActivityResult(
           indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: "Escritura",
+          area: Areas.escritura,
           resultado: true,
           tiempo: 1));
       showCorrectAnsDialog(context, widget.pasarActividad);
@@ -109,7 +110,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
        activityResultService.addActivityResult(new ActivityResult(
          indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: "Escritura",
+          area: Areas.escritura,
           resultado: false,
           tiempo: 1));
       showWrongAnsDialog(context,  widget.pasarActividad);

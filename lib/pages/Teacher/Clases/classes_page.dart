@@ -15,19 +15,17 @@ class ClassesPage extends StatefulWidget {
 }
 
 class _ClassesPageState extends State<ClassesPage> {
-  
   ClassgroupService classgroupService;
   final prefs = new PreferenciasUsuario();
 
   @override
   void initState() {
+    classgroupService = new ClassgroupService();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
-
-    classgroupService = new ClassgroupService();
-    
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kTeacherColor,
@@ -37,9 +35,7 @@ class _ClassesPageState extends State<ClassesPage> {
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
           await Navigator.pushNamed(context, 'addclasses');
-         setState(() {
-           
-         });
+          setState(() {});
         },
         backgroundColor: kTeacherColor,
         child: Icon(Icons.add),
@@ -63,7 +59,8 @@ class _ClassesPageState extends State<ClassesPage> {
           );
         }
         if (snapshot.data != null) {
-          if(snapshot.connectionState == ConnectionState.done && snapshot.data.classgroups.isEmpty){
+          if (snapshot.connectionState == ConnectionState.done &&
+              snapshot.data.classgroups.isEmpty) {
             print('lista empty');
             return emptyList();
           }
@@ -123,7 +120,7 @@ class _ClassesPageState extends State<ClassesPage> {
                   ButtonTheme(
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: ElevatedButton(
+                    child: TextButton(
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -132,40 +129,35 @@ class _ClassesPageState extends State<ClassesPage> {
                                 ClassDetailPage(code: clase.code),
                           ),
                         );
-                        setState(() {
-                          
-                        });
+                        setState(() {});
                       },
-                      style: ElevatedButton.styleFrom(
-                      elevation: 10,
-                      primary: Colors.white,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
                       ),
                       child: Icon(Icons.edit, color: Colors.blue),
-                
                     ),
                   ),
                   ButtonTheme(
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: ElevatedButton(
-                      onPressed: () {
-                        classgroupService
-                            .deleteClassgroup(clase.code)
-                            .then((value) {
-                          setState(() {});
-                        });
-                      },
-                      child: Icon(Icons.delete, color: Colors.red),
-                      style: ElevatedButton.styleFrom(
-                      primary: Colors.white,
-                      elevation: 10,
-                      shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.all(Radius.circular(10))),
-                    )
-                      ),
-                      
+                    child: TextButton(
+                        onPressed: () {
+                          classgroupService
+                              .deleteClassgroup(clase.code)
+                              .then((value) {
+                            setState(() {});
+                          });
+                        },
+                        child: Icon(Icons.delete, color: Colors.red),
+                        style: TextButton.styleFrom(
+                          primary: Colors.white,
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(10))),
+                        )),
                   )
                 ],
               ),
@@ -174,18 +166,22 @@ class _ClassesPageState extends State<ClassesPage> {
         ),
       );
 
-
       clases..add(widgetCard)..add(Divider());
     });
     return clases;
   }
 
-  Widget emptyList(){
-    return Container(
-      child: Center(
-        child:Image(
-              image: AssetImage('assets/images/emptygif.gif'),)
-      ),
-    );
+  Widget emptyList() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+      Text("No has creado ninguna clase aun",style: TextStyle(
+        color: kTeacherColor, fontSize: 20, fontWeight: FontWeight.w600
+      ),),
+      Center(
+          child: Image(
+        image: AssetImage('assets/images/emptygif.gif'),
+      )),
+    ]);
   }
 }

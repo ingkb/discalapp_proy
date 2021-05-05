@@ -5,6 +5,7 @@ import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -26,7 +27,6 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       respuestacorrecta1,
       respuestacorrecta2,
       respuestacorrecta3;
-  String area;
   ActivityResultService activityResultService;
   @override
   void initState() {
@@ -152,7 +152,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       activityResultService.addActivityResult(new ActivityResult(
           indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: area,
+          area: Areas.suma,
           resultado: true,
           tiempo: 1));
       showCorrectAnsDialog(context, widget.pasarActividad);
@@ -160,7 +160,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       activityResultService.addActivityResult(new ActivityResult(
           indice: widget.indice,
           sesionId: usuarioResultados.sesionId,
-          area: area,
+          area: Areas.suma,
           resultado: false,
           tiempo: 1));
       showWrongAnsDialog(context, widget.pasarActividad);

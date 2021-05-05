@@ -24,13 +24,16 @@ class Sesion1State extends State<Sesion1> {
   Actividades actividades;
   SesionService sesionService;
   ActivityResultService activityService;
+  ActiveUser usuario;
+  Sesion lastSesion;
+  
   @override
   void initState() {
     actividadesPreCompletas = 0;
     actividadActual = 1;
-    numActividades = 4;
+    numActividades = 20;
     listaActividades = [Text("...")];
-    actividades = new Actividades(3, 0, 0, 1, 0, pasarActividad);
+    actividades = new Actividades(pasarActividad);
     iniciarSesion();
 
     super.initState();
@@ -39,10 +42,11 @@ class Sesion1State extends State<Sesion1> {
   @override
   Widget build(BuildContext context) {
     double porcent = 0;
-    int actividadMostrar;
+    int actividadMostrar = 0;
     if (actividadActual != null) {
-      porcent = (actividadActual+actividadesPreCompletas) / numActividades;
+      porcent = (actividadActual + actividadesPreCompletas) / numActividades;
     }
+    if(listaActividades!=null)
     if (listaActividades.length != 0) {
       if (actividadActual - 1 < listaActividades.length) {
         actividadMostrar = actividadActual - 1;
@@ -68,7 +72,8 @@ class Sesion1State extends State<Sesion1> {
               transitionBuilder: (child, animation) {
                 return ScaleTransition(scale: animation, child: child);
               },
-              child: listaActividades[actividadMostrar],
+              child: listaActividades!=null?listaActividades[actividadMostrar]
+              :Text("..."),
             )
           ],
         ),
@@ -76,6 +81,11 @@ class Sesion1State extends State<Sesion1> {
         floatingActionButton: btnValidar());
   }
 
+  List<Widget> emptyList(){
+    List<Widget> newAcitivites = [];
+    newAcitivites.add(Text("..."));
+    return newAcitivites;
+  }
   Widget btnValidar() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
@@ -108,14 +118,18 @@ class Sesion1State extends State<Sesion1> {
             para poder llamar la actividad correspondiente
         => si no hay sesiones sin terminar entonces crea una nueva y la registra
     */
-    ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
-    sesionService = new SesionService();
-
+    usuario = Provider.of<ActiveUser>(context, listen: false);
+     sesionService = new SesionService();
     bool sesionSinterminar = false;
+    lastSesion = new Sesion();
+    lastSesion.tipo = 0;
     await sesionService.getAllSesion(usuario.student.userId).then((value) => {
           if (value.state == 0)
             {
               value.sesions.forEach((sesionElement) {
+                if (sesionElement.tipo >= lastSesion.tipo) {
+                  lastSesion = sesionElement;
+                }
                 if (sesionElement.estado == false) {
                   usuario.sesionId = sesionElement.id;
                   sesionSinterminar = true;
@@ -123,6 +137,7 @@ class Sesion1State extends State<Sesion1> {
               })
             }
         });
+
     if (sesionSinterminar) {
       activityService = new ActivityResultService();
 
@@ -139,6 +154,12 @@ class Sesion1State extends State<Sesion1> {
         });
       });
     } else {
+      activityService = new ActivityResultService();
+      await activityService.getAllActivityResult(lastSesion.id).then((value){
+            if (value.state == 0){
+              actividades.setActivitiesNumbers(value.activityResults);
+            }
+          });
       sesionService
           .addSesion(new Sesion(
               student: usuario.student.userId,
@@ -149,26 +170,51 @@ class Sesion1State extends State<Sesion1> {
         if (value.state == 0) usuario.sesionId = value.sesionId;
       });
       setState(() {
+        actividades.crearActividades();
         listaActividades = actividades.getActivities(0);
+        print(listaActividades.length);
       });
     }
   }
 
+  sesionSinTerminar() async {
+    //Revisa las sesiones para ver si hay una sin terminar
+    //Ademas guarda la ultima sesion que se realizo
+    sesionService = new SesionService();
+    bool sesionSinterminar = false;
+    
+    lastSesion = new Sesion();
+    await sesionService.getAllSesion(usuario.student.userId).then((value) => {
+          if (value.state == 0)
+            {
+              value.sesions.forEach((sesionElement) {
+                if (sesionElement.tipo > lastSesion.tipo) {
+                  lastSesion = sesionElement;
+                }
+                if (sesionElement.estado == false) {
+                  usuario.sesionId = sesionElement.id;
+                  sesionSinterminar = true;
+                }
+              })
+            }
+        });
+    return sesionSinterminar;
+  }
+
   validarActividad() {
-    actividades.validarResultado(actividadActual+actividadesPreCompletas);
+    actividades.validarResultado(actividadActual + actividadesPreCompletas);
   }
 
   validarNumActividad() {
-    if ((actividadActual+actividadesPreCompletas) > numActividades) {
+    if ((actividadActual + actividadesPreCompletas) > numActividades) {
       acabarSesion();
     }
   }
 
   acabarSesion() {
     ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
-    sesionService
-        .updateSesion(usuario.sesionId, true)
-        .then((value) => Navigator.pushReplacementNamed(this.context, 'menuStudent'));
+    sesionService.updateSesion(usuario.sesionId, true).then(
+        (value) => Navigator.pushReplacementNamed(this.context, 'menuStudent'));
   }
 
   pasarActividad(int n) {

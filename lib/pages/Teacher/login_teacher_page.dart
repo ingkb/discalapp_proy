@@ -72,15 +72,16 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
 
 Widget inputUserId(){
      return TextField(
-       
       decoration: InputDecoration(
         border: OutlineInputBorder(
-
           borderRadius: BorderRadius.circular(20.0)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kTeacherColor, width: 2),
+          borderRadius: BorderRadius.circular(10.0)
         ),
         labelText: 'Usuario',
         helperText: 'Ingrese su usuario',
-
         suffixIcon: userVerified?Icon(Icons.verified_user):null,
         icon: Icon(Icons.person, color: kTeacherColor ),
       ),
@@ -101,6 +102,10 @@ Widget inputPassword(){
         focusColor: kTeacherColor,
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0)
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: kTeacherColor, width: 2),
+          borderRadius: BorderRadius.circular(10.0)
         ),
         hintText: 'Contraseña',
         labelText: 'Contraseña',
