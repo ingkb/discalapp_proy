@@ -49,6 +49,7 @@ class Actividades {
     });
     var restante = this.totalActividades - totalErrores;
     int numbase = restante ~/ 5;
+    int extra = restante - (numbase*5);
     if (numbase >= 1) {
       for (int i = 0; i < numbase; i++) {
         sumarActivity(Areas.conteo);
@@ -56,6 +57,9 @@ class Actividades {
         sumarActivity(Areas.suma);
         sumarActivity(Areas.multiplicacion);
         sumarActivity(Areas.resta);
+      }
+      for(int i=0; i<extra;i++){
+        sumarActivity(Areas.conteo);
       }
     } else {
       for (int i = 0; i < restante; i++) {
