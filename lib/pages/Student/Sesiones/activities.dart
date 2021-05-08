@@ -48,24 +48,16 @@ class Actividades {
       }
     });
     var restante = this.totalActividades - totalErrores;
-    int numbase = restante ~/ 5;
-    int extra = restante - (numbase*5);
-    if (numbase >= 1) {
-      for (int i = 0; i < numbase; i++) {
-        sumarActivity(Areas.conteo);
-        sumarActivity(Areas.escritura);
-        sumarActivity(Areas.suma);
-        sumarActivity(Areas.multiplicacion);
-        sumarActivity(Areas.resta);
-      }
-      for(int i=0; i<extra;i++){
-        sumarActivity(Areas.conteo);
-      }
-    } else {
-      for (int i = 0; i < restante; i++) {
-        sumarActivity(Areas.suma);
-      }
+    int creadas = 0;
+    while(creadas<=restante){
+      sumarActivity(Areas.conteo);creadas++;if(creadas==restante)break;
+      sumarActivity(Areas.escritura);creadas++;if(creadas==restante)break;
+      sumarActivity(Areas.suma);creadas++;if(creadas==restante)break;
+      sumarActivity(Areas.multiplicacion);creadas++;if(creadas==restante)break;
+      sumarActivity(Areas.resta);creadas++;if(creadas==restante)break;
+      sumarActivity(Areas.comparacion);creadas++;if(creadas==restante)break;
     }
+    
   }
 
   sumarActivity(String area) {
@@ -82,7 +74,9 @@ class Actividades {
       mathOper++;
     }
     if (area == Areas.conteo) {
-      countImg++;
+       int n1 = rng.nextInt(2);
+      if (n1 == 0) countImg++;
+      if (n1 == 1) dicesnum++;
     }
     if (area == Areas.escritura) {
       numWrite++;
@@ -134,14 +128,14 @@ class Actividades {
       this.numActual++;
       keys[numActual] = GlobalKey<AsociativePropietState>();
       actividades.add(AsociativeProp(
-          key: keys[numActual], pasarActividad: pasarActividadfn));
+          key: keys[numActual], pasarActividad: pasarActividadfn,indice: numActual));
     }
 
     for (int i = 1; i <= dicesnum; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<DicesState>();
       actividades.add(DicesActivity(
-          key: keys[numActual], pasarActividad: pasarActividadfn));
+          key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
   }
 

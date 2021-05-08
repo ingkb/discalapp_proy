@@ -3,7 +3,6 @@ import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
 import 'package:discalapp_proy/shared/progress_barr_widget.dart';
-import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -108,12 +107,11 @@ class Sesion1State extends State<SesionTestPage> {
   }
 
   acabarSesionActividad(){
-    final prefs = new PreferenciasUsuario();
     ActivityResultService activityService = new ActivityResultService();
     ActiveUser usuarioResultados = Provider.of<ActiveUser>(context, listen: false);
     var sesionService = new SesionService();
       sesionService.addSesion(
-        new Sesion(student: prefs.userId, tipo: 0, fecha: DateTime.now(), estado: true)
+        new Sesion(student: usuarioResultados.student.userId, tipo: 0, fecha: DateTime.now(), estado: true)
         ).then((value) {
           if(value.state==0){
             List<ActivityResult> results = usuarioResultados.resultados;

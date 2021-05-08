@@ -24,10 +24,9 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   int numMin = 0;
   int num1 = 3, num2 = 9, num3 = 4;
 
-  List<int> rangeDy1 = [230,290];
-  List<int> rangeDy2 = [0,60];
-  List<int> rangeDy3 = [180,240];
-  
+  List<int> rangeDy1 = [230, 290];
+  List<int> rangeDy2 = [0, 60];
+  List<int> rangeDy3 = [180, 240];
 
   @override
   Widget build(BuildContext context) {
@@ -197,7 +196,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
                     image: AssetImage('assets/images/circulonumeroVerde.png'))),
           ),
           childWhenDragging: Container(),
-          
+
           onDragEnd: (details) {
             setState(() {
               pos2 = getNewPosition(details.offset);
@@ -227,7 +226,8 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
             decoration: BoxDecoration(
                 color: Colors.transparent,
                 image: DecorationImage(
-                    image: AssetImage('assets/images/circulonumeroFucsia.png'))),
+                    image:
+                        AssetImage('assets/images/circulonumeroFucsia.png'))),
           ),
           child: Container(
             //Elemento normal sin ser arrastrado
@@ -244,7 +244,8 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
             decoration: BoxDecoration(
                 color: Colors.transparent,
                 image: DecorationImage(
-                    image: AssetImage('assets/images/circulonumeroFucsia.png'))),
+                    image:
+                        AssetImage('assets/images/circulonumeroFucsia.png'))),
           ),
           childWhenDragging: Container(),
 
@@ -257,53 +258,25 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         ));
   }
 
-  validarResultado() {
+  validarDialog() {
+    bool check1 = (pos.dy > rangeDy1[0] && pos.dy < rangeDy1[1]);
+    bool check2 = (pos2.dy > rangeDy2[0] && pos2.dy < rangeDy2[1]);
+    bool check3 = (pos3.dy > rangeDy3[0] && pos3.dy < rangeDy3[1]);
 
-    bool check1=(pos.dy>rangeDy1[0] && pos.dy<rangeDy1[1]);
-    bool check2=(pos2.dy>rangeDy2[0] && pos2.dy<rangeDy2[1]);
-    bool check3=(pos3.dy>rangeDy3[0] && pos3.dy<rangeDy3[1]);
+    ActiveUser usuarioResultados =
+        Provider.of<ActiveUser>(context, listen: false);
 
-    
-    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
-
-    if(check1 && check2 && check3){
-      
-      usuarioResultados.addResults(new ActivityResult(area: Areas.rectaNumerica,resultado: true, tiempo: 1));
-      showCorrectAnsDialog(context, widget.pasarActividad);
-    }else{
-      usuarioResultados.addResults(new ActivityResult(area: Areas.rectaNumerica,resultado: false, tiempo: 1));
-      showWrongAnsDialog(context,  widget.pasarActividad);
+    if (check1 && check2 && check3) {
+      usuarioResultados.addResults(new ActivityResult(
+          area: Areas.rectaNumerica, resultado: true, tiempo: 1));
+    } else {
+      usuarioResultados.addResults(new ActivityResult(
+          area: Areas.rectaNumerica, resultado: false, tiempo: 1));
     }
-    //
+    widget.pasarActividad(0);
   }
 
-  showAlertDialog(BuildContext context, String mensaje, String titulo) {
-
-  // set up the button
-  Widget okButton = TextButton(
-    child: Text("Siguiente",),
-    onPressed: () { 
-        Navigator.of(context).pop();
-        widget.pasarActividad(0);
-    },
-  );
-
-  // set up the AlertDialog
-  AlertDialog alert = AlertDialog(
-    title: Text(titulo,style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),),
-    content: Text(mensaje, style: TextStyle(fontSize: 18),),
-    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-    actions: [
-      okButton,
-    ],
-  );
-
-  // show the dialog
-  showDialog(
-    context: context,
-    builder: (BuildContext context) {
-      return alert;
-    },
-  );
-}
+  validarResultado() {
+    showConfirmationDialog(context, validarDialog);
+  }
 }

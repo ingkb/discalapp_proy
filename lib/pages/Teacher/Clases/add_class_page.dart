@@ -40,8 +40,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
               avatarImage(),
               SizedBox(height: 20),
               inputNombre(),
-              SizedBox(height: 20),
-              inputCodigo(),
+              
               SizedBox(height: 20),
               submitLogin()
             ],
@@ -77,39 +76,15 @@ class _AddClassgroupState extends State<AddClassgroup> {
     );
   }
 
-   Widget inputCodigo(){
-     return TextField(
-      decoration: InputDecoration(
-        focusedBorder: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-          borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-        ),
-        border: OutlineInputBorder(
-          borderRadius: BorderRadius.circular(20.0),
-        ),
-        hintText: 'Codigo',
-        labelText: 'Codigo',
- 
-        suffixIcon: userVerified?Icon(Icons.verified_user):null,
-        icon: Icon(Icons.person)
-      ),
-      onChanged: (valor){
-        setState(() {
-           classgroup.code = valor;
-        });
-      }
-      ,
-    );
-  }
-
+   
   Widget avatarImage(){
 
     return Container(
-      width: 100,
-      height: 100,
+      width: 120,
+      height: 120,
       child: CircleAvatar(
-        child: Image(
-          image: AssetImage('assets/images/avatar1.png'),
+        child: Image(width: 100,
+          image: AssetImage('assets/images/books.png'),
         ) 
       )
     );

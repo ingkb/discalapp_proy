@@ -26,7 +26,7 @@ class Sesion1State extends State<Sesion1> {
   ActivityResultService activityService;
   ActiveUser usuario;
   Sesion lastSesion;
-  
+
   @override
   void initState() {
     actividadesPreCompletas = 0;
@@ -46,8 +46,7 @@ class Sesion1State extends State<Sesion1> {
     if (actividadActual != null) {
       porcent = (actividadActual + actividadesPreCompletas) / numActividades;
     }
-    if(listaActividades!=null)
-    if (listaActividades.length != 0) {
+    if (listaActividades != null) if (listaActividades.length != 0) {
       if (actividadActual - 1 < listaActividades.length) {
         actividadMostrar = actividadActual - 1;
       } else {
@@ -72,8 +71,9 @@ class Sesion1State extends State<Sesion1> {
               transitionBuilder: (child, animation) {
                 return ScaleTransition(scale: animation, child: child);
               },
-              child: listaActividades!=null?listaActividades[actividadMostrar]
-              :Text("..."),
+              child: listaActividades != null
+                  ? listaActividades[actividadMostrar]
+                  : Text("._."),
             )
           ],
         ),
@@ -81,11 +81,12 @@ class Sesion1State extends State<Sesion1> {
         floatingActionButton: btnValidar());
   }
 
-  List<Widget> emptyList(){
+  List<Widget> emptyList() {
     List<Widget> newAcitivites = [];
     newAcitivites.add(Text("..."));
     return newAcitivites;
   }
+
   Widget btnValidar() {
     return Container(
       margin: EdgeInsets.only(bottom: 30),
@@ -119,10 +120,10 @@ class Sesion1State extends State<Sesion1> {
         => si no hay sesiones sin terminar entonces crea una nueva y la registra
     */
     usuario = Provider.of<ActiveUser>(context, listen: false);
-     sesionService = new SesionService();
+    sesionService = new SesionService();
     bool sesionSinterminar = false;
     lastSesion = new Sesion();
-    lastSesion.tipo = 0;
+    lastSesion.tipo = -1;
     await sesionService.getAllSesion(usuario.student.userId).then((value) => {
           if (value.state == 0)
             {
@@ -138,6 +139,15 @@ class Sesion1State extends State<Sesion1> {
             }
         });
 
+    if (lastSesion.tipo >= 0) {
+      activityService = new ActivityResultService();
+      await activityService.getAllActivityResult(lastSesion.id).then((value) {
+        if (value.state == 0) {
+          actividades.setActivitiesNumbers(value.activityResults);
+          actividades.crearActividades();
+        }
+      });
+    }
     if (sesionSinterminar) {
       activityService = new ActivityResultService();
 
@@ -154,12 +164,6 @@ class Sesion1State extends State<Sesion1> {
         });
       });
     } else {
-      activityService = new ActivityResultService();
-      await activityService.getAllActivityResult(lastSesion.id).then((value){
-            if (value.state == 0){
-              actividades.setActivitiesNumbers(value.activityResults);
-            }
-          });
       sesionService
           .addSesion(new Sesion(
               student: usuario.student.userId,
@@ -170,9 +174,7 @@ class Sesion1State extends State<Sesion1> {
         if (value.state == 0) usuario.sesionId = value.sesionId;
       });
       setState(() {
-        actividades.crearActividades();
         listaActividades = actividades.getActivities(0);
-        print(listaActividades.length);
       });
     }
   }
@@ -182,7 +184,7 @@ class Sesion1State extends State<Sesion1> {
     //Ademas guarda la ultima sesion que se realizo
     sesionService = new SesionService();
     bool sesionSinterminar = false;
-    
+
     lastSesion = new Sesion();
     await sesionService.getAllSesion(usuario.student.userId).then((value) => {
           if (value.state == 0)

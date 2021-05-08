@@ -86,7 +86,8 @@ class _SelectClassPageState extends State<SelectClassPage> {
 
   Widget getClass(){
 
-    return FutureBuilder(
+    if(codigoClase!=''){
+      return FutureBuilder(
       builder: (context, AsyncSnapshot<SearchClassgroupResponse> snapshot) {
         if (snapshot.connectionState == ConnectionState.none &&
             snapshot.hasData == null) {
@@ -117,6 +118,11 @@ class _SelectClassPageState extends State<SelectClassPage> {
       },
       future: classgroupService.getClassgroup(codigoClase),
     );
+    }else{
+       return Center(
+            child: Text('. . . .',style: TextStyle( fontSize: 18)),
+          );
+    }
   }
 
   Widget cardClass(Classgroup clase){

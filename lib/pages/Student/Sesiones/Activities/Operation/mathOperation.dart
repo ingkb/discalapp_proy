@@ -10,6 +10,7 @@ import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../botonContinuar.dart';
 
 class MathOperation extends StatefulWidget {
   MathOperation({Key key, this.pasarActividad, this.indice}) : super(key: key);
@@ -26,21 +27,27 @@ class MathOperationState extends BaseActivity<MathOperation> {
   String texto;
   int valorOperacion;
   ActivityResultService activityResultService;
+  bool respondido = false;
   @override
   void initState() {
-    super.initState();
     _generarNumeros();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Actividad",[
-        operacionText(),
-        respuestaInput()
+    return marcoActividad(texto, [
+      operacionText(), 
+      respuesta(),
+      botonContinuar(respondido,widget.pasarActividad)
     ]);
-        
   }
 
+  Widget respuesta(){
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
+      child: respondido?textoRespuesta():respuestaInput());
+  }
   Widget operacionText() {
     return Column(
       children: [
@@ -90,6 +97,8 @@ class MathOperationState extends BaseActivity<MathOperation> {
     );
   }
 
+  
+
   Widget respuestaInput() {
     return Container(
         width: 100,
@@ -103,12 +112,24 @@ class MathOperationState extends BaseActivity<MathOperation> {
               //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
               hintText: 'Respuesta',
               hintStyle: TextStyle(fontSize: 20)),
-          onChanged: (valor) {
-            setState(() {
-              resultado = int.tryParse(valor);
-            });
-          },
+          onChanged: guardarValor,
         ));
+  }
+
+  Widget textoRespuesta() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text(
+          "$respuestaCorrecta",
+          style: TextStyle(
+              fontSize: 40, color: Colors.black, fontWeight: FontWeight.w500),
+        ));
+  }
+
+  guardarValor(valor) {
+    setState(() {
+      resultado = int.tryParse(valor);
+    });
   }
 
   _generarNumeros() {
@@ -151,26 +172,39 @@ class MathOperationState extends BaseActivity<MathOperation> {
     }
   }
 
+//cuando le de validar tiene que salir el mensaje de si gano o no
+// bloquear el input con la respuesta correcta (Animaciones luego)
+// y luego aparecer un boton para continuar
+  @override
   validarResultado() {
-    ActiveUser usuarioResultados =
-        Provider.of<ActiveUser>(context, listen: false);
-    activityResultService= new ActivityResultService();
-    if (resultado == respuestaCorrecta) {
-      activityResultService.addActivityResult(new ActivityResult(
-          indice: widget.indice,
-          sesionId: usuarioResultados.sesionId,
-          area: area,
-          resultado: true,
-          tiempo: 1));
-      showCorrectAnsDialog(context,widget.pasarActividad);
+    if (respondido == false) {
+      respondido = true;
+      ActiveUser usuarioResultados =
+          Provider.of<ActiveUser>(context, listen: false);
+      activityResultService = new ActivityResultService();
+      if (resultado == respuestaCorrecta) {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: area,
+            resultado: true,
+            tiempo: 1));
+        showCorrectAnsDialog(context,(){setState(() {});});
+      } else {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: area,
+            resultado: false,
+            tiempo: 1));
+        showWrongAnsDialog(context, (){setState(() {});});
+      }
     } else {
-      activityResultService.addActivityResult(new ActivityResult(
-          indice: widget.indice,
-          sesionId: usuarioResultados.sesionId,
-          area: area,
-          resultado: false,
-          tiempo: 1));
-      showWrongAnsDialog(context, widget.pasarActividad);
+      if (resultado == respuestaCorrecta) {
+        showCorrectAnsDialog(context, (){setState(() {});});
+      } else {
+        showWrongAnsDialog(context, (){setState(() {});});
+      }
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/botonContinuar.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
@@ -37,7 +38,8 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
   @override
   Widget build(BuildContext context) {
     return marcoActividad("Propiedad asociativa", [
-      Column(children: [operacionText(), respuesta1Input(), respuesta3Input()])
+      Column(children: [operacionText(), respuesta1Input(), 
+      respuesta3Input(), botonContinuar(respondido, widget.pasarActividad)])
     ]);
   }
 
@@ -141,9 +143,13 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     respuestacorrecta3 = respuestacorrecta1 + respuestacorrecta2;
   }
 
+  bool respondido= false;
   @override
   validarResultado() {
-    ActiveUser usuarioResultados =
+
+    if(!respondido){
+      respondido=true;
+      ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
     activityResultService = new ActivityResultService();
     if (resultado1 == respuestacorrecta1 &&
@@ -155,7 +161,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
           area: Areas.suma,
           resultado: true,
           tiempo: 1));
-      showCorrectAnsDialog(context, widget.pasarActividad);
+      showCorrectAnsDialog(context, (){setState(() {});});
     } else {
       activityResultService.addActivityResult(new ActivityResult(
           indice: widget.indice,
@@ -163,7 +169,8 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
           area: Areas.suma,
           resultado: false,
           tiempo: 1));
-      showWrongAnsDialog(context, widget.pasarActividad);
+      showWrongAnsDialog(context, (){setState(() {});});
+    }
     }
   }
 }

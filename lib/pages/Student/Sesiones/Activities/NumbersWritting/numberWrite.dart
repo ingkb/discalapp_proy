@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/NumbersWritting/textBox.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/botonContinuar.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
@@ -45,7 +46,8 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
         textBoxNumero(),
         textBox(1,numerosARepresentar[numeroActivi][1], borderWidth1, seleccionarTextbox),
         textBox(2,numerosARepresentar[numeroActivi][2],borderWidth2, seleccionarTextbox),
-        textBox(3,numerosARepresentar[numeroActivi][3],borderWidth3, seleccionarTextbox)
+        textBox(3,numerosARepresentar[numeroActivi][3],borderWidth3, seleccionarTextbox),
+        botonContinuar(respondido, widget.pasarActividad)
       ]
     );
   }
@@ -92,10 +94,12 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
       selectedOption = n;
     });
   }
-
+  bool respondido= false;
   @override
   validarResultado() {
-    ActiveUser usuarioResultados =
+    if(!respondido){
+      respondido = true;
+      ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
         activityResultService= new ActivityResultService();
     if (selectedOption == respuesta) {
@@ -105,7 +109,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
           area: Areas.escritura,
           resultado: true,
           tiempo: 1));
-      showCorrectAnsDialog(context, widget.pasarActividad);
+      showCorrectAnsDialog(context, (){setState(() {});});
     } else {
        activityResultService.addActivityResult(new ActivityResult(
          indice: widget.indice,
@@ -113,7 +117,8 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
           area: Areas.escritura,
           resultado: false,
           tiempo: 1));
-      showWrongAnsDialog(context,  widget.pasarActividad);
+      showWrongAnsDialog(context,  (){setState(() {});});
+    }
     }
   }
 }

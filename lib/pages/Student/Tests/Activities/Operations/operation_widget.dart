@@ -157,23 +157,25 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
     }
   }
 
-
-  validarResultado() {
+  validarDialog(){
     int resultadoCorrecto = int.parse(operationsActivities[widget.numero][3]);
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
+    
     if (resultado == resultadoCorrecto) {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero][0],
           resultado: true,
           tiempo: 1));
-      showCorrectAnsDialog(context, widget.pasarActividad);
     } else {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero][0],
           resultado: false,
           tiempo: 1));
-      showWrongAnsDialog(context,  widget.pasarActividad);
     }
+    widget.pasarActividad(0);
+  }
+  validarResultado() {
+    showConfirmationDialog(context,validarDialog);
   }
 }

@@ -23,7 +23,7 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
   double borderOPT1 = 1;
   double borderOPT2 = 1;
 
-  int selectedOption = 1;
+  int selectedOption = 3;
 
   String imagen1;
   String imagen2;
@@ -126,18 +126,18 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
     }
   }
 
-  validarResultado(){
-
-    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
+  validarDialog(){
+     ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
 
     if(selectedOption == int.parse(compareActivities[widget.numero][3])){
       
       usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero][0],resultado: true, tiempo: 1));
-       showCorrectAnsDialog(context, widget.pasarActividad);
     }else{
       usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero][0],resultado: false, tiempo: 1));
-       showWrongAnsDialog(context,  widget.pasarActividad);
     }
-    
+    widget.pasarActividad(0);
+  }
+  validarResultado(){
+    showConfirmationDialog(context,validarDialog);
   }
 }
