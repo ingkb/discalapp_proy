@@ -29,6 +29,6 @@ Map<String, WidgetBuilder> getRoutes(){
     'selectclass'     :(BuildContext context) => SelectClassPage(),
     'initialTest'     :(BuildContext context) => SesionTestPage(),
     'menuStudent'     :(BuildContext context) => MenuPage(),
-    'sesion1'         :(BuildContext context) => Sesion1()
+    'sesion1'         :(BuildContext context) => Sesion1(),
   };
 }

@@ -7,6 +7,17 @@ import '../enviroment.dart';
 
 class StudentService{
 
+  Future<SearchStudentsResponse> getClassStudents(String classgroupCode) async{
+    var url = Uri.parse(BaseUrl+'/students/classgroup/'+classgroupCode);
+    final response = await http.get(url);
+
+    if(response.statusCode == 200){
+      return SearchStudentsResponse.fromJson(jsonDecode(response.body));
+    }else{
+      throw Exception('Fallo al encontrar clase');
+    }
+  }
+
   Future<DefaultResponse> upadateStudent(Student student) async{
     var url = Uri.parse(BaseUrl+'/students/'+student.userId);
     final http.Response response = await http.patch(url, 
@@ -51,6 +62,22 @@ class DefaultResponse {
     factory DefaultResponse.fromJson(Map<String, dynamic> json) => DefaultResponse(
         state: json["state"],
         message: json["message"]
+    );
+}
+
+class SearchStudentsResponse{
+
+  SearchStudentsResponse({
+    this.state,
+    this.students
+  });
+
+  int state;
+  List<Student> students;
+
+   factory SearchStudentsResponse.fromJson(Map<String, dynamic> json) => SearchStudentsResponse(
+        state: json["state"],
+        students: List<Student>.from(json["students"].map((x) => Student.fromJson(x))),
     );
 }
 

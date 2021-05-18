@@ -4,6 +4,7 @@ import 'package:discalapp_proy/Services/classes_service.dart';
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/classgroup_model.dart';
 import 'package:discalapp_proy/pages/Teacher/Clases/class_detail_page.dart';
+import 'package:discalapp_proy/pages/Teacher/Results/student_list_page.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/material.dart';
 
@@ -117,6 +118,29 @@ class _ClassesPageState extends State<ClassesPage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   Expanded(child: SizedBox()),
+                  ButtonTheme(
+                    minWidth: 50,
+                    padding: EdgeInsets.symmetric(horizontal: 2),
+                    child: TextButton(
+                      onPressed: () async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                StudentListPage(classcode: clase.code),
+                          ),
+                        );
+                        setState(() {});
+                      },
+                      style: TextButton.styleFrom(
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                      ),
+                      child: Icon(Icons.search, color: Colors.green),
+                    ),
+                  ),
                   ButtonTheme(
                     minWidth: 50,
                     padding: EdgeInsets.symmetric(horizontal: 2),
