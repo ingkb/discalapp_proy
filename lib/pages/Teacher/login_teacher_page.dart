@@ -141,25 +141,6 @@ Widget submitLogin(){
     
   }
 
-
-  loguear1(){
-  final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
-  loginService.loginTeacher(_userId, _password).then((res) {
-
-      if(res.teacher != null){
-          prefs.teacherUserId = _userId;
-          usuarioTemporal.teacher = res.teacher;
-          Navigator.pushNamed(context, 'classes');
-      }else{
-        setState(() {
-          userVerified = false;
-        });
-      }
-
-    });
-    
-  }
-
   loguear() {
     final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
     usuarioTemporal.resultados = [];
@@ -169,9 +150,9 @@ Widget submitLogin(){
     setState(() {
       _isButtonDisabled = true;
     });
-
-    //Llama al servicio para loguear
-    loginService.loginTeacher(_userId, _password).then((res) {
+    try {
+      //Llama al servicio para loguear
+      loginService.loginTeacher(_userId, _password).then((res) {
       setState(() {
       _isButtonDisabled = false;
       });
@@ -190,6 +171,13 @@ Widget submitLogin(){
         showAlertDialog(context, "Usuario o contraseña equivocada", "Error");
       }
     });
+    } catch (e) {
+      setState(() {
+      _isButtonDisabled = false;
+      });
+      showAlertDialog(context, "Vuelve a intentar", "Error");
+    }
+    
   }
 
   showAlertDialog(BuildContext context, String mensaje, String titulo) {

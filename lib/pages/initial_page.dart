@@ -1,5 +1,4 @@
 import 'dart:ui';
-
 import 'package:discalapp_proy/Services/login_service.dart';
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/constants.dart';
@@ -330,14 +329,20 @@ class _InitialPageState extends State<InitialPage> {
     
     final prefs = new PreferenciasUsuario();
     if(prefs.userId!=''){
-      LoginService loginService = new LoginService();
-      loginService.loginStudent(prefs.userId, prefs.userPasw).then((value){
+      try {
+        LoginService loginService = new LoginService();
+        loginService.loginStudent(prefs.userId, prefs.userPasw).then((value){
         estudiante = value.student;
         buscando=false;
         if(intentandoLoguear){
           loguearEstudiante();
         }
       });
+      } catch (e) {
+        print(e);
+        estudiante = null;
+        buscando = false;
+      }
     }else{
       estudiante = null;
       buscando = false;

@@ -1,5 +1,6 @@
 import 'package:discalapp_proy/Services/student_service.dart';
 import 'package:discalapp_proy/models/student_model.dart';
+import 'package:discalapp_proy/pages/Teacher/Results/student_sesionslist_page.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -80,11 +81,30 @@ class _StudentListPageState extends State<StudentListPage> {
         margin: EdgeInsets.only(top: 10, left: 10, right: 10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: ListTile(
-          title: Text(student.name),
+          title: Text('Nombre: ' + student.name),
           trailing: 
-            ElevatedButton(child: Icon(Icons.search),onPressed: (){
-              print("ey");
-            },)
+           ElevatedButton(
+                      onPressed: () 
+                      async {
+                        await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) =>
+                                StudentSesionsPage(student: student),
+                          ),
+                        );
+                        setState(() {});
+                      }
+                      ,
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal:1),
+                        primary: Colors.white,
+                        shape: RoundedRectangleBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(10))),
+                      ),
+                      child: Icon(Icons.search, color: Colors.blue, size: 30,),
+                    )
           ,
           subtitle: Text("Edad: " + student.age.toString()),
         ),

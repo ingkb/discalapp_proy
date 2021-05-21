@@ -90,7 +90,7 @@ class _ClassesPageState extends State<ClassesPage> {
             SizedBox(
               width: double.infinity,
               child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 2),
                 child: Row(
                   children: [
                     Text(
@@ -102,7 +102,7 @@ class _ClassesPageState extends State<ClassesPage> {
                     ),
                   ],
                 ),
-                height: 40,
+                height: 35,
                 decoration: BoxDecoration(
                     borderRadius: BorderRadius.only(
                         topLeft: Radius.circular(10),
@@ -118,10 +118,10 @@ class _ClassesPageState extends State<ClassesPage> {
                       style:
                           TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                   Expanded(child: SizedBox()),
-                  ButtonTheme(
-                    minWidth: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: TextButton(
+                  Container(
+                    width: 50,
+                    margin: EdgeInsets.only(right: 2),
+                    child: ElevatedButton(
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -132,8 +132,9 @@ class _ClassesPageState extends State<ClassesPage> {
                         );
                         setState(() {});
                       },
-                      style: TextButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
                         primary: Colors.white,
+                        padding: EdgeInsets.symmetric(horizontal:1),
                         shape: RoundedRectangleBorder(
                             borderRadius:
                                 BorderRadius.all(Radius.circular(10))),
@@ -141,10 +142,10 @@ class _ClassesPageState extends State<ClassesPage> {
                       child: Icon(Icons.search, color: Colors.green),
                     ),
                   ),
-                  ButtonTheme(
-                    minWidth: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: TextButton(
+                  Container(
+                    width: 50,
+                    margin: EdgeInsets.only(right: 2),
+                    child: ElevatedButton(
                       onPressed: () async {
                         await Navigator.push(
                           context,
@@ -155,7 +156,8 @@ class _ClassesPageState extends State<ClassesPage> {
                         );
                         setState(() {});
                       },
-                      style: TextButton.styleFrom(
+                      style: ElevatedButton.styleFrom(
+                        padding: EdgeInsets.symmetric(horizontal:1),
                         primary: Colors.white,
                         shape: RoundedRectangleBorder(
                             borderRadius:
@@ -164,10 +166,9 @@ class _ClassesPageState extends State<ClassesPage> {
                       child: Icon(Icons.edit, color: Colors.blue),
                     ),
                   ),
-                  ButtonTheme(
-                    minWidth: 50,
-                    padding: EdgeInsets.symmetric(horizontal: 2),
-                    child: TextButton(
+                  Container(
+                    width: 50,
+                    child: ElevatedButton(
                         onPressed: () {
                           classgroupService
                               .deleteClassgroup(clase.code)
@@ -176,13 +177,14 @@ class _ClassesPageState extends State<ClassesPage> {
                           });
                         },
                         child: Icon(Icons.delete, color: Colors.red),
-                        style: TextButton.styleFrom(
+                        style: ElevatedButton.styleFrom(
+                          padding: EdgeInsets.symmetric(horizontal:1),
                           primary: Colors.white,
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(10))),
                         )),
-                  )
+                  ),
                 ],
               ),
             ),
@@ -196,12 +198,12 @@ class _ClassesPageState extends State<ClassesPage> {
   }
 
   Widget emptyList() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-      Text("No has creado ninguna clase aun",style: TextStyle(
-        color: kTeacherColor, fontSize: 20, fontWeight: FontWeight.w600
-      ),),
+    return Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+      Text(
+        "No has creado ninguna clase aun",
+        style: TextStyle(
+            color: kTeacherColor, fontSize: 20, fontWeight: FontWeight.w600),
+      ),
       Center(
           child: Image(
         image: AssetImage('assets/images/emptygif.gif'),
