@@ -5,11 +5,13 @@ import 'package:discalapp_proy/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
+import 'package:intl/date_symbol_data_local.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();
   final prefs = new PreferenciasUsuario();
   await prefs.initPrefs();
+  await initializeDateFormatting();
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]).then((value) => 
    runApp(MyApp()));
  

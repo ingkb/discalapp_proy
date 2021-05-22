@@ -53,8 +53,8 @@ class StudentLoginResponse {
         this.student,
     });
 
-    String message;
-    Student student;
+    String? message;
+    Student? student;
 
     factory StudentLoginResponse.fromJson(Map<String, dynamic> json) => StudentLoginResponse(
         message: json["message"],
@@ -68,8 +68,8 @@ class TeacherLoginResponse {
         this.teacher,
     });
 
-    String message;
-    Teacher teacher;
+    String? message;
+    Teacher? teacher;
 
     factory TeacherLoginResponse.fromJson(Map<String, dynamic> json) => TeacherLoginResponse(
         message: json["message"],

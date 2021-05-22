@@ -59,7 +59,7 @@ class SesionService{
     }
   }
 
-  Future<RegisterSesionResponse> updateSesion(String sesionid, bool estado) async{
+  Future<RegisterSesionResponse> updateSesion(String? sesionid, bool estado) async{
     var url = Uri.parse(BaseUrl+'/sesions');
     final http.Response response = await http.patch(url, 
      body: json.encode(new UpdateSesionRequest(sesionId: sesionid,estado:estado).toJson()),
@@ -81,8 +81,8 @@ class UpdateSesionRequest{
     this.estado,
     this.sesionId
   });
-  bool estado;
-  String sesionId;
+  bool? estado;
+  String? sesionId;
 
   Map toJson() => {
     "sesionId": sesionId == null ? null : sesionId,
@@ -95,8 +95,8 @@ class SearchAllSesionResponse {
         this.sesions,
     });
 
-    int state;
-    List<Sesion> sesions;
+    int? state;
+    List<Sesion>? sesions;
 
     factory SearchAllSesionResponse.fromJson(Map<String, dynamic> json) => SearchAllSesionResponse(
         state: json["state"],
@@ -111,9 +111,9 @@ class SearchSesionResponse {
         this.sesion,
     });
 
-    int state;
-    String message;
-    Sesion sesion;
+    int? state;
+    String? message;
+    Sesion? sesion;
 
     factory SearchSesionResponse.fromJson(Map<String, dynamic> json) => SearchSesionResponse(
         state: json["state"],
@@ -129,9 +129,9 @@ class RegisterSesionResponse {
         this.message,
         this.sesionId
     });
-    int state;
-    String message;
-    String sesionId;
+    int? state;
+    String? message;
+    String? sesionId;
 
     factory RegisterSesionResponse.fromJson(Map<String, dynamic> json) => RegisterSesionResponse(
        state: json["state"],

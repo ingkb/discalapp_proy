@@ -11,7 +11,7 @@ import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class SelectClassPage extends StatefulWidget {
-  SelectClassPage({Key key}) : super(key: key);
+  SelectClassPage({Key? key}) : super(key: key);
 
   @override
   _SelectClassPageState createState() => _SelectClassPageState();
@@ -19,8 +19,8 @@ class SelectClassPage extends StatefulWidget {
 
 class _SelectClassPageState extends State<SelectClassPage> {
 
-  ClassgroupService classgroupService;
-  StudentService studentService;
+  late ClassgroupService classgroupService;
+  late StudentService studentService;
   String codigoClase = '';
 
   @override
@@ -89,8 +89,7 @@ class _SelectClassPageState extends State<SelectClassPage> {
     if(codigoClase!=''){
       return FutureBuilder(
       builder: (context, AsyncSnapshot<SearchClassgroupResponse> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
+        if (snapshot.connectionState == ConnectionState.none) {
           return Container();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -102,9 +101,9 @@ class _SelectClassPageState extends State<SelectClassPage> {
           );
         }
         if (snapshot.data != null) {
-          print(snapshot.data.message);
-          if(snapshot.data.classgroup != null){
-            return cardClass(snapshot.data.classgroup);
+          print(snapshot.data!.message);
+          if(snapshot.data!.classgroup != null){
+            return cardClass(snapshot.data!.classgroup!);
           }else{
             return Center(
             child: Text('no se encontro la clase',style: TextStyle( fontSize: 18),),
@@ -140,7 +139,7 @@ class _SelectClassPageState extends State<SelectClassPage> {
                 child: Row(
                   children: [
                     Text(
-                      clase.name,
+                      clase.name!,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -160,7 +159,7 @@ class _SelectClassPageState extends State<SelectClassPage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text('código: ' + clase.code,
+                  Text('código: ' + clase.code!,
                       style:
                           TextStyle(fontSize: 20)),
                   Expanded(child: SizedBox()),
@@ -182,9 +181,9 @@ class _SelectClassPageState extends State<SelectClassPage> {
       );
   }
 
-  asignarClase(String code){
+  asignarClase(String? code){
     final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
-    Student temp = usuarioTemporal.student;
+    Student temp = usuarioTemporal.student!;
     temp.classgroup = code;
     usuarioTemporal.student = temp;
 

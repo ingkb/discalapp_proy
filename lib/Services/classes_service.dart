@@ -81,8 +81,8 @@ class SearchAllClassgroupResponse {
         this.classgroups,
     });
 
-    int state;
-    List<Classgroup> classgroups;
+    int? state;
+    List<Classgroup>? classgroups;
 
     factory SearchAllClassgroupResponse.fromJson(Map<String, dynamic> json) => SearchAllClassgroupResponse(
         state: json["state"],
@@ -97,9 +97,9 @@ class SearchClassgroupResponse {
         this.classgroup,
     });
 
-    int state;
-    String message;
-    Classgroup classgroup;
+    int? state;
+    String? message;
+    Classgroup? classgroup;
 
     factory SearchClassgroupResponse.fromJson(Map<String, dynamic> json) => SearchClassgroupResponse(
         state: json["state"],
@@ -114,8 +114,8 @@ class RegisterClassgroupResponse {
         this.state,
         this.message,
     });
-    int state;
-    String message;
+    int? state;
+    String? message;
 
     factory RegisterClassgroupResponse.fromJson(Map<String, dynamic> json) => RegisterClassgroupResponse(
        state: json["state"],

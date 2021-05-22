@@ -8,11 +8,11 @@ class Sesion {
        this.id
     });
 
-    int tipo;
-    DateTime fecha;
-    String student;
-    bool estado;
-    String id;
+    int? tipo;
+    DateTime? fecha;
+    String? student;
+    bool? estado;
+    String? id;
     factory Sesion.fromJson(Map<String, dynamic> json) => Sesion(
         student: json["student"] == null ? null : json["student"],
         tipo: json["tipo"] == null ? null : json["tipo"],
@@ -24,7 +24,7 @@ class Sesion {
     Map<String, dynamic> toJson() => {
         "student": student == null ? null : student,
         "tipo": tipo == null ? null : tipo,
-        "fecha": fecha == null ? null : fecha.toIso8601String(),
+        "fecha": fecha == null ? null : fecha!.toIso8601String(),
         "estado": estado == null ? null : estado,
         "id":id==null?null:id
         };

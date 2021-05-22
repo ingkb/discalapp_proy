@@ -7,11 +7,11 @@ class Student {
          this.classgroup
     });
 
-    String userId;
-    String name;
-    String password;
-    String classgroup;
-    int age;
+    String? userId;
+    String? name;
+    String? password;
+    String? classgroup;
+    int? age;
 
     factory Student.fromJson(Map<String, dynamic> json) => Student(
         userId: json["userId"],

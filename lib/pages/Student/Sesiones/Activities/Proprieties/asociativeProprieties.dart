@@ -11,15 +11,15 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class AsociativeProp extends StatefulWidget {
-  AsociativeProp({Key key, this.pasarActividad, this.indice}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  AsociativeProp({Key? key, this.pasarActividad, this.indice}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
   @override
   AsociativePropietState createState() => AsociativePropietState();
 }
 
 class AsociativePropietState extends BaseActivity<AsociativeProp> {
-  int n1,
+  int? n1,
       n3,
       n2,
       resultado1,
@@ -28,7 +28,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       respuestacorrecta1,
       respuestacorrecta2,
       respuestacorrecta3;
-  ActivityResultService activityResultService;
+  late ActivityResultService activityResultService;
   @override
   void initState() {
     super.initState();
@@ -138,9 +138,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     n1 = rng.nextInt(20);
     n2 = rng.nextInt(20);
     n3 = rng.nextInt(20);
-    respuestacorrecta1 = n1 + n2;
+    respuestacorrecta1 = n1! + n2!;
     respuestacorrecta2 = n3;
-    respuestacorrecta3 = respuestacorrecta1 + respuestacorrecta2;
+    respuestacorrecta3 = respuestacorrecta1! + respuestacorrecta2!;
   }
 
   bool respondido= false;

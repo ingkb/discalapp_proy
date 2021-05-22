@@ -9,7 +9,7 @@ Widget casilla(String numro,String manzana){
 
   Widget numero(String number, String manzana){
 
-    Color colorNum = Colors.blue[400];
+    Color? colorNum = Colors.blue[400];
     if(manzana=="roja"){
       colorNum = Colors.red;
     }
@@ -27,7 +27,7 @@ Widget casilla(String numro,String manzana){
 
   Widget apple(String manzana){
 
-    DecorationImage imag;
+    DecorationImage? imag;
 
     if(manzana == "roja"){
       imag = DecorationImage(image:AssetImage('assets/images/appleRed.png'));

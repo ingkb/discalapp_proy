@@ -10,22 +10,22 @@ import '../../../constants.dart';
 import 'activities.dart';
 
 class Sesion1 extends StatefulWidget {
-  Sesion1({Key key}) : super(key: key);
+  Sesion1({Key? key}) : super(key: key);
 
   @override
   Sesion1State createState() => Sesion1State();
 }
 
 class Sesion1State extends State<Sesion1> {
-  int numActividades;
-  int actividadActual;
-  int actividadesPreCompletas;
-  List<Widget> listaActividades;
-  Actividades actividades;
-  SesionService sesionService;
-  ActivityResultService activityService;
-  ActiveUser usuario;
-  Sesion lastSesion;
+  late int numActividades;
+  int actividadActual = 0;
+  int? actividadesPreCompletas;
+  List<Widget>? listaActividades;
+  late Actividades actividades;
+  late SesionService sesionService;
+  late ActivityResultService activityService;
+  late ActiveUser usuario;
+  late Sesion lastSesion;
 
   @override
   void initState() {
@@ -43,14 +43,12 @@ class Sesion1State extends State<Sesion1> {
   Widget build(BuildContext context) {
     double porcent = 0;
     int actividadMostrar = 0;
-    if (actividadActual != null) {
-      porcent = (actividadActual + actividadesPreCompletas) / numActividades;
-    }
-    if (listaActividades != null) if (listaActividades.length != 0) {
-      if (actividadActual - 1 < listaActividades.length) {
+    porcent = (actividadActual + actividadesPreCompletas!) / numActividades;
+    if (listaActividades != null) if (listaActividades!.length != 0) {
+      if (actividadActual - 1 < listaActividades!.length) {
         actividadMostrar = actividadActual - 1;
       } else {
-        actividadMostrar = listaActividades.length - 1;
+        actividadMostrar = listaActividades!.length - 1;
       }
     }
 
@@ -72,7 +70,7 @@ class Sesion1State extends State<Sesion1> {
                 return ScaleTransition(scale: animation, child: child);
               },
               child: listaActividades != null
-                  ? listaActividades[actividadMostrar]
+                  ? listaActividades![actividadMostrar]
                   : Text("._."),
             )
           ],
@@ -124,26 +122,26 @@ class Sesion1State extends State<Sesion1> {
     bool sesionSinterminar = false;
     lastSesion = new Sesion();
     lastSesion.tipo = -1;
-    await sesionService.getAllSesion(usuario.student.userId).then((value) => {
+    await sesionService.getAllSesion(usuario.student!.userId!).then((value) => {
           if (value.state == 0)
             {
-              value.sesions.forEach((sesionElement) {
-                if (sesionElement.tipo >= lastSesion.tipo) {
+              value.sesions!.forEach((sesionElement) {
+                if (sesionElement.tipo! >= lastSesion.tipo!) {
                   lastSesion = sesionElement;
                 }
                 if (sesionElement.estado == false) {
-                  usuario.sesionId = sesionElement.id;
+                  usuario.sesionId =  sesionElement.id??'';
                   sesionSinterminar = true;
                 }
               })
             }
         });
 
-    if (lastSesion.tipo >= 0) {
+    if (lastSesion.tipo! >= 0) {
       activityService = new ActivityResultService();
-      await activityService.getAllActivityResult(lastSesion.id).then((value) {
+      await activityService.getAllActivityResult(lastSesion.id!).then((value) {
         if (value.state == 0) {
-          actividades.setActivitiesNumbers(value.activityResults);
+          actividades.setActivitiesNumbers(value.activityResults!);
           actividades.crearActividades();
         }
       });
@@ -151,10 +149,10 @@ class Sesion1State extends State<Sesion1> {
     if (sesionSinterminar) {
       activityService = new ActivityResultService();
 
-      int actyMax = 0;
+      int? actyMax = 0;
       activityService.getAllActivityResult(usuario.sesionId).then((value) {
-        value.activityResults.forEach((acti) {
-          if (acti.indice > actyMax) {
+        value.activityResults!.forEach((acti) {
+          if (acti.indice! > actyMax!) {
             actyMax = acti.indice;
           }
         });
@@ -166,12 +164,12 @@ class Sesion1State extends State<Sesion1> {
     } else {
       sesionService
           .addSesion(new Sesion(
-              student: usuario.student.userId,
+              student: usuario.student!.userId,
               tipo: 1,
               fecha: DateTime.now(),
               estado: false))
           .then((value) {
-        if (value.state == 0) usuario.sesionId = value.sesionId;
+        if (value.state == 0) usuario.sesionId = value.sesionId??'';
       });
       setState(() {
         listaActividades = actividades.getActivities(0);
@@ -186,15 +184,15 @@ class Sesion1State extends State<Sesion1> {
     bool sesionSinterminar = false;
 
     lastSesion = new Sesion();
-    await sesionService.getAllSesion(usuario.student.userId).then((value) => {
+    await sesionService.getAllSesion(usuario.student!.userId!).then((value) => {
           if (value.state == 0)
             {
-              value.sesions.forEach((sesionElement) {
-                if (sesionElement.tipo > lastSesion.tipo) {
+              value.sesions!.forEach((sesionElement) {
+                if (sesionElement.tipo! > lastSesion.tipo!) {
                   lastSesion = sesionElement;
                 }
                 if (sesionElement.estado == false) {
-                  usuario.sesionId = sesionElement.id;
+                  usuario.sesionId = sesionElement.id??'';
                   sesionSinterminar = true;
                 }
               })
@@ -204,11 +202,11 @@ class Sesion1State extends State<Sesion1> {
   }
 
   validarActividad() {
-    actividades.validarResultado(actividadActual + actividadesPreCompletas);
+    actividades.validarResultado(actividadActual + actividadesPreCompletas!);
   }
 
   validarNumActividad() {
-    if ((actividadActual + actividadesPreCompletas) > numActividades) {
+    if ((actividadActual + actividadesPreCompletas!) > numActividades) {
       acabarSesion();
     }
   }

@@ -7,11 +7,11 @@ class ActivityResult {
          this.sesionId
     });
 
-    String sesionId;
-    int indice;
-    bool resultado;
-    double tiempo;
-    String area;
+    String? sesionId;
+    int? indice;
+    bool? resultado;
+    double? tiempo;
+    String? area;
 
     factory ActivityResult.fromJson(Map<String, dynamic> json) => ActivityResult(
         resultado: json["resultado"] == null ? null : json["resultado"],

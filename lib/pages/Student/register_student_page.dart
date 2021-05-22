@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class RegisterStudentPage extends StatefulWidget {
-  RegisterStudentPage({Key key}) : super(key: key);
+  RegisterStudentPage({Key? key}) : super(key: key);
 
   @override
   _RegisterStudentPageState createState() => _RegisterStudentPageState();
@@ -16,8 +16,8 @@ class RegisterStudentPage extends StatefulWidget {
 class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
 
-  Student student;
-  RegisterService registerService;
+  Student? student;
+  late RegisterService registerService;
   bool userVerified = false;
 
   @override
@@ -75,7 +75,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
       ),
       onChanged: (valor){
         setState(() {
-           student.age = int.parse(valor);
+           student!.age = int.parse(valor);
         });
       }
       ,
@@ -100,7 +100,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
       ),
       onChanged: (valor){
         setState(() {
-           student.name = valor;
+           student!.name = valor;
         });
       }
       ,
@@ -138,7 +138,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
       ),
       onChanged: (valor){
         setState(() {
-           student.userId = valor;
+           student!.userId = valor;
         });
       }
       ,
@@ -163,7 +163,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
       ),
       onChanged: (valor){
         setState(() {
-           student.password = valor;
+           student!.password = valor;
         });
       }
       ,
@@ -197,7 +197,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
 
   _registrarEstudiante() {
     final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
-    registerService.registerStudent(student).then((value){
+    registerService.registerStudent(student!).then((value){
       if(value.state == 0){
         usuarioTemporal.student = student;
         Navigator.pushReplacementNamed(context, 'selectclass');

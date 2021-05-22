@@ -26,7 +26,7 @@ Widget marcoActividad(String titulo,List<Widget> contenido){
         borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue[900].withOpacity(0.5),
+            color: Colors.blue[900]!.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(2, 5), // changes position of shadow

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 class ProgressBar extends StatefulWidget {
   
-  ProgressBar({Key key, @required this.porcentaje}) : super(key: key);
+  ProgressBar({Key? key, required this.porcentaje}) : super(key: key);
   final double porcentaje;
   @override
   _ProgressBarState createState() => _ProgressBarState();
@@ -32,7 +32,7 @@ class _ProgressBarState extends State<ProgressBar> {
             borderRadius: BorderRadius.all(Radius.circular(30)),
             boxShadow: [
               BoxShadow(
-                color: Colors.blue[900].withOpacity(0.5),
+                color: Colors.blue[900]!.withOpacity(0.5),
                 spreadRadius: 2,
                 blurRadius: 3,
                 offset: Offset(1, 2), // changes position of shadow

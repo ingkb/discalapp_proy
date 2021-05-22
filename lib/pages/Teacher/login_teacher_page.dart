@@ -10,7 +10,7 @@ import 'package:provider/provider.dart';
 
 
 class LoginTeacherPage extends StatefulWidget {
-  LoginTeacherPage({Key key}) : super(key: key);
+  LoginTeacherPage({Key? key}) : super(key: key);
 
   @override
   _LoginTeacherPageState createState() => _LoginTeacherPageState();
@@ -20,7 +20,7 @@ class _LoginTeacherPageState extends State<LoginTeacherPage> {
   
   String _userId = '';
   String _password='';
-  LoginService loginService;
+  late LoginService loginService;
   bool userVerified = false;
   bool _isButtonDisabled = false;
   final prefs = new PreferenciasUsuario();

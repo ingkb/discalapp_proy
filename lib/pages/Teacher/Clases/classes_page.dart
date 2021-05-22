@@ -9,14 +9,14 @@ import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/material.dart';
 
 class ClassesPage extends StatefulWidget {
-  ClassesPage({Key key}) : super(key: key);
+  ClassesPage({Key? key}) : super(key: key);
 
   @override
   _ClassesPageState createState() => _ClassesPageState();
 }
 
 class _ClassesPageState extends State<ClassesPage> {
-  ClassgroupService classgroupService;
+  late ClassgroupService classgroupService;
   final prefs = new PreferenciasUsuario();
 
   @override
@@ -47,8 +47,7 @@ class _ClassesPageState extends State<ClassesPage> {
   Widget crearListaClases() {
     return FutureBuilder(
       builder: (context, AsyncSnapshot<SearchAllClassgroupResponse> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
+        if (snapshot.connectionState == ConnectionState.none) {
           return Container();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -61,12 +60,12 @@ class _ClassesPageState extends State<ClassesPage> {
         }
         if (snapshot.data != null) {
           if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data.classgroups.isEmpty) {
+              snapshot.data!.classgroups!.isEmpty) {
             print('lista empty');
             return emptyList();
           }
           return ListView(
-            children: listaClassgroups(snapshot.data.classgroups),
+            children: listaClassgroups(snapshot.data!.classgroups!),
           );
         } else {
           print('data null');
@@ -94,7 +93,7 @@ class _ClassesPageState extends State<ClassesPage> {
                 child: Row(
                   children: [
                     Text(
-                      clase.name,
+                      clase.name!,
                       style: TextStyle(
                           color: Colors.white,
                           fontSize: 22,
@@ -114,9 +113,9 @@ class _ClassesPageState extends State<ClassesPage> {
               padding: const EdgeInsets.all(8.0),
               child: Row(
                 children: [
-                  Text('Codigo: ' + clase.code,
+                  Text('Código: ' + clase.code!,
                       style:
-                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                          TextStyle(fontSize: 18)),
                   Expanded(child: SizedBox()),
                   Container(
                     width: 50,
@@ -171,7 +170,7 @@ class _ClassesPageState extends State<ClassesPage> {
                     child: ElevatedButton(
                         onPressed: () {
                           classgroupService
-                              .deleteClassgroup(clase.code)
+                              .deleteClassgroup(clase.code!)
                               .then((value) {
                             setState(() {});
                           });

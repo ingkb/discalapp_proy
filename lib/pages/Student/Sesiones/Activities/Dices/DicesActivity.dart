@@ -15,18 +15,18 @@ import '../../../baseActivity.dart';
 import 'Dice.dart';
 
 class DicesActivity extends StatefulWidget {
-  DicesActivity({Key key, this.pasarActividad, this.indice}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  DicesActivity({Key? key, this.pasarActividad, this.indice}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
 
   @override
   DicesState createState() => DicesState();
 }
 
 class DicesState extends BaseActivity<DicesActivity> {
-  int ejercicio;
-  int respuesta;
-  ActivityResultService activityResultService;
+  int? ejercicio;
+  int? respuesta;
+  late ActivityResultService activityResultService;
   @override
   void initState() {
     getRandom();
@@ -81,7 +81,7 @@ class DicesState extends BaseActivity<DicesActivity> {
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
       activityResultService = new ActivityResultService();
-      if (respuesta.toString() == dicesImages[ejercicio][2]) {
+      if (respuesta.toString() == dicesImages[ejercicio!]![2]) {
         activityResultService.addActivityResult(new ActivityResult(
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,

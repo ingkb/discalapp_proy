@@ -4,9 +4,9 @@ class Classgroup {
          this.name,
          this.teacher,
     });
-    String code;
-    String name;
-    String teacher;
+    String? code;
+    String? name;
+    String? teacher;
 
     factory Classgroup.fromJson(Map<String, dynamic> json) => Classgroup(
         code: json["code"],

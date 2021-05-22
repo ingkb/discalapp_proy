@@ -13,22 +13,22 @@ import 'Activities/NumbersWritting/numberWrite.dart';
 import 'Activities/Operation/mathOperation.dart';
 
 class Actividades {
-  ValueChanged<int> pasarActividadfn;
-  Map<int, GlobalKey<BaseActivity>> keys;
+  ValueChanged<int>? pasarActividadfn;
+  late Map<int?, GlobalKey<BaseActivity>> keys;
 
-  int mathOper; //Suma, resta, multi
-  int appleActi; //suma
-  int countImg; // conteo
-  int numWrite; //escritura
-  int asociative; // suma, multi
-  int dicesnum; // conteo
+  int mathOper = 0; //Suma, resta, multi
+  int appleActi= 0; //suma
+  int countImg= 0; // conteo
+  int numWrite= 0; //escritura
+  int asociative= 0; // suma, multi
+  int dicesnum= 0; // conteo
 
   int totalActividades = 20;
-  List<Widget> actividades;
-  int numActual;
+  List<Widget>? actividades;
+  int numActual = 0;
 
   Actividades(ValueChanged<int> pasarActividad) {
-    keys = new Map<int, GlobalKey<BaseActivity>>();
+    keys = new Map<int?, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.numActual = 0;
     mathOper=0; 
@@ -60,7 +60,7 @@ class Actividades {
     
   }
 
-  sumarActivity(String area) {
+  sumarActivity(String? area) {
     var rng = new Random();
     if (area == Areas.suma) {
       int n1 = rng.nextInt(2);
@@ -94,7 +94,7 @@ class Actividades {
     for (int i = 1; i <= mathOper; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<MathOperationState>();
-      actividades.add(MathOperation(
+      actividades!.add(MathOperation(
           key: keys[numActual],
           pasarActividad: pasarActividadfn,
           indice: numActual));
@@ -102,7 +102,7 @@ class Actividades {
     for (int i = 1; i <= appleActi; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<AddingApplesActivityState>();
-      actividades.add(AddingApplesActivity(
+      actividades!.add(AddingApplesActivity(
           key: keys[numActual],
           pasarActividad: pasarActividadfn,
           indice: numActual));
@@ -110,7 +110,7 @@ class Actividades {
     for (int i = 1; i <= countImg; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<CountImagesState>();
-      actividades.add(CountImages(
+      actividades!.add(CountImages(
           key: keys[numActual],
           pasarActividad: pasarActividadfn,
           indice: numActual));
@@ -118,7 +118,7 @@ class Actividades {
     for (int i = 1; i <= numWrite; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<NumberWriteState>();
-      actividades.add(NumberWrite(
+      actividades!.add(NumberWrite(
           key: keys[numActual],
           pasarActividad: pasarActividadfn,
           indice: numActual));
@@ -127,30 +127,30 @@ class Actividades {
     for (int i = 1; i <= asociative; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<AsociativePropietState>();
-      actividades.add(AsociativeProp(
+      actividades!.add(AsociativeProp(
           key: keys[numActual], pasarActividad: pasarActividadfn,indice: numActual));
     }
 
     for (int i = 1; i <= dicesnum; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<DicesState>();
-      actividades.add(DicesActivity(
+      actividades!.add(DicesActivity(
           key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
     }
   }
 
-  List<Widget> getActivities(int n) {
+  List<Widget>? getActivities(int? n) {
     if (n == 0) {
       return actividades;
     }
     List<Widget> newAcitivites = [];
-    for (int i = n; i < actividades.length; i++) {
-      newAcitivites.add(actividades[i]);
+    for (int i = n!; i < actividades!.length; i++) {
+      newAcitivites.add(actividades![i]);
     }
     return newAcitivites;
   }
 
   validarResultado(int numero) {
-    return keys[numero].currentState.validarResultado();
+    return keys[numero]!.currentState!.validarResultado();
   }
 }

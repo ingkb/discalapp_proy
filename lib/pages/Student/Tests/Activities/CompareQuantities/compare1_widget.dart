@@ -10,9 +10,9 @@ import 'package:provider/provider.dart';
 import 'compare1_list.dart';
 
 class CompareActivity1 extends StatefulWidget {
-  CompareActivity1({Key key, @required this.numero, this.pasarActividad}) : super(key: key);
+  CompareActivity1({Key? key, required this.numero, this.pasarActividad}) : super(key: key);
   final int numero;
-  final ValueChanged<int> pasarActividad;
+  final ValueChanged<int>? pasarActividad;
   @override
   CompareActivity1State createState() => CompareActivity1State();
 }
@@ -25,8 +25,8 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
 
   int selectedOption = 3;
 
-  String imagen1;
-  String imagen2;
+  late String imagen1;
+  late String imagen2;
   
 
   @override
@@ -36,8 +36,8 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
 
   @override
   Widget build(BuildContext context) {
-    imagen1 = compareActivities[widget.numero][1];
-    imagen2 = compareActivities[widget.numero][2];
+    imagen1 = compareActivities[widget.numero]![1];
+    imagen2 = compareActivities[widget.numero]![2];
 
     return Container(
         margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
@@ -47,7 +47,7 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
           children: [
             Container(
               margin: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              child: Text("Selecciona la imagen con mas ${compareActivities[widget.numero][0]}",
+              child: Text("Selecciona la imagen con mas ${compareActivities[widget.numero]![0]}",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                       fontSize: 22,
@@ -96,7 +96,7 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
           borderRadius: BorderRadius.all(Radius.circular(10)),
           boxShadow: [
             BoxShadow(
-              color: Colors.blue[900].withOpacity(0.5),
+              color: Colors.blue[900]!.withOpacity(0.5),
               spreadRadius: 5,
               blurRadius: 7,
               offset: Offset(2, 5), // changes position of shadow
@@ -129,13 +129,13 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
   validarDialog(){
      ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
 
-    if(selectedOption == int.parse(compareActivities[widget.numero][3])){
+    if(selectedOption == int.parse(compareActivities[widget.numero]![3])){
       
-      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero][0],resultado: true, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero]![0],resultado: true, tiempo: 1));
     }else{
-      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero][0],resultado: false, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero]![0],resultado: false, tiempo: 1));
     }
-    widget.pasarActividad(0);
+    widget.pasarActividad!(0);
   }
   validarResultado(){
     showConfirmationDialog(context,validarDialog);

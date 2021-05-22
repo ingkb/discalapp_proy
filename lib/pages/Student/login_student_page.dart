@@ -8,7 +8,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class LoginStudentPage extends StatefulWidget {
-  LoginStudentPage({ Key key}) : super(key: key);
+  LoginStudentPage({ Key? key}) : super(key: key);
 
   @override
   _LoginStudentPageState createState() => _LoginStudentPageState();
@@ -17,8 +17,8 @@ class LoginStudentPage extends StatefulWidget {
 class _LoginStudentPageState extends State<LoginStudentPage> {
   String _userId = '';
   String _password = '';
-  LoginService loginService;
-  SesionService sesionService;
+  late LoginService loginService;
+  late SesionService sesionService;
   bool _isButtonDisabled = false;
   bool userVerified = false;
 
@@ -141,10 +141,10 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
         prefs.userId = _userId;
         prefs.userPasw = _password;
 
-        if (res.student.classgroup != null) {
+        if (res.student!.classgroup != null) {
           //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
           sesionService.getAllSesion(_userId).then((respuesta){
-            if(respuesta.state == 0 && respuesta.sesions.isEmpty){
+            if(respuesta.state == 0 && respuesta.sesions!.isEmpty){
                Navigator.pushReplacementNamed(context, 'initialTest');
             }else{
                 Navigator.pushReplacementNamed(context, 'menuStudent');

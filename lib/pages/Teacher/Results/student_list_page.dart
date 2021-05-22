@@ -6,14 +6,14 @@ import 'package:flutter/material.dart';
 import '../../../constants.dart';
 
 class StudentListPage extends StatefulWidget {
-  StudentListPage({Key key, @required this.classcode}) : super(key: key);
-  final String classcode;
+  StudentListPage({Key? key, required this.classcode}) : super(key: key);
+  final String? classcode;
   @override
   _StudentListPageState createState() => _StudentListPageState();
 }
 
 class _StudentListPageState extends State<StudentListPage> {
-  StudentService _studentService;
+  late StudentService _studentService;
   @override
   void initState() {
     _studentService = new StudentService();
@@ -42,8 +42,7 @@ class _StudentListPageState extends State<StudentListPage> {
   Widget createListStudents() {
     return FutureBuilder(
       builder: (context, AsyncSnapshot<SearchStudentsResponse> snapshot) {
-        if (snapshot.connectionState == ConnectionState.none &&
-            snapshot.hasData == null) {
+        if (snapshot.connectionState == ConnectionState.none) {
           return Container();
         }
         if (snapshot.connectionState == ConnectionState.waiting) {
@@ -56,19 +55,19 @@ class _StudentListPageState extends State<StudentListPage> {
         }
         if (snapshot.data != null) {
           if (snapshot.connectionState == ConnectionState.done &&
-              snapshot.data.students.isEmpty) {
+              snapshot.data!.students!.isEmpty) {
             print('lista empty');
             return emptyList();
           }
           return ListView(
-            children: listStudents(snapshot.data.students),
+            children: listStudents(snapshot.data!.students!),
           );
         } else {
           print('data null');
           return Container();
         }
       },
-      future: _studentService.getClassStudents(widget.classcode),
+      future: _studentService.getClassStudents(widget.classcode!),
     );
   }
 
@@ -81,7 +80,7 @@ class _StudentListPageState extends State<StudentListPage> {
         margin: EdgeInsets.only(top: 10, left: 10, right: 10),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
         child: ListTile(
-          title: Text('Nombre: ' + student.name),
+          title: Text('Nombre: ' + student.name!),
           trailing: 
            ElevatedButton(
                       onPressed: () 

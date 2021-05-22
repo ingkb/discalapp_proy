@@ -5,10 +5,10 @@ class Teacher {
          this.password,
          this.id,
     });
-    String id;
-    String userId;
-    String name;
-    String password;
+    String? id;
+    String? userId;
+    String? name;
+    String? password;
 
     factory Teacher.fromJson(Map<String, dynamic> json) => Teacher(
         id: json["id"],

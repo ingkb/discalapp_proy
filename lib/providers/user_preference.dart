@@ -12,13 +12,13 @@ class PreferenciasUsuario{
   }
   PreferenciasUsuario._internal();
 
-  SharedPreferences _prefs;
+  late SharedPreferences _prefs;
 
   initPrefs() async{
     this._prefs = await SharedPreferences.getInstance();
   }
 
-  get userId {
+  String get userId {
     return _prefs.getString('userId')  ?? '';
   }
 
@@ -26,7 +26,7 @@ class PreferenciasUsuario{
      _prefs.setString('userId', userId);
   }
 
-  get userPasw {
+  String get userPasw {
     return _prefs.getString('userPasw')  ?? '';
   }
 
@@ -34,7 +34,7 @@ class PreferenciasUsuario{
      _prefs.setString('userPasw', userPasw);
   }
 
-  get teacherUserId {
+  String get teacherUserId {
     return _prefs.getString('teacherUserId') ?? '';
   }
 
@@ -42,7 +42,7 @@ class PreferenciasUsuario{
      _prefs.setString('teacherUserId', teacherUserId);
   }
 
-  get teacherUserPasw {
+  String get teacherUserPasw {
     return _prefs.getString('teacherUserPasw') ?? '';
   }
 

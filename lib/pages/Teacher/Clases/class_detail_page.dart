@@ -5,16 +5,16 @@ import 'package:discalapp_proy/pages/Teacher/Clases/classes_page.dart';
 import 'package:flutter/material.dart';
 
 class ClassDetailPage extends StatefulWidget {
-  ClassDetailPage({Key key, this.code}) : super(key: key);
-  final String code;
+  ClassDetailPage({Key? key, this.code}) : super(key: key);
+  final String? code;
   @override
   _ClassDetailPageState createState() => _ClassDetailPageState();
 }
 
 class _ClassDetailPageState extends State<ClassDetailPage> {
-  Classgroup classgroup;
-  ClassgroupService classesService;
-  String code='';
+  Classgroup? classgroup;
+  late ClassgroupService classesService;
+  String? code='';
   bool userVerified = false;
 
   @override
@@ -22,9 +22,9 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
     super.initState();
     code = widget.code;
     classgroup = new Classgroup();
-    classgroup.name = '';
+    classgroup!.name = '';
     classesService = new ClassgroupService();
-    classesService.getClassgroup(code).then((value){
+    classesService.getClassgroup(code!).then((value){
       setState(() {
       classgroup=value.classgroup;
       });});
@@ -36,7 +36,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kTeacherColor,
-        title:Text('Clase ${classgroup.name}')
+        title:Text('Clase ${classgroup!.name}')
       ),
       body: Center(
         child:ListView(
@@ -59,7 +59,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
   Widget inputNombre(){
      return TextField(
       controller: new TextEditingController(
-        text: classgroup.name.toString()
+        text: classgroup!.name.toString()
       ),
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
@@ -75,7 +75,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
         icon: Icon(Icons.person)
       ),
       onChanged: (valor){
-           classgroup.name = valor;
+           classgroup!.name = valor;
       }
       ,
     );
@@ -85,7 +85,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
      return  TextField(
        enabled: false,
       controller: new TextEditingController(
-        text: classgroup.code.toString()
+        text: classgroup!.code.toString()
       ),
       decoration: InputDecoration(
         focusedBorder: OutlineInputBorder(
@@ -95,7 +95,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(20.0),
         ),
-        hintText: classgroup.code,
+        hintText: classgroup!.code,
         labelText: 'Codigo',
         suffixIcon: userVerified?Icon(Icons.verified_user):null,
         icon: Icon(Icons.person)
@@ -145,7 +145,7 @@ class _ClassDetailPageState extends State<ClassDetailPage> {
 
   _modificarClase() {
 
-    classesService.updateClassgroup(classgroup.code,classgroup).then((value){
+    classesService.updateClassgroup(classgroup!.code!,classgroup!).then((value){
      setState(() {
        Navigator.push(context, MaterialPageRoute(
             builder: (context) => ClassesPage(),

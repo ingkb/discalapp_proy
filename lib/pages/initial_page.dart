@@ -9,7 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class InitialPage extends StatefulWidget {
-  InitialPage({ Key key}) : super(key: key);
+  InitialPage({ Key? key}) : super(key: key);
 
   @override
   _InitialPageState createState() => _InitialPageState();
@@ -43,8 +43,8 @@ class _InitialPageState extends State<InitialPage> {
   bool _isBackDisabled = true;
   bool _isButtonDisabled = false;
 
-  SesionService sesionService;
-  ActiveUser usuarioTemporal;
+  late SesionService sesionService;
+  late ActiveUser usuarioTemporal;
   @override
   void initState() {
     sesionService = new SesionService();
@@ -324,7 +324,7 @@ class _InitialPageState extends State<InitialPage> {
               )),
         ));
   }
-  Student estudiante;
+  Student? estudiante;
   buscarUsuario(){
     
     final prefs = new PreferenciasUsuario();
@@ -356,10 +356,10 @@ class _InitialPageState extends State<InitialPage> {
 
     if(estudiante!=null && !buscando){
 
-      if (estudiante.classgroup != null) {
+      if (estudiante!.classgroup != null) {
           //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
-          sesionService.getAllSesion(estudiante.userId).then((respuesta){
-            if(respuesta.state == 0 && respuesta.sesions.isEmpty){
+          sesionService.getAllSesion(estudiante!.userId!).then((respuesta){
+            if(respuesta.state == 0 && respuesta.sesions!.isEmpty){
               Navigator.pushReplacementNamed(context, 'initialTest');
             }else{
               Navigator.pushNamed(context, 'menuStudent');

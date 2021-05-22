@@ -7,15 +7,15 @@ import 'package:discalapp_proy/models/teacher_model.dart';
 import 'package:provider/provider.dart';
 
 class RegisterTeacherPage extends StatefulWidget {
-  RegisterTeacherPage({Key key}) : super(key: key);
+  RegisterTeacherPage({Key? key}) : super(key: key);
 
   @override
   _RegisterTeacherPageState createState() => _RegisterTeacherPageState();
 }
 
 class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
-  Teacher teacher;
-  RegisterService registerService;
+  Teacher? teacher;
+  late RegisterService registerService;
   bool userVerified = false;
   final prefs = new PreferenciasUsuario();
   
@@ -73,7 +73,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
       ),
       onChanged: (valor){
         setState(() {
-           teacher.password = valor;
+           teacher!.password = valor;
         });
       }
       ,
@@ -98,7 +98,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
       ),
       onChanged: (valor){
         setState(() {
-           teacher.name = valor;
+           teacher!.name = valor;
         });
       }
       ,
@@ -123,7 +123,7 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
       ),
       onChanged: (valor){
         setState(() {
-           teacher.userId = valor;
+           teacher!.userId = valor;
         });
       }
       ,
@@ -183,15 +183,15 @@ class _RegisterTeacherPageState extends State<RegisterTeacherPage> {
 
   _registrarDocente() {
     final usuarioTemporal = Provider.of<ActiveUser>(context,listen:false);
-    registerService.registerTeacher(teacher).then((value){
+    registerService.registerTeacher(teacher!).then((value){
      if(value.state==0){
        usuarioTemporal.teacher = teacher;
-       prefs.teacherUserId = teacher.userId;
+       prefs.teacherUserId = teacher!.userId!;
       Navigator.pushReplacementNamed(context, 'classes');
      }else{
        showDialog(
          context: context,
-         builder:(_)=>alerta(value.message),
+         builder:(_)=>alerta(value.message!),
        );
      }
     }

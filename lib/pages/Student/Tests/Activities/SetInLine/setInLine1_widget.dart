@@ -9,8 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SetInLine1 extends StatefulWidget {
-  SetInLine1({Key key, this.pasarActividad}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
+  SetInLine1({Key? key, this.pasarActividad}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
   @override
   SetInLine1State createState() => SetInLine1State();
 }
@@ -38,7 +38,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue[900].withOpacity(0.5),
+            color: Colors.blue[900]!.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(2, 5), // changes position of shadow
@@ -112,7 +112,6 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         left: pos.dx,
         child: Draggable(
           //Elemento arrastrable
-          dragAnchor: DragAnchor.child,
           feedback: Container(
             // lo que se ve cuando se sostiene
             height: 110,
@@ -152,7 +151,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
               pos = getNewPosition(details.offset);
             });
           },
-          data: "num1",
+          data: "num1", dragAnchorStrategy: childDragAnchorStrategy,
         ));
   }
 
@@ -162,7 +161,6 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         left: pos2.dx,
         child: Draggable(
           //Elemento arrastrable
-          dragAnchor: DragAnchor.child,
           feedback: Container(
             // lo que se ve cuando se sostiene
             height: 110,
@@ -202,7 +200,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
               pos2 = getNewPosition(details.offset);
             });
           },
-          data: "num2",
+          data: "num2", dragAnchorStrategy: childDragAnchorStrategy,
         ));
   }
 
@@ -212,7 +210,6 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         left: pos3.dx,
         child: Draggable(
           //Elemento arrastrable
-          dragAnchor: DragAnchor.child,
           feedback: Container(
             // lo que se ve cuando se sostiene
             height: 110,
@@ -254,7 +251,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
               pos3 = getNewPosition(details.offset);
             });
           },
-          data: "num3",
+          data: "num3", dragAnchorStrategy: childDragAnchorStrategy,
         ));
   }
 
@@ -273,7 +270,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
       usuarioResultados.addResults(new ActivityResult(
           area: Areas.rectaNumerica, resultado: false, tiempo: 1));
     }
-    widget.pasarActividad(0);
+    widget.pasarActividad!(0);
   }
 
   validarResultado() {

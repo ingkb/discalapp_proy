@@ -16,22 +16,22 @@ import 'package:provider/provider.dart';
 import 'numerosARepresentar.dart';
 
 class NumberWrite extends StatefulWidget {
-  NumberWrite({Key key,  this.pasarActividad, this.indice}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  NumberWrite({Key? key,  this.pasarActividad, this.indice}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
   @override
   NumberWriteState createState() => NumberWriteState();
 }
 
 class NumberWriteState extends BaseActivity<NumberWrite> {
 
-  double borderWidth1;
-  double borderWidth2;
-  double borderWidth3;
-  int numeroActivi;
-  int selectedOption;
-  int respuesta;
-  ActivityResultService activityResultService;
+  late double borderWidth1;
+  late double borderWidth2;
+  late double borderWidth3;
+  int? numeroActivi;
+  int? selectedOption;
+  int? respuesta;
+  late ActivityResultService activityResultService;
   @override
   void initState() {
     
@@ -44,9 +44,9 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
     return marcoActividad("Selecciona la forma correcta de escribir el siguiente número",
       [
         textBoxNumero(),
-        textBox(1,numerosARepresentar[numeroActivi][1], borderWidth1, seleccionarTextbox),
-        textBox(2,numerosARepresentar[numeroActivi][2],borderWidth2, seleccionarTextbox),
-        textBox(3,numerosARepresentar[numeroActivi][3],borderWidth3, seleccionarTextbox),
+        textBox(1,numerosARepresentar[numeroActivi!]![1], borderWidth1, seleccionarTextbox),
+        textBox(2,numerosARepresentar[numeroActivi!]![2],borderWidth2, seleccionarTextbox),
+        textBox(3,numerosARepresentar[numeroActivi!]![3],borderWidth3, seleccionarTextbox),
         botonContinuar(respondido, widget.pasarActividad)
       ]
     );
@@ -62,14 +62,14 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
     
     var rng = new Random();
     this.numeroActivi = rng.nextInt(3);
-    this.respuesta = int.parse(numerosARepresentar[numeroActivi][4]);
+    this.respuesta = int.parse(numerosARepresentar[numeroActivi!]![4]);
   
   }
 
   textBoxNumero(){
     return Container(
       margin: EdgeInsets.symmetric(horizontal:30,vertical:10),
-      child: Text(numerosARepresentar[numeroActivi][0],style: GoogleFonts.getFont('Bubblegum Sans',
+      child: Text(numerosARepresentar[numeroActivi!]![0],style: GoogleFonts.getFont('Bubblegum Sans',
               fontSize: 40, fontWeight: FontWeight.w700, color:Colors.deepOrange )),
     );
   }

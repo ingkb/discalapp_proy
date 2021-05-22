@@ -8,19 +8,19 @@ import 'dart:ui';
 import 'operation1_list.dart';
 
 class OperationActivity extends StatefulWidget {
-  OperationActivity({Key key, @required this.numero, this.pasarActividad})
+  OperationActivity({Key? key, required this.numero, this.pasarActividad})
       : super(key: key);
   final int numero;
-  final ValueChanged<int> pasarActividad;
+  final ValueChanged<int>? pasarActividad;
   @override
   OperationActivityState createState() => OperationActivityState();
 }
 
 class OperationActivityState extends BaseActivity<OperationActivity> {
-  int n1, n2, resultado;
-  String operacion;
-  String texto;
-  int valorOperacion;
+  int? n1, n2, resultado;
+  String? operacion;
+  String? texto;
+  int? valorOperacion;
   @override
   void initState() {
     super.initState();
@@ -54,7 +54,7 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
         borderRadius: BorderRadius.all(Radius.circular(10)),
         boxShadow: [
           BoxShadow(
-            color: Colors.blue[900].withOpacity(0.5),
+            color: Colors.blue[900]!.withOpacity(0.5),
             spreadRadius: 5,
             blurRadius: 7,
             offset: Offset(2, 5), // changes position of shadow
@@ -135,10 +135,10 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
   }
 
   _generarNumeros() {
-    n1 = int.tryParse(operationsActivities[widget.numero][1]);
-    n2 = int.tryParse(operationsActivities[widget.numero][2]);
+    n1 = int.tryParse(operationsActivities[widget.numero]![1]);
+    n2 = int.tryParse(operationsActivities[widget.numero]![2]);
 
-    switch (operationsActivities[widget.numero][0]) {
+    switch (operationsActivities[widget.numero]![0]) {
       case 'suma':
         operacion = "+";
         texto = "Realiza la siguiente SUMA";
@@ -158,22 +158,22 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
   }
 
   validarDialog(){
-    int resultadoCorrecto = int.parse(operationsActivities[widget.numero][3]);
+    int resultadoCorrecto = int.parse(operationsActivities[widget.numero]![3]);
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
     
     if (resultado == resultadoCorrecto) {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: operationsActivities[widget.numero]![0],
           resultado: true,
           tiempo: 1));
     } else {
       usuarioResultados.addResults(new ActivityResult(
-          area: operationsActivities[widget.numero][0],
+          area: operationsActivities[widget.numero]![0],
           resultado: false,
           tiempo: 1));
     }
-    widget.pasarActividad(0);
+    widget.pasarActividad!(0);
   }
   validarResultado() {
     showConfirmationDialog(context,validarDialog);

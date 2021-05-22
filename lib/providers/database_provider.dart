@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:discalapp_proy/models/student_model.dart';
 import 'package:discalapp_proy/models/teacher_model.dart';
 import 'package:sqflite/sqflite.dart';
@@ -8,9 +10,9 @@ class DBProvider {
   DBProvider._();
 
   static final DBProvider db = DBProvider._();
-  static Database _database;
+  static Database? _database;
 
-  Future<Database> get database async {
+  Future<Database?> get database async {
     if (_database != null) {
       return _database;
     }
@@ -30,7 +32,7 @@ class DBProvider {
   }
 
   newStudent(Student student) async {
-    final db = await database;
+    final db = await (database as FutureOr<Database>);
 
     db.rawDelete('''
     DELETE FROM students
@@ -41,7 +43,7 @@ class DBProvider {
   }
 
   modifyStudent(Student student) async {
-    final db = await database;
+    final db = await (database as FutureOr<Database>);
 
     var res = await db.rawUpdate('''
     UPDATE students SET user = ?, password = ? WHERE id=1
@@ -49,8 +51,8 @@ class DBProvider {
     return res;
   }
 
-  Future<Student> getStudent() async {
-    final db = await database;
+  Future<Student?> getStudent() async {
+    final db = await (database as FutureOr<Database>);
     var res = await db.query("students");
     var student = Student();
     if (res.length == 0) {
@@ -58,10 +60,10 @@ class DBProvider {
     } else {
       var resMap = res[0];
 
-      if (resMap != null && resMap.isNotEmpty) {
+      if (resMap.isNotEmpty) {
         student = new Student(
-            userId: resMap['user'],
-            password: resMap['password'],
+            userId: resMap['user'] as String?,
+            password: resMap['password'] as String?,
             );
         return student;
       } else {
@@ -72,7 +74,7 @@ class DBProvider {
 
  // ------------------- Teacher metodos ------------------//
   newTeacher(Teacher teacher) async {
-    final db = await database;
+    final db = await (database as FutureOr<Database>);
 
     db.rawDelete('''
     DELETE FROM teachers
@@ -83,7 +85,7 @@ class DBProvider {
   }
 
   modifyTeacher(Teacher teacher) async {
-    final db = await database;
+    final db = await (database as FutureOr<Database>);
 
     var res = await db.rawUpdate('''
     UPDATE teachers SET user = ?, password = ? WHERE id=1
@@ -91,8 +93,8 @@ class DBProvider {
     return res;
   }
 
-  Future<Teacher> getTeacher() async {
-    final db = await database;
+  Future<Teacher?> getTeacher() async {
+    final db = await (database as FutureOr<Database>);
     var res = await db.query("teachers");
     var teacher = Teacher();
     if (res.length == 0) {
@@ -100,11 +102,11 @@ class DBProvider {
     } else {
       var resMap = res[0];
 
-      if (resMap != null && resMap.isNotEmpty) {
+      if (resMap.isNotEmpty) {
         teacher = new Teacher(
-            id: resMap['id'],
-            userId: resMap['user'],
-            password: resMap['password'],
+            id: resMap['id'] as String?,
+            userId: resMap['user'] as String?,
+            password: resMap['password'] as String?,
             );
         return teacher;
       } else {

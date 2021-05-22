@@ -7,11 +7,11 @@ class AreaResult {
          this.sesionId
     });
 
-    int preguntas;
-    int aciertos;
-    double tiempo;
-    String sesionId;
-    String area;
+    int? preguntas;
+    int? aciertos;
+    double? tiempo;
+    String? sesionId;
+    String? area;
 
     factory AreaResult.fromJson(Map<String, dynamic> json) => AreaResult(
         preguntas: json["preguntas"] == null ? null : json["preguntas"],

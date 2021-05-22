@@ -5,7 +5,7 @@ import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/material.dart';
 
 class AddClassgroup extends StatefulWidget {
-  AddClassgroup({Key key}) : super(key: key);
+  AddClassgroup({Key? key}) : super(key: key);
 
   @override
   _AddClassgroupState createState() => _AddClassgroupState();
@@ -13,8 +13,8 @@ class AddClassgroup extends StatefulWidget {
 
 class _AddClassgroupState extends State<AddClassgroup> {
 
-  Classgroup classgroup;
-  ClassgroupService classesService;
+  late Classgroup classgroup;
+  late ClassgroupService classesService;
   bool userVerified = false;
   final prefs = new PreferenciasUsuario();
 

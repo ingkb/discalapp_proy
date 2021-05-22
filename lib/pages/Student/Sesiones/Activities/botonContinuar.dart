@@ -1,7 +1,7 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:flutter/material.dart';
 
-Widget botonContinuar(bool respondido, funcion(int n)) {
+Widget botonContinuar(bool respondido, funcion(int n)?) {
   if (respondido) {
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
@@ -15,7 +15,7 @@ Widget botonContinuar(bool respondido, funcion(int n)) {
                 size: 50,
               ),
               onPressed: () {
-                funcion(0);
+                funcion!(0);
               })
         ],
         mainAxisAlignment: MainAxisAlignment.end,

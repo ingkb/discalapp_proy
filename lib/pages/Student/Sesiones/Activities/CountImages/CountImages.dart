@@ -12,17 +12,17 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class CountImages extends StatefulWidget {
-  CountImages({Key key, this.pasarActividad, this.indice}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  CountImages({Key? key, this.pasarActividad, this.indice}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
   @override
   CountImagesState createState() => CountImagesState();
 }
 
 class CountImagesState extends BaseActivity<CountImages> {
-  int n1;
-  int resultado;
-  ActivityResultService activityResultService;
+  int? n1;
+  int? resultado;
+  late ActivityResultService activityResultService;
   bool respondido= false;
   @override
   void initState() {
@@ -65,7 +65,7 @@ class CountImagesState extends BaseActivity<CountImages> {
     );
   }
 
-  List<Widget> filas(int numero) {
+  List<Widget> filas(int? numero) {
     List<Widget> filasCajas = [];
     switch (numero) {
       case 3:

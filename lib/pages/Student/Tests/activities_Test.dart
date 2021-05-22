@@ -6,22 +6,22 @@ import 'Activities/Operations/operation_widget.dart';
 import 'Activities/SetInLine/setInLine1_widget.dart';
 
 class ActividadesTest {
-  ValueChanged<int> pasarActividadfn;
-  Map<int, GlobalKey<BaseActivity>> keys;
+  ValueChanged<int>? pasarActividadfn;
+  late Map<int?, GlobalKey<BaseActivity>> keys;
 
   int compareQuant;
   int operations;
   int setInLine;
   //int nuevaActividad;
 
-  List<Widget> actividades;
-  int numActual;
+  List<Widget>? actividades;
+  int numActual = 0;
 
   //ACTIVIDADES EN ORDEN
   //Agregar aqui el numero de actividades nueva
   ActividadesTest(this.compareQuant, this.setInLine, this.operations, 
     ValueChanged<int> pasarActividad) {
-    keys = new Map<int, GlobalKey<BaseActivity>>();
+    keys = new Map<int?, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.numActual = 0;
 
@@ -34,21 +34,21 @@ class ActividadesTest {
     for (int i = 1; i <= compareQuant; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<CompareActivity1State>();
-      actividades.add(CompareActivity1(
+      actividades!.add(CompareActivity1(
           key: keys[numActual], numero: i, pasarActividad: pasarActividadfn));
     }
     
     for (int i = 1; i <= setInLine; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<SetInLine1State>();
-      actividades.add(
+      actividades!.add(
           SetInLine1(key: keys[numActual], pasarActividad: pasarActividadfn));
     }
 
     for (int i = 1; i <= operations; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<OperationActivityState>();
-      actividades.add(OperationActivity(
+      actividades!.add(OperationActivity(
           key: keys[numActual],numero: i,pasarActividad: pasarActividadfn));
     }
    
@@ -60,11 +60,11 @@ class ActividadesTest {
     // }
   }
 
-  List<Widget> getActivities() {
+  List<Widget>? getActivities() {
     return actividades;
   }
 
-  validarResultado(int numero) {
-    return keys[numero].currentState.validarResultado();
+  validarResultado(int? numero) {
+    return keys[numero]!.currentState!.validarResultado();
   }
 }

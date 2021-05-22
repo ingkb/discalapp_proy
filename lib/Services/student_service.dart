@@ -19,7 +19,7 @@ class StudentService{
   }
 
   Future<DefaultResponse> upadateStudent(Student student) async{
-    var url = Uri.parse(BaseUrl+'/students/'+student.userId);
+    var url = Uri.parse(BaseUrl+'/students/'+student.userId!);
     final http.Response response = await http.patch(url, 
       body: json.encode(student.toJson()),
       headers: <String, String>{
@@ -57,8 +57,8 @@ class DefaultResponse {
         this.message,
     });
 
-    int state;
-    String message;
+    int? state;
+    String? message;
     factory DefaultResponse.fromJson(Map<String, dynamic> json) => DefaultResponse(
         state: json["state"],
         message: json["message"]
@@ -72,8 +72,8 @@ class SearchStudentsResponse{
     this.students
   });
 
-  int state;
-  List<Student> students;
+  int? state;
+  List<Student>? students;
 
    factory SearchStudentsResponse.fromJson(Map<String, dynamic> json) => SearchStudentsResponse(
         state: json["state"],

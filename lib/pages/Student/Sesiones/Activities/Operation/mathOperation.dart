@@ -13,20 +13,20 @@ import 'package:provider/provider.dart';
 import '../botonContinuar.dart';
 
 class MathOperation extends StatefulWidget {
-  MathOperation({Key key, this.pasarActividad, this.indice}) : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  MathOperation({Key? key, this.pasarActividad, this.indice}) : super(key: key);
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
   @override
   MathOperationState createState() => MathOperationState();
 }
 
 class MathOperationState extends BaseActivity<MathOperation> {
-  int n1, n2, resultado, respuestaCorrecta;
-  String operacion;
-  String area;
-  String texto;
-  int valorOperacion;
-  ActivityResultService activityResultService;
+  int? n1, n2, resultado, respuestaCorrecta;
+  String? operacion;
+  String? area;
+  late String texto;
+  int? valorOperacion;
+  late ActivityResultService activityResultService;
   bool respondido = false;
   @override
   void initState() {
@@ -145,18 +145,18 @@ class MathOperationState extends BaseActivity<MathOperation> {
         area = Areas.suma;
         operacion = "+";
         texto = "Realiza la siguiente SUMA";
-        respuestaCorrecta = n1 + n2;
+        respuestaCorrecta = n1! + n2!;
         break;
       case 1:
         area = Areas.resta;
         operacion = "-";
         texto = "Realiza la siguiente RESTA";
-        if (n1 < n2) {
+        if (n1! < n2!) {
           var temp = n1;
           n1 = n2;
           n2 = temp;
         }
-        respuestaCorrecta = n1 - n2;
+        respuestaCorrecta = n1! - n2!;
         break;
       case 2:
         n1 = rng.nextInt(10);
@@ -164,7 +164,7 @@ class MathOperationState extends BaseActivity<MathOperation> {
         area = Areas.multiplicacion;
         operacion = "x";
         texto = "Realiza la siguiente MULTIPLICACIÓN";
-        respuestaCorrecta = n1 * n2;
+        respuestaCorrecta = n1! * n2!;
         break;
       default:
         operacion = ".";

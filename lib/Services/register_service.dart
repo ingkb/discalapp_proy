@@ -46,8 +46,8 @@ class DefaultResponse {
         this.message,
     });
 
-    int state;
-    String message;
+    int? state;
+    String? message;
     factory DefaultResponse.fromJson(Map<String, dynamic> json) => DefaultResponse(
         state: json["state"],
         message: json["message"]

@@ -13,19 +13,19 @@ import 'package:provider/provider.dart';
 import 'casilla.dart';
 
 class AddingApplesActivity extends StatefulWidget {
-  AddingApplesActivity({Key key, this.pasarActividad, this.indice})
+  AddingApplesActivity({Key? key, this.pasarActividad, this.indice})
       : super(key: key);
-  final ValueChanged<int> pasarActividad;
-  final int indice;
+  final ValueChanged<int>? pasarActividad;
+  final int? indice;
   @override
   AddingApplesActivityState createState() => AddingApplesActivityState();
 }
 
 class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
-  int n1;
-  int n2;
-  int resultado;
-  ActivityResultService activityResultService;
+  late int n1;
+  int? n2;
+  late int resultado;
+  late ActivityResultService activityResultService;
   bool respondido = false;
   @override
   void initState() {

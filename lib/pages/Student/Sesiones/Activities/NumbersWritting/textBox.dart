@@ -15,7 +15,7 @@ Widget textBox(int n,String numero, double borderW, fnSeleccionar(int n)) {
               fontSize: 30, fontWeight: FontWeight.w700, color:Colors.black )),
     ),
     decoration: BoxDecoration(
-        border: Border.all(width: borderW, color: Colors.orange[800]),
+        border: Border.all(width: borderW, color: Colors.orange[800]!),
         image: DecorationImage(
             image: AssetImage('assets/images/cuadromadera.jpg'),
             fit: BoxFit.fill)),

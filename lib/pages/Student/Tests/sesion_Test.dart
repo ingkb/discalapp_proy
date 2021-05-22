@@ -11,17 +11,17 @@ import '../../../constants.dart';
 import 'activities_Test.dart';
 
 class SesionTestPage extends StatefulWidget {
-  SesionTestPage({Key key}) : super(key: key);
+  SesionTestPage({Key? key}) : super(key: key);
 
   @override
   Sesion1State createState() => Sesion1State();
 }
 
 class Sesion1State extends State<SesionTestPage> {
-  int numActividades;
-  int actividadActual;
-  List<Widget> listaActividades;
-  ActividadesTest actividades;
+  late int numActividades;
+  int actividadActual = 0;
+  List<Widget>? listaActividades;
+  late ActividadesTest actividades;
 
   @override
   void initState() {
@@ -37,13 +37,11 @@ class Sesion1State extends State<SesionTestPage> {
   Widget build(BuildContext context) {
     double porcent = 0;
     int actividadMostrar;
-    if (actividadActual != null) {
-      porcent = actividadActual / numActividades;
-    }
-    if (actividadActual - 1 < listaActividades.length) {
+    porcent = actividadActual / numActividades;
+    if (actividadActual - 1 < listaActividades!.length) {
       actividadMostrar = actividadActual - 1;
     } else {
-      actividadMostrar = listaActividades.length - 1;
+      actividadMostrar = listaActividades!.length - 1;
     }
     return Scaffold(
         appBar: AppBar(
@@ -62,7 +60,7 @@ class Sesion1State extends State<SesionTestPage> {
               transitionBuilder: (child, animation) {
                 return ScaleTransition(scale: animation, child: child);
               },
-              child: listaActividades[actividadMostrar],
+              child: listaActividades![actividadMostrar],
             )
           ],
         ),
@@ -111,10 +109,10 @@ class Sesion1State extends State<SesionTestPage> {
     ActiveUser usuarioResultados = Provider.of<ActiveUser>(context, listen: false);
     var sesionService = new SesionService();
       sesionService.addSesion(
-        new Sesion(student: usuarioResultados.student.userId, tipo: 0, fecha: DateTime.now(), estado: true)
+        new Sesion(student: usuarioResultados.student!.userId, tipo: 0, fecha: DateTime.now(), estado: true)
         ).then((value) {
           if(value.state==0){
-            List<ActivityResult> results = usuarioResultados.resultados;
+            List<ActivityResult> results = usuarioResultados.resultados??[];
             results.forEach((element) {element.sesionId = value.sesionId;});
             activityService.addGroupActivityResult(RegisterAcitivityGroupRequest(activities:results)).then((value) {print(value.message);});
           }

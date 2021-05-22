@@ -7,33 +7,33 @@ import 'package:flutter/material.dart';
 class ActiveUser with ChangeNotifier{
 
 
-  Teacher _teacher;
-  Student _student;
+  Teacher? _teacher;
+  Student? _student;
   
-  String _sesionId;
-  List<ActivityResult> _resultados;
+  String _sesionId = '';
+  List<ActivityResult>? _resultados;
 
-  get sesionId{
+  String get sesionId{
     return _sesionId;
   }
-  get teacher {
+  Teacher? get teacher {
     return _teacher;
   }
 
-  Student get student {
+  Student? get student {
     return _student;
   }
 
-  get resultados {
+  List<ActivityResult>? get resultados {
     return _resultados;
   }
 
-  set teacher(Teacher teach){
+  set teacher(Teacher? teach){
     this._teacher = teach;
     notifyListeners();
   }
 
- set student(Student stud){
+ set student(Student? stud){
     this._student = stud;
     notifyListeners();
   }
@@ -43,7 +43,7 @@ class ActiveUser with ChangeNotifier{
     notifyListeners();
   }
 
-  set resultados(List<ActivityResult> results){
+  set resultados(List<ActivityResult>? results){
     this._resultados = results;
     notifyListeners();
   }
@@ -52,15 +52,15 @@ class ActiveUser with ChangeNotifier{
     if(this._resultados==null){
       this._resultados=[];
     }
-    this._resultados.add(result);
+    this._resultados!.add(result);
     notifyListeners();
   }
 
   getAciertosArea(String area){
     int aciertos=0;
-    for (ActivityResult result in _resultados) {
+    for (ActivityResult result in _resultados!) {
       if(result.area == area ){
-        if(result.resultado){
+        if(result.resultado!){
           aciertos++;
         }
       }
@@ -70,7 +70,7 @@ class ActiveUser with ChangeNotifier{
 
   getTotalArea(String area){
     int totalArea = 0;
-    for (ActivityResult result in _resultados) {
+    for (ActivityResult result in _resultados!) {
       if(result.area == area ){
         totalArea++;
       }

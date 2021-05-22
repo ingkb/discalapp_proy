@@ -4,7 +4,7 @@ import 'package:google_fonts/google_fonts.dart';
 import '../../constants.dart';
 
 class MenuPage extends StatefulWidget {
-  MenuPage({Key key}) : super(key: key);
+  MenuPage({Key? key}) : super(key: key);
 
   @override
   _MenuPageState createState() => _MenuPageState();
@@ -35,7 +35,7 @@ class _MenuPageState extends State<MenuPage> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
 
   void _openEndDrawer() {
-    _scaffoldKey.currentState.openEndDrawer();
+    _scaffoldKey.currentState!.openEndDrawer();
   }
 
   // void _closeEndDrawer() {

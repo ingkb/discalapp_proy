@@ -94,8 +94,8 @@ class SearchAllActivityResultResponse {
         this.activityResults,
     });
 
-    int state;
-    List<ActivityResult> activityResults;
+    int? state;
+    List<ActivityResult>? activityResults;
 
     factory SearchAllActivityResultResponse.fromJson(Map<String, dynamic> json) => SearchAllActivityResultResponse(
         state: json["state"],
@@ -110,9 +110,9 @@ class SearchActivityResultResponse {
         this.activityResult,
     });
 
-    int state;
-    String message;
-    ActivityResult activityResult;
+    int? state;
+    String? message;
+    ActivityResult? activityResult;
 
     factory SearchActivityResultResponse.fromJson(Map<String, dynamic> json) => SearchActivityResultResponse(
         state: json["state"],
@@ -127,8 +127,8 @@ class RegisterActivityResultResponse {
         this.state,
         this.message,
     });
-    int state;
-    String message;
+    int? state;
+    String? message;
 
     factory RegisterActivityResultResponse.fromJson(Map<String, dynamic> json) => RegisterActivityResultResponse(
        state: json["state"],
@@ -142,7 +142,7 @@ class RegisterAcitivityGroupRequest{
   });
 
   Map toJson() => {"activities": activities == null ? null : activities};
-  List<ActivityResult> activities;
+  List<ActivityResult>? activities;
 }
 
 class SearchSesionResultResponse{
@@ -156,14 +156,14 @@ class SearchSesionResultResponse{
     this.conteo,
     this.rectaNumerica
   });
-  int state;
-  double suma;
-  double resta;
-  double multiplicacion;
-  double escritura;
-  double comparacion;
-  double conteo;
-  double rectaNumerica;
+  int? state;
+  double? suma;
+  double? resta;
+  double? multiplicacion;
+  double? escritura;
+  double? comparacion;
+  double? conteo;
+  double? rectaNumerica;
 /* 
   factory SearchSesionResultResponse.fromJson(Map<String, dynamic> json) => SearchSesionResultResponse(
         state: json["state"],
