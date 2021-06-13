@@ -1,6 +1,7 @@
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
 import 'package:discalapp_proy/models/student_model.dart';
+import 'package:discalapp_proy/pages/Teacher/Results/student_sesionResuls_page.dart';
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import '../../../constants.dart';
@@ -20,7 +21,7 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
   List<Sesion> sesions = [];
   List<Sesion> daySesions = [];
   DateTime? _firstday;
-  DateTime? _lastday;
+  DateTime _lastday = DateTime.now().add(const Duration(days: 30));
   @override
   void initState() {
     getSesions();
@@ -62,6 +63,7 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
 
         setState(() {
           _firstday = firstday;
+          _focusedDay = lastday;
           _lastday = lastday;
         });
       }
@@ -85,7 +87,7 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
                   color: Colors.grey[400], shape: BoxShape.circle),
               todayTextStyle: TextStyle(fontWeight: FontWeight.w600)),
           firstDay: _firstday ?? DateTime.now(),
-          lastDay: _lastday ?? DateTime.now().add(const Duration(days: 30)),
+          lastDay: _lastday  ,
           focusedDay: _focusedDay,
           calendarFormat: _calendarFormat,
           selectedDayPredicate: (day) {
@@ -172,14 +174,14 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
         ),
         trailing: ElevatedButton(
           onPressed: () async {
-            // await Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //     builder: (context) =>
-            //         StudentSesionsPage(student: student),
-            //   ),
-            // );
-            // setState(() {});
+            await Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) =>
+                    StudentSesionResult(sesion: element),
+              ),
+            );
+            setState(() {});
           },
           style: ElevatedButton.styleFrom(
             padding: EdgeInsets.symmetric(horizontal: 1),
