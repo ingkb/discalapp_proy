@@ -81,9 +81,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
           margin: EdgeInsets.only(right: 15, top: 10),
           child: TextField(
             keyboardType: TextInputType.number,
-            textAlign: TextAlign.end,
+            textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
             decoration: InputDecoration(
                 //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
                 hintText: '?',
@@ -94,13 +94,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
               });
             },
           )),
-      Container(
-          margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-          child: Text(
-            "+",
-            style: TextStyle(
-                fontSize: 35, color: Colors.black, fontWeight: FontWeight.w500),
-          )),
+      signo(),
       Container(
           width: 100,
           margin: EdgeInsets.only(right: 15, top: 10),
@@ -108,7 +102,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
             decoration: InputDecoration(
                 //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
                 hintText: '?',
@@ -128,9 +122,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
         margin: EdgeInsets.only(right: 15, top: 10),
         child: TextField(
           keyboardType: TextInputType.number,
-          textAlign: TextAlign.end,
+          textAlign: TextAlign.center,
           style: TextStyle(
-              color: Colors.black, fontSize: 40, fontWeight: FontWeight.w500),
+              color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
           decoration: InputDecoration(
               //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
               hintText: 'Respuesta',
@@ -221,16 +215,16 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget numero(String imgUrl) {
     return Container(
-        height: 80,
-        width: 80,
+        height: 60,
+        width: 60,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Image(image: AssetImage('assets/images/numeros/' + imgUrl)));
   }
 
   Widget signo() {
     return Container(
-        height: 80,
-        width: 80,
+        height: 60,
+        width: 60,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Image(
             image: AssetImage('assets/images/numeros/plus-24844_1280.png')));
@@ -238,9 +232,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget flecha() {
     return Container(
-        height: 80,
-        width: 80,
-        padding: EdgeInsets.symmetric(horizontal: 10),
+        height: 60,
+        width: 60,
+        padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Image(image: AssetImage('assets/images/numeros/flecha-12.png')));
   }
 
@@ -252,6 +246,12 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
   Widget fila2() {
     return Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: [flecha(), flecha()]);
+        children: [flecha(), separador(), flecha()]);
+  }
+
+  Widget separador() {
+    return Container(
+      width: 170,
+    );
   }
 }

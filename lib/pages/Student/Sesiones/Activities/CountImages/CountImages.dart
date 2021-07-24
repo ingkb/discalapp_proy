@@ -23,7 +23,7 @@ class CountImagesState extends BaseActivity<CountImages> {
   int? n1;
   int? resultado;
   late ActivityResultService activityResultService;
-  bool respondido= false;
+  bool respondido = false;
   @override
   void initState() {
     super.initState();
@@ -159,7 +159,9 @@ class CountImagesState extends BaseActivity<CountImages> {
             area: Areas.conteo,
             resultado: true,
             tiempo: 1));
-        showCorrectAnsDialog(context, () {setState(() {});});
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
       } else {
         activityResultService.addActivityResult(new ActivityResult(
             indice: widget.indice,
@@ -167,7 +169,9 @@ class CountImagesState extends BaseActivity<CountImages> {
             area: Areas.conteo,
             resultado: false,
             tiempo: 1));
-        showWrongAnsDialog(context, () {setState(() {});});
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
       }
     }
   }
