@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'numerosARepresentar.dart';
 
 class NumberWrite extends StatefulWidget {
-  NumberWrite({Key? key,  this.pasarActividad, this.indice}) : super(key: key);
+  NumberWrite({Key? key, this.pasarActividad, this.indice}) : super(key: key);
   final ValueChanged<int>? pasarActividad;
   final int? indice;
   @override
@@ -24,7 +24,6 @@ class NumberWrite extends StatefulWidget {
 }
 
 class NumberWriteState extends BaseActivity<NumberWrite> {
-
   late double borderWidth1;
   late double borderWidth2;
   late double borderWidth3;
@@ -34,47 +33,54 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   late ActivityResultService activityResultService;
   @override
   void initState() {
-    
     inicializar();
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Selecciona la forma correcta de escribir el siguiente número",
-      [
-        textBoxNumero(),
-        textBox(1,numerosARepresentar[numeroActivi!]![1], borderWidth1, seleccionarTextbox),
-        textBox(2,numerosARepresentar[numeroActivi!]![2],borderWidth2, seleccionarTextbox),
-        textBox(3,numerosARepresentar[numeroActivi!]![3],borderWidth3, seleccionarTextbox),
-        botonContinuar(respondido, widget.pasarActividad)
-      ]
-    );
+    return marcoActividad(
+        "Selecciona la forma correcta de escribir el siguiente número", [
+      textBoxNumero(),
+      textBox(1, numerosARepresentar[numeroActivi!]![1], borderWidth1,
+          seleccionarTextbox),
+      textBox(2, numerosARepresentar[numeroActivi!]![2], borderWidth2,
+          seleccionarTextbox),
+      textBox(3, numerosARepresentar[numeroActivi!]![3], borderWidth3,
+          seleccionarTextbox),
+      botonContinuar(respondido, widget.pasarActividad)
+    ]);
   }
 
-
-  inicializar(){
-
+  inicializar() {
     this.selectedOption = 0;
     this.borderWidth1 = 1;
     this.borderWidth2 = 1;
     this.borderWidth3 = 1;
-    
+
     var rng = new Random();
     this.numeroActivi = rng.nextInt(3);
     this.respuesta = int.parse(numerosARepresentar[numeroActivi!]![4]);
-  
   }
 
-  textBoxNumero(){
+  textBoxNumero() {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal:30,vertical:10),
-      child: Text(numerosARepresentar[numeroActivi!]![0],style: GoogleFonts.getFont('Bubblegum Sans',
-              fontSize: 40, fontWeight: FontWeight.w700, color:Colors.deepOrange )),
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 10),
+      child: Text(numerosARepresentar[numeroActivi!]![0],
+          style: GoogleFonts.getFont('Bubblegum Sans',
+              fontSize: 40,
+              fontWeight: FontWeight.w700,
+              color: Colors.deepOrange)),
     );
   }
 
-  seleccionarTextbox(int n){
+  /*
+convertirNumeaWidg(){
+  // leer el char del numero , luego hacer una row que coja ese numero 
+  numerosARepresentar[numeroActivi!]![0]
+}
+*/
+  seleccionarTextbox(int n) {
     borderWidth1 = 1;
     borderWidth2 = 1;
     borderWidth3 = 1;
@@ -82,10 +88,10 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
       case 1:
         borderWidth1 = 7;
         break;
-       case 2:
+      case 2:
         borderWidth2 = 7;
         break;
-       case 3:
+      case 3:
         borderWidth3 = 7;
         break;
       default:
@@ -94,31 +100,36 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
       selectedOption = n;
     });
   }
-  bool respondido= false;
+
+  bool respondido = false;
   @override
   validarResultado() {
-    if(!respondido){
+    if (!respondido) {
       respondido = true;
       ActiveUser usuarioResultados =
-        Provider.of<ActiveUser>(context, listen: false);
-        activityResultService= new ActivityResultService();
-    if (selectedOption == respuesta) {
-      activityResultService.addActivityResult(new ActivityResult(
-          indice: widget.indice,
-          sesionId: usuarioResultados.sesionId,
-          area: Areas.escritura,
-          resultado: true,
-          tiempo: 1));
-      showCorrectAnsDialog(context, (){setState(() {});});
-    } else {
-       activityResultService.addActivityResult(new ActivityResult(
-         indice: widget.indice,
-          sesionId: usuarioResultados.sesionId,
-          area: Areas.escritura,
-          resultado: false,
-          tiempo: 1));
-      showWrongAnsDialog(context,  (){setState(() {});});
-    }
+          Provider.of<ActiveUser>(context, listen: false);
+      activityResultService = new ActivityResultService();
+      if (selectedOption == respuesta) {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.escritura,
+            resultado: true,
+            tiempo: 1));
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
+      } else {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.escritura,
+            resultado: false,
+            tiempo: 1));
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
+      }
     }
   }
 }
