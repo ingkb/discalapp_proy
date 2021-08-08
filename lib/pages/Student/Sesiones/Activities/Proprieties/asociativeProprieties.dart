@@ -2,6 +2,7 @@ import 'dart:math';
 import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/botonContinuar.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/mapaNumeroImagen.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
@@ -31,7 +32,6 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       respuestacorrecta2,
       respuestacorrecta3;
 
-  String? firstNumber, secondNumber, thirdNumber, fourthNumber;
   late ActivityResultService activityResultService;
   @override
   void initState() {
@@ -62,13 +62,13 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          numero(firstNumber!),
+          numero(n1!),
           signo(),
-          numero(secondNumber!),
+          numero(n2!),
           signo(),
-          numero(thirdNumber!),
+          numero(n3!),
           signo(),
-          numero(fourthNumber!)
+          numero(n4!)
         ],
       ),
     );
@@ -146,37 +146,6 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     respuestacorrecta1 = n1! + n2!;
     respuestacorrecta2 = n3! + n4!;
     respuestacorrecta3 = respuestacorrecta1! + respuestacorrecta2!;
-    firstNumber = convertirNumero(n1!);
-    secondNumber = convertirNumero(n2!);
-    thirdNumber = convertirNumero(n3!);
-    fourthNumber = convertirNumero(n4!);
-  }
-
-  convertirNumero(int numbe) {
-    switch (numbe) {
-      case 0:
-        return "0.png";
-      case 1:
-        return "1.png";
-      case 2:
-        return "2.png";
-      case 3:
-        return "3.png";
-      case 4:
-        return "4.png";
-      case 5:
-        return "5.png";
-      case 6:
-        return "6.png";
-      case 7:
-        return "7.png";
-      case 8:
-        return "8.png";
-      case 9:
-        return "9.png";
-
-      default:
-    }
   }
 
   bool respondido = false;
@@ -213,12 +182,12 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     }
   }
 
-  Widget numero(String imgUrl) {
+  Widget numero(int numero) {
     return Container(
         height: 60,
         width: 60,
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Image(image: AssetImage('assets/images/numeros/' + imgUrl)));
+        child: mapaNumeroImagenes[numero]);
   }
 
   Widget signo() {
