@@ -33,6 +33,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             SizedBox(height: 20),
             inputEdad(),
             SizedBox(height: 20),
+            inputGrado(),
+            SizedBox(height: 20),
             inputNombre(),
             SizedBox(height: 20),
             nextPage()
@@ -87,6 +89,29 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     );
   }
 
+  Widget inputGrado() {
+    return TextField(
+      keyboardType: TextInputType.number,
+      decoration: InputDecoration(
+          focusedBorder: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+          ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(20.0),
+          ),
+          hintText: 'Grado',
+          labelText: 'Grado',
+          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
+          icon: Icon(Icons.class_)),
+      onChanged: (valor) {
+        setState(() {
+          student!.grade = int.parse(valor);
+        });
+      },
+    );
+  }
+
   Widget avatarImage() {
     return Container(
         width: 200,
@@ -108,8 +133,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             primary: kAlumnColor,
           ),
           onPressed: () {
-            if(student!.age != null && student!.name != null)
-            Navigator.pushNamed(context, 'registerStudent2', arguments: student);
+            if (student!.age != null && student!.name != null)
+              Navigator.pushNamed(context, 'registerStudent2',
+                  arguments: student);
           },
           child: Text('Siguiente',
               style: TextStyle(fontSize: 25, color: Colors.white))),

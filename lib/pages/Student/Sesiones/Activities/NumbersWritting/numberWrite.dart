@@ -13,6 +13,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
+import '../mapaNumeroImagen.dart';
 import 'numerosARepresentar.dart';
 
 class NumberWrite extends StatefulWidget {
@@ -41,7 +42,8 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   Widget build(BuildContext context) {
     return marcoActividad(
         "Selecciona la forma correcta de escribir el siguiente número", [
-      textBoxNumero(),
+      //textBoxNumero(),
+      convertirNumeaWidg(),
       textBox(1, numerosARepresentar[numeroActivi!]![1], borderWidth1,
           seleccionarTextbox),
       textBox(2, numerosARepresentar[numeroActivi!]![2], borderWidth2,
@@ -54,9 +56,9 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
 
   inicializar() {
     this.selectedOption = 0;
-    this.borderWidth1 = 1;
-    this.borderWidth2 = 1;
-    this.borderWidth3 = 1;
+    this.borderWidth1 = 0;
+    this.borderWidth2 = 0;
+    this.borderWidth3 = 0;
 
     var rng = new Random();
     this.numeroActivi = rng.nextInt(3);
@@ -74,16 +76,32 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
     );
   }
 
-  /*
-convertirNumeaWidg(){
-  // leer el char del numero , luego hacer una row que coja ese numero 
-  numerosARepresentar[numeroActivi!]![0]
-}
-*/
+  Widget convertirNumeaWidg() {
+    // leer el char del numero , luego hacer una row que coja ese numero
+    String numeroOriginal = numerosARepresentar[numeroActivi!]![0];
+
+    List<Widget> numeros = [];
+    for (var i = 0; i < numeroOriginal.length; i++) {
+      numeros.add(numero(int.parse(numeroOriginal[i])));
+    }
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: numeros,
+    );
+  }
+
+  Widget numero(int numero) {
+    return Container(
+        height: 60,
+        width: 60,
+        padding: EdgeInsets.symmetric(horizontal: 10),
+        child: mapaNumeroImagenes[numero]);
+  }
+
   seleccionarTextbox(int n) {
-    borderWidth1 = 1;
-    borderWidth2 = 1;
-    borderWidth3 = 1;
+    borderWidth1 = 0;
+    borderWidth2 = 0;
+    borderWidth3 = 0;
     switch (n) {
       case 1:
         borderWidth1 = 7;
