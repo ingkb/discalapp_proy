@@ -39,7 +39,8 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
           backgroundColor: kTeacherColor,
           title: Text('Resultados sesion'),
         ),
-        body: listResults());
+        body: Container(
+            margin: EdgeInsets.only(top: 20, right: 20), child: listResults()));
   }
 
   List<AreaResult> areasResult = List.generate(
@@ -91,22 +92,87 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
     List<Widget> results = [];
 
     this.areasResult.forEach((element) {
-
+      double porcenjateNum = 0;
       String porcentaje = "No";
       try {
-        double value = (element.aciertos / element.preguntas)*100;
-        porcentaje = value.toInt().toString() +'%';
-      } catch (e) {
-      }
+        porcenjateNum = (element.aciertos / element.preguntas);
+        porcentaje = (porcenjateNum * 100).toInt().toString() + '%';
+      } catch (e) {}
+      if (element.preguntas > 0) {
+        Widget temp = Container(
+          width: 400,
+          height: 60,
+          margin: EdgeInsets.symmetric(vertical: 5, horizontal: 10),
+          child: Column(
+            children: [
+              Row(
+                children: [
+                  Text(element.area,
+                      style:
+                          TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  Expanded(child: SizedBox()),
+                  Text(element.tiempo.toString())
+                ],
+              ),
+              Row(
+                children: [
+                  barraPorcentaje(porcenjateNum),
+                  Container(
+                      margin: EdgeInsets.only(left: 4), child: Text(porcentaje))
+                ],
+              )
+            ],
+          ),
+        );
 
-      Widget temp = ListTile(
-        title: Text(element.area),
-        trailing: Text(porcentaje),
-      );
-      results.add(temp);
+        results.add(temp);
+      }
     });
     return ListView(
       children: results,
     );
+  }
+
+  Widget barraPorcentaje(double porcentaje) {
+    double maxWidth = 260;
+    double progressLenght = (maxWidth * porcentaje);
+    return Container(
+      height: 22,
+      width: maxWidth,
+      margin: EdgeInsets.symmetric(vertical: 4, horizontal: 2),
+      decoration: BoxDecoration(
+        color: Colors.grey[300],
+        borderRadius: BorderRadius.all(Radius.circular(30)),
+      ),
+      child: Align(
+        alignment: Alignment.topLeft,
+        child: Container(
+          height: 20,
+          width: progressLenght,
+          decoration: BoxDecoration(
+            color: getColor(porcentaje),
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+            boxShadow: [
+              BoxShadow(
+                color: getColor(porcentaje).withOpacity(0.5),
+                spreadRadius: 2,
+                blurRadius: 3,
+                offset: Offset(1, 2), // changes position of shadow
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Color getColor(porcentaje){
+    if(porcentaje<=0.4){
+      return Color(0xFFC53F3F);
+    }else if(porcentaje<=0.65){
+      return Color(0xFF523FC5);
+    }else{
+      return Color(0xFF3FC544);
+    }
   }
 }
