@@ -130,7 +130,7 @@ class Sesion1State extends State<Sesion1> {
                   lastSesion = sesionElement;
                 }
                 if (sesionElement.estado == false) {
-                  usuario.sesionId =  sesionElement.id??'';
+                  usuario.sesionId = sesionElement.id ?? '';
                   sesionSinterminar = true;
                 }
               })
@@ -165,40 +165,16 @@ class Sesion1State extends State<Sesion1> {
       sesionService
           .addSesion(new Sesion(
               student: usuario.student!.userId,
-              tipo: 1,
+              tipo: ModalRoute.of(context)!.settings.arguments as int,
               fecha: DateTime.now(),
               estado: false))
           .then((value) {
-        if (value.state == 0) usuario.sesionId = value.sesionId??'';
+        if (value.state == 0) usuario.sesionId = value.sesionId ?? '';
       });
       setState(() {
         listaActividades = actividades.getActivities(0);
       });
     }
-  }
-
-  sesionSinTerminar() async {
-    //Revisa las sesiones para ver si hay una sin terminar
-    //Ademas guarda la ultima sesion que se realizo
-    sesionService = new SesionService();
-    bool sesionSinterminar = false;
-
-    lastSesion = new Sesion();
-    await sesionService.getAllSesion(usuario.student!.userId!).then((value) => {
-          if (value.state == 0)
-            {
-              value.sesions!.forEach((sesionElement) {
-                if (sesionElement.tipo! > lastSesion.tipo!) {
-                  lastSesion = sesionElement;
-                }
-                if (sesionElement.estado == false) {
-                  usuario.sesionId = sesionElement.id??'';
-                  sesionSinterminar = true;
-                }
-              })
-            }
-        });
-    return sesionSinterminar;
   }
 
   validarActividad() {

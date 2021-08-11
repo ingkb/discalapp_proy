@@ -93,24 +93,24 @@ class _MenuPageState extends State<MenuPage> {
           mainAxisSpacing: 10,
           crossAxisSpacing: 10,
           children: [
-            botonNivel("Nivel 1", 'sesion1', context),
-            botonNivel("Nivel 2", 'sesion1', context),
-            botonNivel("Nivel 3", 'sesion1', context),
-            botonNivel("Nivel 4", 'sesion1', context)
+            botonNivel("Nivel 1", 'sesion1', context, 1),
+            botonNivel("Nivel 2", 'sesion1', context, 2),
+            botonNivel("Nivel 3", 'sesion1', context, 3),
+            botonNivel("Test Final", 'initialTest', context, 4),
           ],
         ),
       ),
     );
   }
 
-  Widget botonNivel(String sesion, String direccion, BuildContext context) {
+  Widget botonNivel(String sesion, String direccion, BuildContext context, int numSesion) {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/notaPapel.png'))),
       child: TextButton(
           onPressed: () {
-            Navigator.pushNamed(context, direccion);
+            Navigator.pushNamed(context, direccion, arguments: numSesion);
           },
           child: Text(
             sesion,

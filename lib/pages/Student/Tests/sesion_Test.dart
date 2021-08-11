@@ -14,10 +14,10 @@ class SesionTestPage extends StatefulWidget {
   SesionTestPage({Key? key}) : super(key: key);
 
   @override
-  Sesion1State createState() => Sesion1State();
+  SesioTestState createState() => SesioTestState();
 }
 
-class Sesion1State extends State<SesionTestPage> {
+class SesioTestState extends State<SesionTestPage> {
   late int numActividades;
   int actividadActual = 0;
   List<Widget>? listaActividades;
@@ -104,18 +104,30 @@ class Sesion1State extends State<SesionTestPage> {
     }
   }
 
-  acabarSesionActividad(){
+  acabarSesionActividad() {
     ActivityResultService activityService = new ActivityResultService();
-    ActiveUser usuarioResultados = Provider.of<ActiveUser>(context, listen: false);
+    ActiveUser usuarioResultados =
+        Provider.of<ActiveUser>(context, listen: false);
     var sesionService = new SesionService();
-      sesionService.addSesion(
-        new Sesion(student: usuarioResultados.student!.userId, tipo: 0, fecha: DateTime.now(), estado: true)
-        ).then((value) {
-          if(value.state==0){
-            List<ActivityResult> results = usuarioResultados.resultados??[];
-            results.forEach((element) {element.sesionId = value.sesionId;});
-            activityService.addGroupActivityResult(RegisterAcitivityGroupRequest(activities:results)).then((value) {print(value.message);});
-          }
+    sesionService
+        .addSesion(new Sesion(
+            student: usuarioResultados.student!.userId,
+            tipo: ModalRoute.of(context)!.settings.arguments as int,
+            fecha: DateTime.now(),
+            estado: true))
+        .then((value) {
+      if (value.state == 0) {
+        List<ActivityResult> results = usuarioResultados.resultados ?? [];
+        results.forEach((element) {
+          element.sesionId = value.sesionId;
+        });
+        activityService
+            .addGroupActivityResult(
+                RegisterAcitivityGroupRequest(activities: results))
+            .then((value) {
+          print(value.message);
+        });
+      }
     });
   }
 

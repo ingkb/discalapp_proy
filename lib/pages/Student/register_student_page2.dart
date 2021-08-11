@@ -22,7 +22,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
   @override
   void initState() {
     super.initState();
-    //student = ModalRoute.of(context)!.settings.arguments as Student;
+   
     registerService = new RegisterService();
   }
 
@@ -42,7 +42,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
             SizedBox(height: 20),
             inputPassword(),
             SizedBox(height: 20),
-            submitLogin()
+            submitRegister()
           ],
         ),
       )),
@@ -142,7 +142,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
     );
   }
 
-  Widget submitLogin() {
+  Widget submitRegister() {
     return Container(
       height: 50,
       margin: EdgeInsets.symmetric(horizontal: 50),
@@ -161,6 +161,9 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
   }
 
   _registrarEstudiante() {
+    var stud = ModalRoute.of(context)!.settings.arguments as Student;
+    student!.name = stud.name;
+    student!.age = stud.age;
     final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
     registerService.registerStudent(student!).then((value) {
       if (value.state == 0) {
