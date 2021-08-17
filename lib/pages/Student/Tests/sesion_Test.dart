@@ -26,8 +26,8 @@ class SesioTestState extends State<SesionTestPage> {
   @override
   void initState() {
     actividadActual = 1;
-    numActividades = 14;
-    actividades = new ActividadesTest(24, 2, 16, 12, pasarActividad);
+    numActividades = 4; 
+    actividades = new ActividadesTest(1, 1, 1, 1, pasarActividad); // 24,2,16,12
     listaActividades = actividades.getActivities();
 
     super.initState();
@@ -100,7 +100,7 @@ class SesioTestState extends State<SesionTestPage> {
   validarNumActividad() {
     if (actividadActual > numActividades) {
       acabarSesionActividad();
-      Navigator.pushReplacementNamed(this.context, 'menuStudent');
+      Navigator.pushReplacementNamed(this.context, 'finish');
     }
   }
 

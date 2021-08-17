@@ -189,7 +189,7 @@ class _SelectClassPageState extends State<SelectClassPage> {
 
     studentService.upadateStudent(temp).then((res){
       if(res.state==0){
-      Navigator.pushReplacementNamed(context, 'initialTest');
+      Navigator.pushReplacementNamed(context, 'initialTest',arguments: 0);
       }else{
         print('Error modificando al estudiante');
       }

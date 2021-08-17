@@ -145,7 +145,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
           //Busca si el estudiante ya realizo el test inicial, si no lo ha realizado lo manda al test
           sesionService.getAllSesion(_userId).then((respuesta){
             if(respuesta.state == 0 && respuesta.sesions!.isEmpty){
-               Navigator.pushReplacementNamed(context, 'initialTest');
+               Navigator.pushReplacementNamed(context, 'initialTest', arguments: 0);
             }else{
                 Navigator.pushReplacementNamed(context, 'menuStudent');
             }

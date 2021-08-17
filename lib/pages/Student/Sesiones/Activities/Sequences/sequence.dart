@@ -49,9 +49,9 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   bool respondido = false;
   @override
   validarResultado() {
-    String respuestacorrecta1 = SsecuenciaARepresentar[numeroActivi!]![2];
-    String respuestacorrecta2 = SsecuenciaARepresentar[numeroActivi!]![4];
-    String respuestacorrecta3 = SsecuenciaARepresentar[numeroActivi!]![6];
+    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
+    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
+    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
     if (!respondido) {
       respondido = true;
       ActiveUser usuarioResultados =
@@ -192,7 +192,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
     for (var i = 0; i < 3; i++) {
       if (p != 3) {
-        String numeroOriginal = SsecuenciaARepresentar[numeroActivi!]![i];
+        String numeroOriginal = secuenciaARepresentar[numeroActivi!]![i];
         numeros.add(convertirNumeaWidg(numeroOriginal));
         numeros.add(flechaDerecha());
       } else {
@@ -232,7 +232,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     List<Widget> numeros = [];
     for (var i = 0; i < 3; i++) {
       if (p != 4) {
-        String numeroOriginal = SsecuenciaARepresentar[numeroActivi!]![p];
+        String numeroOriginal = secuenciaARepresentar[numeroActivi!]![p];
         numeros.add(convertirNumeaWidg(numeroOriginal));
       } else {
         numeros.add(flechaizquierda());
@@ -253,7 +253,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     for (var i = 0; i < 3; i++) {
       if (p != 6) {
         numeros.add(flechaDerecha());
-        String numeroOriginal = SsecuenciaARepresentar[numeroActivi!]![p];
+        String numeroOriginal = secuenciaARepresentar[numeroActivi!]![p];
         numeros.add(convertirNumeaWidg(numeroOriginal));
       } else {
         numeros.add(respuesta3Input());

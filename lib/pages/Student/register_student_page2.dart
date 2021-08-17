@@ -15,7 +15,9 @@ class RegisterStudentPage2 extends StatefulWidget {
 enum Opcion { si, no }
 
 class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
-  Student? student;
+  
+  String? userID;
+  String? passwd;
   late RegisterService registerService;
   bool userVerified = false;
   Opcion? _character = Opcion.no;
@@ -113,7 +115,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
           icon: Icon(Icons.account_circle)),
       onChanged: (valor) {
         setState(() {
-          student!.userId = valor;
+          userID = valor;
         });
       },
     );
@@ -136,7 +138,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
           icon: Icon(Icons.lock)),
       onChanged: (valor) {
         setState(() {
-          student!.password = valor;
+          passwd = valor;
         });
       },
     );
@@ -162,12 +164,12 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
 
   _registrarEstudiante() {
     var stud = ModalRoute.of(context)!.settings.arguments as Student;
-    student!.name = stud.name;
-    student!.age = stud.age;
+    stud.userId = userID;
+    stud.password = passwd;
     final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
-    registerService.registerStudent(student!).then((value) {
+    registerService.registerStudent(stud).then((value) {
       if (value.state == 0) {
-        usuarioTemporal.student = student;
+        usuarioTemporal.student = stud;
         Navigator.pushReplacementNamed(context, 'selectclass');
       } else {
         Navigator.pop(context);

@@ -1,4 +1,5 @@
 import 'package:discalapp_proy/pages/Student/Sesiones/sesion1.dart';
+import 'package:discalapp_proy/pages/Student/Tests/finish_Page.dart';
 import 'package:discalapp_proy/pages/Student/Tests/sesion_Test.dart';
 import 'package:discalapp_proy/pages/Student/menu_page.dart';
 import 'package:discalapp_proy/pages/Student/register_student_page2.dart';
@@ -32,5 +33,6 @@ Map<String, WidgetBuilder> getRoutes(){
     'initialTest'     :(BuildContext context) => SesionTestPage(),
     'menuStudent'     :(BuildContext context) => MenuPage(),
     'sesion1'         :(BuildContext context) => Sesion1(),
+    'finish'          :(BuildContext context) => FinishPage()
   };
 }
