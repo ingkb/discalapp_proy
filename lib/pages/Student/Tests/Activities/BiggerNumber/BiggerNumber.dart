@@ -3,6 +3,7 @@ import 'package:discalapp_proy/pages/Student/Tests/Activities/BiggerNumber/Bigge
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +29,13 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
   int numOPT1 = 0;
   int numOPT2 = 0;
 
+  Stopwatch tiempo = Stopwatch();
   @override
   void initState() {
     super.initState();
     numOPT1 = biggerNumbers[widget.numero]![0];
     numOPT2 = biggerNumbers[widget.numero]![1];
+    tiempo.start();
   }
 
   @override
@@ -143,13 +146,14 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
   validarDialog() {
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
-
-    if (selectedOption == 2) {
+    tiempo.stop();
+    double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+    if (selectedOption == biggerNumbers[widget.numero]![2]) {
       usuarioResultados.addResults(
-          new ActivityResult(area: "area", resultado: true, tiempo: 1));
+          new ActivityResult(area: Areas.menormayor, resultado: true, tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(
-          new ActivityResult(area: "area", resultado: false, tiempo: 1));
+          new ActivityResult(area: Areas.menormayor, resultado: false, tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }

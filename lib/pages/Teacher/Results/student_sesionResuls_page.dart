@@ -18,6 +18,9 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
   ActivityResultService activityService = new ActivityResultService();
   List<ActivityResult>? activityResults = [];
 
+  List<AreaResult> areasResult =  List.generate(
+      11, (index) => new AreaResult(0, 0, 0, index.toString(), ''));
+
   @override
   void initState() {
     super.initState();
@@ -43,8 +46,7 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
             margin: EdgeInsets.only(top: 20, right: 20), child: listResults()));
   }
 
-  List<AreaResult> areasResult = List.generate(
-      7, (index) => new AreaResult(0, 0, 0, index.toString(), ''));
+  //Se crean los resultados de area, luego se reparten las actividades dependiendo de donde coincida el area
   organize() {
     areasResult[0].area = Areas.conteo;
     areasResult[1].area = Areas.suma;
@@ -53,39 +55,20 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
     areasResult[4].area = Areas.comparacion;
     areasResult[5].area = Areas.escritura;
     areasResult[6].area = Areas.rectaNumerica;
+    areasResult[7].area = Areas.secuencia;
+    areasResult[8].area = Areas.puntos;
+    areasResult[9].area = Areas.lineas;
+    areasResult[10].area = Areas.menormayor;
 
     this.activityResults!.forEach((element) {
-      switch (element.area) {
-        case Areas.conteo:
-          _addResult(0, element);
-          break;
-        case Areas.suma:
-          _addResult(1, element);
-          break;
-        case Areas.resta:
-          _addResult(2, element);
-          break;
-        case Areas.multiplicacion:
-          _addResult(3, element);
-          break;
-        case Areas.comparacion:
-          _addResult(4, element);
-          break;
-        case Areas.escritura:
-          _addResult(5, element);
-          break;
-        case Areas.rectaNumerica:
-          _addResult(6, element);
-          break;
-        default:
+      for (var i = 0; i < 11; i++) {
+        if(areasResult[i].area == element.area){
+          areasResult[i].preguntas++;
+          areasResult[i].tiempo += element.tiempo!;
+          if (element.resultado! == true) areasResult[i].aciertos++;
+        }
       }
     });
-  }
-
-  _addResult(int number, ActivityResult element) {
-    areasResult[number].preguntas++;
-    areasResult[number].tiempo += element.tiempo!;
-    if (element.resultado! == true) areasResult[number].aciertos++;
   }
 
   Widget listResults() {
@@ -166,12 +149,12 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
     );
   }
 
-  Color getColor(porcentaje){
-    if(porcentaje<=0.4){
+  Color getColor(porcentaje) {
+    if (porcentaje <= 0.4) {
       return Color(0xFFC53F3F);
-    }else if(porcentaje<=0.65){
+    } else if (porcentaje <= 0.65) {
       return Color(0xFF523FC5);
-    }else{
+    } else {
       return Color(0xFF3FC544);
     }
   }
