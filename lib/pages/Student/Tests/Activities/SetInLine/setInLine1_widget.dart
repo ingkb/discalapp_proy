@@ -9,8 +9,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 class SetInLine1 extends StatefulWidget {
-  SetInLine1({Key? key, this.pasarActividad}) : super(key: key);
+  SetInLine1({Key? key, this.pasarActividad, this.numero}) : super(key: key);
   final ValueChanged<int>? pasarActividad;
+  final int? numero;
   @override
   SetInLine1State createState() => SetInLine1State();
 }
@@ -24,10 +25,24 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   int numMin = 0;
   int num1 = 3, num2 = 9, num3 = 4;
 
+  String valor = " a";
+
   List<int> rangeDy1 = [230, 290];
   List<int> rangeDy2 = [0, 60];
   List<int> rangeDy3 = [180, 240];
 
+  @override
+  void initState() { 
+    super.initState();
+    if(widget.numero == 2){
+      numMax = 100;
+      numMin = 0;
+      num1 = 25; num2 = 90; num3 = 70;
+      rangeDy1 = [230, 290];
+      rangeDy2 = [0, 60];
+      rangeDy3 = [80, 120];
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return Container(

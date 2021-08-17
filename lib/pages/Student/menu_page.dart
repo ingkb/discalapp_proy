@@ -1,3 +1,4 @@
+import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -11,11 +12,35 @@ class MenuPage extends StatefulWidget {
 }
 
 class _MenuPageState extends State<MenuPage> {
+  int mayor = 0;
 
   @override
   void initState() {
     super.initState();
+    buscarSesiones();
   }
+
+  buscarSesiones() {
+    final prefs = new PreferenciasUsuario();
+
+    if (prefs.userId != '') {
+      try {
+        SesionService sesionService = new SesionService();
+        sesionService.getAllSesion(prefs.userId).then((value) {
+          if (value.state == 0 && value.sesions!.length > 0) {
+            setState(() {
+              for (var item in value.sesions!) {
+              if (item.tipo! > mayor && item.estado == true) mayor = item.tipo!;
+            }
+            });
+          }
+        });
+      } catch (e) {
+        print(e);
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -103,20 +128,72 @@ class _MenuPageState extends State<MenuPage> {
     );
   }
 
-  Widget botonNivel(String sesion, String direccion, BuildContext context, int numSesion) {
+  Widget botonNivel(
+      String sesion, String direccion, BuildContext context, int numSesion) {
     return Container(
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/notaPapel.png'))),
       child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, direccion, arguments: numSesion);
-          },
-          child: Text(
-            sesion,
-            textAlign: TextAlign.center,
-            style: GoogleFonts.permanentMarker(fontSize: 25, color: Colors.black54),
+          onPressed: (numSesion == mayor + 1)
+              ? () {
+                  Navigator.pushNamed(context, direccion, arguments: numSesion);
+                }
+              : null,
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              imagen(numSesion),
+              Text(
+                sesion,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.permanentMarker(
+                    fontSize: 25, color: Colors.black54),
+              )
+            ],
           )),
+    );
+  }
+
+  Widget imagen(int numSesion) {
+    if (numSesion <= mayor) {
+      return chulitoImage();
+    } else if (numSesion > mayor + 1) {
+      return candadoImage();
+    } else {
+      return Container();
+    }
+  }
+
+  Widget candadoImage() {
+    return Positioned(
+      top: 5,
+      left: 15,
+      child: Container(
+        color: Colors.transparent,
+        child: Image(
+          alignment: Alignment.topCenter,
+          width: 45,
+          fit: BoxFit.contain,
+          image: AssetImage('assets/images/candado.png'),
+        ),
+      ),
+    );
+  }
+
+  Widget chulitoImage() {
+    return Positioned(
+      bottom: 5,
+      right: 10,
+      child: Container(
+        color: Colors.transparent,
+        child: Image(
+          alignment: Alignment.topCenter,
+          width: 40,
+          fit: BoxFit.contain,
+          image: AssetImage('assets/images/chulo.png'),
+        ),
+      ),
     );
   }
 

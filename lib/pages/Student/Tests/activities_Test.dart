@@ -1,3 +1,4 @@
+import 'package:discalapp_proy/pages/Student/Tests/Activities/BiggerNumber/BiggerNumber.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:flutter/material.dart';
 import 'Activities/CompareQuantities/compare1_widget.dart';
@@ -10,6 +11,7 @@ class ActividadesTest {
   late Map<int?, GlobalKey<BaseActivity>> keys;
 
   int compareQuant;
+  int biggerNumber;
   int operations;
   int setInLine;
   //int nuevaActividad;
@@ -19,7 +21,7 @@ class ActividadesTest {
 
   //ACTIVIDADES EN ORDEN
   //Agregar aqui el numero de actividades nueva
-  ActividadesTest(this.compareQuant, this.setInLine, this.operations, 
+  ActividadesTest(this.compareQuant, this.setInLine,this.biggerNumber, this.operations, 
     ValueChanged<int> pasarActividad) {
     keys = new Map<int?, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
@@ -42,7 +44,14 @@ class ActividadesTest {
       this.numActual++;
       keys[numActual] = GlobalKey<SetInLine1State>();
       actividades!.add(
-          SetInLine1(key: keys[numActual], pasarActividad: pasarActividadfn));
+          SetInLine1(key: keys[numActual], numero: i, pasarActividad: pasarActividadfn));
+    }
+
+    for (int i = 1; i <= biggerNumber; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<BiggerNumberActivityState>();
+      actividades!.add(BiggerNumberActivity(
+          key: keys[numActual], numero: i, pasarActividad: pasarActividadfn));
     }
 
     for (int i = 1; i <= operations; i++) {

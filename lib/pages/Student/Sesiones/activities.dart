@@ -39,14 +39,20 @@ class Actividades {
     dicesnum=0; 
   }
 
+  //Asigna el número de actividades que se van a realizar en esta sesion
   setActivitiesNumbers(List<ActivityResult> activities) {
     int totalErrores = 0;
+
+    //Primero busca los errores de la sesion anterior para agregar actividades de esta area 
+    //asegurandose que hay un refuerzo de las areas en las que hay mas dificultades 
     activities.forEach((acti) {
       if (acti.resultado == false) {
         totalErrores++;
         sumarActivity(acti.area);
       }
     });
+
+    //Una vez se aseguro el refuerzo, se llena el resto de actividades de la sesion 
     var restante = this.totalActividades - totalErrores;
     int creadas = 0;
     while(creadas<=restante){
@@ -57,9 +63,9 @@ class Actividades {
       sumarActivity(Areas.resta);creadas++;if(creadas==restante)break;
       sumarActivity(Areas.comparacion);creadas++;if(creadas==restante)break;
     }
-    
   }
-
+  // Si existe mas de una actividad para una misma area se escoge al azar 
+  // y se suma al numero de actividades que se van a instanciar
   sumarActivity(String? area) {
     var rng = new Random();
     if (area == Areas.suma) {
