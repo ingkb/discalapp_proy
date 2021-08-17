@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/CountImages/CountImages.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/Dices/DicesActivity.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/Sequences/sequence.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,12 @@ class Actividades {
   late Map<int?, GlobalKey<BaseActivity>> keys;
 
   int mathOper = 0; //Suma, resta, multi
-  int appleActi= 0; //suma
-  int countImg= 0; // conteo
-  int numWrite= 0; //escritura
-  int asociative= 0; // suma, multi
-  int dicesnum= 0; // conteo
-
+  int appleActi = 0; //suma
+  int countImg = 0; // conteo
+  int numWrite = 0; //escritura
+  int asociative = 0; // suma, multi
+  int dicesnum = 0; // conteo
+  int secuennum = 0; // secuencia
   int totalActividades = 20;
   List<Widget>? actividades;
   int numActual = 0;
@@ -31,12 +32,13 @@ class Actividades {
     keys = new Map<int?, GlobalKey<BaseActivity>>();
     this.pasarActividadfn = pasarActividad;
     this.numActual = 0;
-    mathOper=0; 
-    appleActi=0;
-    countImg=0; 
-    numWrite=0; 
-    asociative=0;
-    dicesnum=0; 
+    mathOper = 0;
+    appleActi = 0;
+    countImg = 0;
+    numWrite = 0;
+    asociative = 0;
+    dicesnum = 0;
+    secuennum = 0;
   }
 
   //Asigna el número de actividades que se van a realizar en esta sesion
@@ -55,13 +57,28 @@ class Actividades {
     //Una vez se aseguro el refuerzo, se llena el resto de actividades de la sesion 
     var restante = this.totalActividades - totalErrores;
     int creadas = 0;
-    while(creadas<=restante){
-      sumarActivity(Areas.conteo);creadas++;if(creadas==restante)break;
-      sumarActivity(Areas.escritura);creadas++;if(creadas==restante)break;
-      sumarActivity(Areas.suma);creadas++;if(creadas==restante)break;
-      sumarActivity(Areas.multiplicacion);creadas++;if(creadas==restante)break;
-      sumarActivity(Areas.resta);creadas++;if(creadas==restante)break;
-      sumarActivity(Areas.comparacion);creadas++;if(creadas==restante)break;
+    while (creadas <= restante) {
+      sumarActivity(Areas.conteo);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.escritura);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.suma);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.multiplicacion);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.resta);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.comparacion);
+      creadas++;
+      if (creadas == restante) break;
+      sumarActivity(Areas.secuencia);
+      creadas++;
+      if (creadas == restante) break;
     }
   }
   // Si existe mas de una actividad para una misma area se escoge al azar 
@@ -80,18 +97,22 @@ class Actividades {
       mathOper++;
     }
     if (area == Areas.conteo) {
-       int n1 = rng.nextInt(2);
+      int n1 = rng.nextInt(2);
       if (n1 == 0) countImg++;
       if (n1 == 1) dicesnum++;
     }
     if (area == Areas.escritura) {
       numWrite++;
     }
-    if(area == Areas.rectaNumerica){
+    if (area == Areas.rectaNumerica) {
       appleActi++;
     }
-    if(area == Areas.comparacion){
+    if (area == Areas.comparacion) {
       dicesnum++;
+    }
+
+    if (area == Areas.secuencia) {
+      secuennum++;
     }
   }
 
@@ -134,14 +155,27 @@ class Actividades {
       this.numActual++;
       keys[numActual] = GlobalKey<AsociativePropietState>();
       actividades!.add(AsociativeProp(
-          key: keys[numActual], pasarActividad: pasarActividadfn,indice: numActual));
+          key: keys[numActual],
+          pasarActividad: pasarActividadfn,
+          indice: numActual));
     }
 
     for (int i = 1; i <= dicesnum; i++) {
       this.numActual++;
       keys[numActual] = GlobalKey<DicesState>();
       actividades!.add(DicesActivity(
-          key: keys[numActual], pasarActividad: pasarActividadfn, indice: numActual));
+          key: keys[numActual],
+          pasarActividad: pasarActividadfn,
+          indice: numActual));
+    }
+
+    for (int i = 1; i <= secuennum; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<SequencesActivityState>();
+      actividades!.add(SequencesActivity(
+          key: keys[numActual],
+          pasarActividad: pasarActividadfn,
+          indice: numActual));
     }
   }
 

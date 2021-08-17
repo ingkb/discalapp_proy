@@ -1,4 +1,4 @@
-class Areas{
+class Areas {
   //static get suma=>"suma";
   // static get resta=>"resta";
   // static get multiplicacion=>"multiplicacion";
@@ -8,10 +8,11 @@ class Areas{
   // static get rectaNumerica=>"rectaNumerica";
 
   static const String suma = "suma";
-  static const String resta ="resta";
+  static const String resta = "resta";
   static const String multiplicacion = "multiplicacion";
   static const String escritura = "escritura";
-  static const String comparacion ="comparacion";
-  static const String conteo ="conteo";
+  static const String comparacion = "comparacion";
+  static const String conteo = "conteo";
   static const String rectaNumerica = "rectaNumerica";
+  static const String secuencia = "secuencia";
 }
