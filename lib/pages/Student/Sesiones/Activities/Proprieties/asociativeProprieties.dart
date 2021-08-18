@@ -33,10 +33,13 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       respuestacorrecta3;
 
   late ActivityResultService activityResultService;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     _generarNumeros();
+    tiempo.start();
   }
 
   @override
@@ -148,40 +151,6 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     respuestacorrecta3 = respuestacorrecta1! + respuestacorrecta2!;
   }
 
-  bool respondido = false;
-  @override
-  validarResultado() {
-    if (!respondido) {
-      respondido = true;
-      ActiveUser usuarioResultados =
-          Provider.of<ActiveUser>(context, listen: false);
-      activityResultService = new ActivityResultService();
-      if (resultado1 == respuestacorrecta1 &&
-          resultado2 == respuestacorrecta2 &&
-          respuestacorrecta3 == resultado3) {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.suma,
-            resultado: true,
-            tiempo: 1));
-        showCorrectAnsDialog(context, () {
-          setState(() {});
-        });
-      } else {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.suma,
-            resultado: false,
-            tiempo: 1));
-        showWrongAnsDialog(context, () {
-          setState(() {});
-        });
-      }
-    }
-  }
-
   Widget numero(int numero) {
     return Container(
         height: 60,
@@ -223,4 +192,43 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       width: 170,
     );
   }
+  
+  bool respondido = false;
+  @override
+  validarResultado() {
+    if (!respondido) {
+      respondido = true;
+      ActiveUser usuarioResultados =
+          Provider.of<ActiveUser>(context, listen: false);
+      activityResultService = new ActivityResultService();
+
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+      if (resultado1 == respuestacorrecta1 &&
+          resultado2 == respuestacorrecta2 &&
+          respuestacorrecta3 == resultado3) {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.suma,
+            resultado: true,
+            tiempo: tiempoActividad));
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
+      } else {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.suma,
+            resultado: false,
+            tiempo: tiempoActividad));
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
+      }
+    }
+  }
+
+  
 }

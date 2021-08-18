@@ -27,11 +27,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   int? respuesta1, respuesta2, respuesta3;
   int? numeroActivi;
   late ActivityResultService activityResultService;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     var rng = new Random();
     this.numeroActivi = rng.nextInt(4);
+    tiempo.start();
   }
 
   @override
@@ -44,43 +47,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       fila3(),
       botonContinuar(respondido, widget.pasarActividad)
     ]);
-  }
-
-  bool respondido = false;
-  @override
-  validarResultado() {
-    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
-    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
-    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
-    if (!respondido) {
-      respondido = true;
-      ActiveUser usuarioResultados =
-          Provider.of<ActiveUser>(context, listen: false);
-      activityResultService = new ActivityResultService();
-      if (respuesta1 == int.parse(respuestacorrecta1) &&
-          respuesta2 == int.parse(respuestacorrecta2) &&
-          respuesta3 == int.parse(respuestacorrecta3)) {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.secuencia,
-            resultado: true,
-            tiempo: 1));
-        showCorrectAnsDialog(context, () {
-          setState(() {});
-        });
-      } else {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.secuencia,
-            resultado: false,
-            tiempo: 1));
-        showWrongAnsDialog(context, () {
-          setState(() {});
-        });
-      }
-    }
   }
 
   Widget numero(int numero) {
@@ -289,4 +255,45 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [separador(), separador(), flechaabajo()]);
   }
+
+  bool respondido = false;
+  @override
+  validarResultado() {
+    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
+    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
+    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
+    if (!respondido) {
+      respondido = true;
+      ActiveUser usuarioResultados =
+          Provider.of<ActiveUser>(context, listen: false);
+      activityResultService = new ActivityResultService();
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+
+      if (respuesta1 == int.parse(respuestacorrecta1) &&
+          respuesta2 == int.parse(respuestacorrecta2) &&
+          respuesta3 == int.parse(respuestacorrecta3)) {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.secuencia,
+            resultado: true,
+            tiempo: tiempoActividad));
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
+      } else {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.secuencia,
+            resultado: false,
+            tiempo: tiempoActividad));
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
+      }
+    }
+  }
+
 }

@@ -24,10 +24,13 @@ class CountImagesState extends BaseActivity<CountImages> {
   int? resultado;
   late ActivityResultService activityResultService;
   bool respondido = false;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     generarNumero();
+    tiempo.start();
   }
 
   @override
@@ -151,6 +154,8 @@ class CountImagesState extends BaseActivity<CountImages> {
       respondido = true;
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
       activityResultService = new ActivityResultService();
       if (resultado == n1) {
         activityResultService.addActivityResult(new ActivityResult(
@@ -158,7 +163,7 @@ class CountImagesState extends BaseActivity<CountImages> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
         });
@@ -168,7 +173,7 @@ class CountImagesState extends BaseActivity<CountImages> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});
         });

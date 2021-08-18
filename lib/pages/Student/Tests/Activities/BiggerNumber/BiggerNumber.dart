@@ -30,6 +30,7 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
   int numOPT2 = 0;
 
   Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
@@ -65,8 +66,7 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: borderOPT1, color: colorOPT1),
-                      borderRadius: BorderRadius.all(Radius.circular(40))
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(40))),
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -80,15 +80,17 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
                             color: Colors.black)),
                   ),
                 ),
-                VerticalDivider(width: 10,thickness: 3,),
+                VerticalDivider(
+                  width: 10,
+                  thickness: 3,
+                ),
                 Container(
                   width: 80,
                   height: 80,
                   decoration: BoxDecoration(
                       color: Colors.white,
                       border: Border.all(width: borderOPT2, color: colorOPT2),
-                      borderRadius: BorderRadius.all(Radius.circular(40))
-                      ),
+                      borderRadius: BorderRadius.all(Radius.circular(40))),
                   child: TextButton(
                     onPressed: () {
                       setState(() {
@@ -149,11 +151,11 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
     tiempo.stop();
     double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     if (selectedOption == biggerNumbers[widget.numero]![2]) {
-      usuarioResultados.addResults(
-          new ActivityResult(area: Areas.menormayor, resultado: true, tiempo: tiempoActividad));
+      usuarioResultados.addResults(new ActivityResult(
+          area: Areas.menormayor, resultado: true, tiempo: tiempoActividad));
     } else {
-      usuarioResultados.addResults(
-          new ActivityResult(area: Areas.menormayor, resultado: false, tiempo: tiempoActividad));
+      usuarioResultados.addResults(new ActivityResult(
+          area: Areas.menormayor, resultado: false, tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }

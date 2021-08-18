@@ -28,10 +28,13 @@ class MathOperationState extends BaseActivity<MathOperation> {
   int? valorOperacion;
   late ActivityResultService activityResultService;
   bool respondido = false;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     _generarNumeros();
     super.initState();
+    tiempo.start();
   }
 
   @override
@@ -182,13 +185,17 @@ class MathOperationState extends BaseActivity<MathOperation> {
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
       activityResultService = new ActivityResultService();
+
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+
       if (resultado == respuestaCorrecta) {
         activityResultService.addActivityResult(new ActivityResult(
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: area,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context,(){setState(() {});});
       } else {
         activityResultService.addActivityResult(new ActivityResult(
@@ -196,7 +203,7 @@ class MathOperationState extends BaseActivity<MathOperation> {
             sesionId: usuarioResultados.sesionId,
             area: area,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, (){setState(() {});});
       }
     } else {

@@ -32,17 +32,19 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   int? selectedOption;
   int? respuesta;
   late ActivityResultService activityResultService;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     inicializar();
     super.initState();
+    tiempo.start();
   }
 
   @override
   Widget build(BuildContext context) {
     return marcoActividad(
         "Selecciona la forma correcta de escribir el siguiente número", [
-      //textBoxNumero(),
       convertirNumeaWidg(),
       textBox(1, numerosARepresentar[numeroActivi!]![1], borderWidth1,
           seleccionarTextbox),
@@ -56,9 +58,9 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
 
   inicializar() {
     this.selectedOption = 0;
-    this.borderWidth1 = 0;
-    this.borderWidth2 = 0;
-    this.borderWidth3 = 0;
+    this.borderWidth1 = 0.1;
+    this.borderWidth2 = 0.1;
+    this.borderWidth3 = 0.1;
 
     var rng = new Random();
     this.numeroActivi = rng.nextInt(3);
@@ -99,9 +101,9 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   }
 
   seleccionarTextbox(int n) {
-    borderWidth1 = 0;
-    borderWidth2 = 0;
-    borderWidth3 = 0;
+    borderWidth1 = 0.1;
+    borderWidth2 = 0.1;
+    borderWidth3 = 0.1;
     switch (n) {
       case 1:
         borderWidth1 = 7;
@@ -126,6 +128,8 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
       respondido = true;
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
       activityResultService = new ActivityResultService();
       if (selectedOption == respuesta) {
         activityResultService.addActivityResult(new ActivityResult(
@@ -133,7 +137,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.escritura,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
         });
@@ -143,7 +147,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.escritura,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});
         });

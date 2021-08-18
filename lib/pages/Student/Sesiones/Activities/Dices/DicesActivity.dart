@@ -27,10 +27,13 @@ class DicesState extends BaseActivity<DicesActivity> {
   int? ejercicio;
   int? respuesta;
   late ActivityResultService activityResultService;
+
+  Stopwatch tiempo = Stopwatch();
   @override
   void initState() {
     getRandom();
     super.initState();
+    tiempo.start();
   }
 
   @override
@@ -80,6 +83,9 @@ class DicesState extends BaseActivity<DicesActivity> {
       respondido = true;
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
+      
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
       activityResultService = new ActivityResultService();
       if (respuesta.toString() == dicesImages[ejercicio!]![2]) {
         activityResultService.addActivityResult(new ActivityResult(
@@ -87,7 +93,7 @@ class DicesState extends BaseActivity<DicesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {setState(() {});});
       } else {
         activityResultService.addActivityResult(new ActivityResult(
@@ -95,7 +101,7 @@ class DicesState extends BaseActivity<DicesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {setState(() {});});
       }
     }

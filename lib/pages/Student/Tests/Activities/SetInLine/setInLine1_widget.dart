@@ -31,18 +31,24 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   List<int> rangeDy2 = [0, 60];
   List<int> rangeDy3 = [180, 240];
 
+  Stopwatch tiempo = Stopwatch();
+
   @override
-  void initState() { 
+  void initState() {
     super.initState();
-    if(widget.numero == 2){
+    if (widget.numero == 2) {
       numMax = 100;
       numMin = 0;
-      num1 = 25; num2 = 90; num3 = 70;
+      num1 = 25;
+      num2 = 90;
+      num3 = 70;
       rangeDy1 = [230, 290];
       rangeDy2 = [0, 60];
       rangeDy3 = [80, 120];
     }
+    tiempo.start();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -275,15 +281,19 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
     bool check2 = (pos2.dy > rangeDy2[0] && pos2.dy < rangeDy2[1]);
     bool check3 = (pos3.dy > rangeDy3[0] && pos3.dy < rangeDy3[1]);
 
+    tiempo.stop();
+    double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
 
     if (check1 && check2 && check3) {
       usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica, resultado: true, tiempo: 1));
+          area: Areas.rectaNumerica, resultado: true, tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica, resultado: false, tiempo: 1));
+          area: Areas.rectaNumerica,
+          resultado: false,
+          tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }
