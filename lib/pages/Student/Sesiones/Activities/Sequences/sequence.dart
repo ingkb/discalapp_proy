@@ -48,41 +48,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   bool respondido = false;
   @override
-  validarResultado() {
-    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
-    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
-    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
-    if (!respondido) {
-      respondido = true;
-      ActiveUser usuarioResultados =
-          Provider.of<ActiveUser>(context, listen: false);
-      activityResultService = new ActivityResultService();
-      if (respuesta1 == int.parse(respuestacorrecta1) &&
-          respuesta2 == int.parse(respuestacorrecta2) &&
-          respuesta3 == int.parse(respuestacorrecta3)) {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.secuencia,
-            resultado: true,
-            tiempo: 1));
-        showCorrectAnsDialog(context, () {
-          setState(() {});
-        });
-      } else {
-        activityResultService.addActivityResult(new ActivityResult(
-            indice: widget.indice,
-            sesionId: usuarioResultados.sesionId,
-            area: Areas.secuencia,
-            resultado: false,
-            tiempo: 1));
-        showWrongAnsDialog(context, () {
-          setState(() {});
-        });
-      }
-    }
-  }
-
   Widget numero(int numero) {
     return Container(
         height: 50,
@@ -189,7 +154,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   Widget fila1() {
     List<Widget> numeros = [];
     int p = 1;
-
     for (var i = 0; i < 3; i++) {
       if (p != 3) {
         String numeroOriginal = secuenciaARepresentar[numeroActivi!]![i];
@@ -198,7 +162,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       } else {
         numeros.add(respuestaInput());
       }
-
       p++;
     }
     return Row(
@@ -228,7 +191,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget fila2() {
     int p = 5;
-
     List<Widget> numeros = [];
     for (var i = 0; i < 3; i++) {
       if (p != 4) {
@@ -288,5 +250,40 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [separador(), separador(), flechaabajo()]);
+  }
+
+  validarResultado() {
+    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
+    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
+    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
+    if (!respondido) {
+      respondido = true;
+      ActiveUser usuarioResultados =
+          Provider.of<ActiveUser>(context, listen: false);
+      activityResultService = new ActivityResultService();
+      if (respuesta1 == int.parse(respuestacorrecta1) &&
+          respuesta2 == int.parse(respuestacorrecta2) &&
+          respuesta3 == int.parse(respuestacorrecta3)) {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.secuencia,
+            resultado: true,
+            tiempo: 1));
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
+      } else {
+        activityResultService.addActivityResult(new ActivityResult(
+            indice: widget.indice,
+            sesionId: usuarioResultados.sesionId,
+            area: Areas.secuencia,
+            resultado: false,
+            tiempo: 1));
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
+      }
+    }
   }
 }

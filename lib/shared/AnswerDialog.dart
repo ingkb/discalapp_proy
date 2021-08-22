@@ -1,7 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-showCorrectAnsDialog(BuildContext context, validar()) {
+import '../constants.dart';
+
+/*  showCorrectAnsDialog(BuildContext context, validar()) {
   // set up the button
   Widget okButton = TextButton(
     child: Text(
@@ -37,6 +39,7 @@ showCorrectAnsDialog(BuildContext context, validar()) {
     },
   );
 }
+*/
 
 showWrongAnsDialog(BuildContext context, validar()) {
   // set up the button
@@ -75,7 +78,7 @@ showWrongAnsDialog(BuildContext context, validar()) {
   );
 }
 
-showConfirmationDialog(BuildContext context, validar() ) {
+showConfirmationDialog(BuildContext context, validar()) {
   Widget okButton = TextButton(
     child: Text(
       "Continuar",
@@ -96,7 +99,6 @@ showConfirmationDialog(BuildContext context, validar() ) {
     },
   );
 
-
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text(
@@ -112,6 +114,67 @@ showConfirmationDialog(BuildContext context, validar() ) {
   );
 
   // show the dialog
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return alert;
+    },
+  );
+}
+
+showCorrectAnsDialog(BuildContext context, validar()) {
+  Widget okButton = TextButton(
+    child: Text(
+      "Si",
+      style: TextStyle(fontSize: 20, color: Colors.white),
+    ),
+    style: TextButton.styleFrom(
+      elevation: 5,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      backgroundColor: Colors.green,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
+    ),
+    onPressed: () {
+      Navigator.of(context).pop();
+      validar();
+    },
+  );
+
+  Widget noButton = TextButton(
+    child: Text(
+      "No",
+      style: TextStyle(fontSize: 20, color: Colors.white),
+    ),
+    style: TextButton.styleFrom(
+      elevation: 5,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      backgroundColor: Colors.red,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
+    ),
+    onPressed: () {
+      Navigator.of(context).pop();
+    },
+  );
+
+  AlertDialog alert = AlertDialog(
+    title: Text(
+      'Confirmacion',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+    ),
+    content: Text(
+      '¿Estas seguro?',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 18),
+    ),
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+    actions: [okButton, noButton],
+  );
+
   showDialog(
     context: context,
     builder: (BuildContext context) {

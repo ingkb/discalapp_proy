@@ -99,9 +99,9 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
   }
 
   seleccionarTextbox(int n) {
-    borderWidth1 = 0;
-    borderWidth2 = 0;
-    borderWidth3 = 0;
+    borderWidth1 = 0.1;
+    borderWidth2 = 0.1;
+    borderWidth3 = 0.1;
     switch (n) {
       case 1:
         borderWidth1 = 7;
