@@ -3,11 +3,20 @@ import 'package:flutter/material.dart';
 
 import '../constants.dart';
 
-/*  showCorrectAnsDialog(BuildContext context, validar()) {
+showCorrectAnsDialog(BuildContext context, validar()) {
   // set up the button
   Widget okButton = TextButton(
     child: Text(
       "Siguiente",
+      style: TextStyle(fontSize: 20, color: Colors.white),
+    ),
+    style: TextButton.styleFrom(
+      elevation: 5,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      backgroundColor: Colors.green,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
     ),
     onPressed: () {
       Navigator.of(context).pop();
@@ -18,8 +27,9 @@ import '../constants.dart';
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text(
-      '¡Geniaaaal!',
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+      '¡Bien hecho!',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
     ),
     content: Text(
       'Respuesta Correcta',
@@ -39,13 +49,21 @@ import '../constants.dart';
     },
   );
 }
-*/
 
 showWrongAnsDialog(BuildContext context, validar()) {
   // set up the button
   Widget okButton = TextButton(
     child: Text(
       "Siguiente",
+      style: TextStyle(fontSize: 20, color: Colors.white),
+    ),
+    style: TextButton.styleFrom(
+      elevation: 5,
+      padding: EdgeInsets.symmetric(vertical: 15, horizontal: 15),
+      backgroundColor: Colors.red,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(40),
+      ),
     ),
     onPressed: () {
       Navigator.of(context).pop();
@@ -56,11 +74,12 @@ showWrongAnsDialog(BuildContext context, validar()) {
   // set up the AlertDialog
   AlertDialog alert = AlertDialog(
     title: Text(
-      'Ups..',
-      style: TextStyle(fontSize: 18, fontWeight: FontWeight.w700),
+      '¡Oh, no...!',
+      textAlign: TextAlign.center,
+      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
     ),
     content: Text(
-      'Respuesta incorrecta',
+      'Te has equivocado en tu respuesta',
       style: TextStyle(fontSize: 18),
     ),
     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
@@ -122,7 +141,7 @@ showConfirmationDialog(BuildContext context, validar()) {
   );
 }
 
-showCorrectAnsDialog(BuildContext context, validar()) {
+confirmationAnsDialog(BuildContext context, validar()) {
   Widget okButton = TextButton(
     child: Text(
       "Si",

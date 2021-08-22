@@ -51,8 +51,8 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget numero(int numero) {
     return Container(
-        height: 50,
-        width: 40,
+        height: 25,
+        width: 25,
         padding: EdgeInsets.symmetric(horizontal: 2),
         child: mapaNumeroImagenes[numero]);
   }
@@ -85,14 +85,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuestaInput() {
     return Container(
-        width: 70,
+        width: 50,
         margin: EdgeInsets.only(right: 15, top: 10),
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 35,
+              fontSize: 20,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -108,14 +108,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuesta2Input() {
     return Container(
-        width: 70,
-        margin: EdgeInsets.only(right: 15, top: 10),
+        width: 50,
+        margin: EdgeInsets.only(left: 5, right: 5, top: 10),
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 35,
+              fontSize: 20,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -131,14 +131,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuesta3Input() {
     return Container(
-        width: 70,
-        margin: EdgeInsets.only(right: 15, top: 10),
+        width: 50,
+        margin: EdgeInsets.only(left: 15, right: 5, top: 10),
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 35,
+              fontSize: 20,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -231,13 +231,13 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget separador() {
     return Container(
-      width: 160,
+      width: 125,
     );
   }
 
   Widget separadormin() {
     return Container(
-      width: 60,
+      width: 10,
     );
   }
 
