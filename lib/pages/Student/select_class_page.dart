@@ -95,7 +95,7 @@ class _SelectClassPageState extends State<SelectClassPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: Image(
-              image: AssetImage('assets/images/loading1.gif'),
+              image: AssetImage('assets/images/loadingblue.gif'),
               width: 100,
             ),
           );

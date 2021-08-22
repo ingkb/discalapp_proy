@@ -18,7 +18,7 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
   ActivityResultService activityService = new ActivityResultService();
   List<ActivityResult>? activityResults = [];
 
-  List<AreaResult> areasResult =  List.generate(
+  List<AreaResult> areasResult = List.generate(
       11, (index) => new AreaResult(0, 0, 0, index.toString(), ''));
 
   @override
@@ -43,7 +43,8 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
           title: Text('Resultados sesion'),
         ),
         body: Container(
-            margin: EdgeInsets.only(top: 20, right: 20), child: listResults()));
+            margin: EdgeInsets.only(top: 20, right: 20),
+            child: loaderListResults()));
   }
 
   //Se crean los resultados de area, luego se reparten las actividades dependiendo de donde coincida el area
@@ -62,13 +63,45 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
 
     this.activityResults!.forEach((element) {
       for (var i = 0; i < 11; i++) {
-        if(areasResult[i].area == element.area){
+        if (areasResult[i].area == element.area) {
           areasResult[i].preguntas++;
           areasResult[i].tiempo += element.tiempo!;
           if (element.resultado! == true) areasResult[i].aciertos++;
         }
       }
     });
+  }
+
+  Widget loaderListResults() {
+    return FutureBuilder(
+      builder:
+          (context, AsyncSnapshot<SearchAllActivityResultResponse> snapshot) {
+        if (snapshot.connectionState == ConnectionState.none) {
+          return Container();
+        }
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return Center(
+            child: Image(
+              image: AssetImage('assets/images/loadinggreen.gif'),
+              width: 100,
+            ),
+          );
+        }
+        if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
+            if (snapshot.data!.activityResults!.isEmpty) {
+              print('lista empty');
+              return Container();
+            }
+            this.activityResults = snapshot.data!.activityResults;
+            organize();
+            return listResults();
+        } else {
+          print('data null');
+          return Container();
+        }
+      },
+      future: activityService.getAllActivityResult(widget.sesion!.id ?? ' '),
+    );
   }
 
   Widget listResults() {
