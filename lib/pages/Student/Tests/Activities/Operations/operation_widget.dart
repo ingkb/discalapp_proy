@@ -2,6 +2,7 @@ import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:discalapp_proy/shared/AnswerDialog.dart';
+import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'dart:ui';
@@ -21,10 +22,14 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
   String? operacion;
   String? texto;
   int? valorOperacion;
+
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     _generarNumeros();
+    tiempo.start();
   }
 
   @override
@@ -139,15 +144,15 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
     n2 = int.tryParse(operationsActivities[widget.numero]![2]);
 
     switch (operationsActivities[widget.numero]![0]) {
-      case 'suma':
+      case Areas.suma:
         operacion = "+";
         texto = "Realiza la siguiente SUMA";
         break;
-      case 'resta':
+      case Areas.resta:
         operacion = "-";
         texto = "Realiza la siguiente RESTA";
         break;
-      case 'multiplicacion':
+      case Areas.multiplicacion:
         operacion = "x";
         texto = "Realiza la siguiente MULTIPLICACIÓN";
         break;
@@ -157,25 +162,30 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
     }
   }
 
-  validarDialog(){
+  validarDialog() {
     int resultadoCorrecto = int.parse(operationsActivities[widget.numero]![3]);
+
+    tiempo.stop();
+    double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
-    
+
     if (resultado == resultadoCorrecto) {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero]![0],
           resultado: true,
-          tiempo: 1));
+          tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero]![0],
           resultado: false,
-          tiempo: 1));
+          tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }
+
   validarResultado() {
-    showConfirmationDialog(context,validarDialog);
+    showConfirmationDialog(context, validarDialog);
   }
 }

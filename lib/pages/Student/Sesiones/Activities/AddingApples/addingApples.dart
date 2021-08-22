@@ -27,10 +27,13 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
   late int resultado;
   late ActivityResultService activityResultService;
   bool respondido = false;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     generarNumeros();
+    tiempo.start();
   }
 
   @override
@@ -153,6 +156,8 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
       respondido = true;
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
       activityResultService = new ActivityResultService();
       if (n2 == resultado - n1) {
         activityResultService.addActivityResult(new ActivityResult(
@@ -160,7 +165,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.suma,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
         });
@@ -170,7 +175,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.suma,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});
         });

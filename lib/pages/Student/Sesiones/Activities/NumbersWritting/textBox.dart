@@ -15,7 +15,8 @@ Widget textBox(int n, String numero, double borderW, fnSeleccionar(int n)) {
               fontSize: 30, fontWeight: FontWeight.w700, color: Colors.black)),
     ),
     decoration: BoxDecoration(
-        border: Border.all(width: 0.1, color: Colors.orange[800]!),
+      borderRadius: BorderRadius.all(Radius.circular(30)),
+        border: Border.all(width: borderW, color: Colors.orange[800]!),
         image: DecorationImage(
             image: AssetImage('assets/images/tablita.png'), fit: BoxFit.fill)),
   );

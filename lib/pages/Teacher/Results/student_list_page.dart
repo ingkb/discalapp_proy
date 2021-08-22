@@ -48,7 +48,7 @@ class _StudentListPageState extends State<StudentListPage> {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return Center(
             child: Image(
-              image: AssetImage('assets/images/loading1.gif'),
+              image: AssetImage('assets/images/loadinggreen.gif'),
               width: 100,
             ),
           );

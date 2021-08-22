@@ -27,11 +27,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   int? respuesta1, respuesta2, respuesta3;
   int? numeroActivi;
   late ActivityResultService activityResultService;
+  Stopwatch tiempo = Stopwatch();
+
   @override
   void initState() {
     super.initState();
     var rng = new Random();
     this.numeroActivi = rng.nextInt(4);
+    tiempo.start();
   }
 
   @override
@@ -46,8 +49,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     ]);
   }
 
-  bool respondido = false;
-  @override
   Widget numero(int numero) {
     return Container(
         height: 50,
@@ -252,6 +253,8 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
         children: [separador(), separador(), flechaabajo()]);
   }
 
+  bool respondido = false;
+  @override
   validarResultado() {
     String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
     String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
@@ -261,6 +264,9 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
       activityResultService = new ActivityResultService();
+      tiempo.stop();
+      double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
+
       if (respuesta1 == int.parse(respuestacorrecta1) &&
           respuesta2 == int.parse(respuestacorrecta2) &&
           respuesta3 == int.parse(respuestacorrecta3)) {
@@ -269,7 +275,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.secuencia,
             resultado: true,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
         });
@@ -279,7 +285,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
             sesionId: usuarioResultados.sesionId,
             area: Areas.secuencia,
             resultado: false,
-            tiempo: 1));
+            tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});
         });

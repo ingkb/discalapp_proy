@@ -28,10 +28,12 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
   late String imagen1;
   late String imagen2;
   
+  Stopwatch tiempo = Stopwatch();
 
   @override
   void initState() {
     super.initState();
+    tiempo.start();
   }
 
   @override
@@ -129,11 +131,13 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
   validarDialog(){
      ActiveUser usuarioResultados = Provider.of<ActiveUser>(context,listen:false);
 
+    tiempo.stop();
+    double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     if(selectedOption == int.parse(compareActivities[widget.numero]![3])){
       
-      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero]![0],resultado: true, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero]![0],resultado: true, tiempo: tiempoActividad));
     }else{
-      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero]![0],resultado: false, tiempo: 1));
+      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero]![0],resultado: false, tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }

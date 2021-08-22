@@ -2,6 +2,7 @@ import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
+import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:discalapp_proy/shared/progress_barr_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +33,18 @@ class Sesion1State extends State<Sesion1> {
     actividadesPreCompletas = 0;
     actividadActual = 1;
     numActividades = 20;
-    listaActividades = [Text("...")];
+    listaActividades = [
+      marcoActividad('',[Container(
+        height: 200,
+        child: Center(
+          child: Image(
+            image: AssetImage('assets/images/loadingblue.gif'),
+            width: 100,
+          ),
+        ),
+      )]),
+      
+    ];
     actividades = new Actividades(pasarActividad);
     iniciarSesion();
 
