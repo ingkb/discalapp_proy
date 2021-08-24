@@ -288,11 +288,11 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
 
     if (check1 && check2 && check3) {
       usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica, resultado: true, tiempo: tiempoActividad));
+          area: Areas.rectaNumerica, resultado: 1, tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(new ActivityResult(
           area: Areas.rectaNumerica,
-          resultado: false,
+          resultado: 0,
           tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);

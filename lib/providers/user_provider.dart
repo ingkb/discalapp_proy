@@ -56,26 +56,4 @@ class ActiveUser with ChangeNotifier{
     notifyListeners();
   }
 
-  getAciertosArea(String area){
-    int aciertos=0;
-    for (ActivityResult result in _resultados!) {
-      if(result.area == area ){
-        if(result.resultado!){
-          aciertos++;
-        }
-      }
-    }
-    return aciertos;
-  }
-
-  getTotalArea(String area){
-    int totalArea = 0;
-    for (ActivityResult result in _resultados!) {
-      if(result.area == area ){
-        totalArea++;
-      }
-    }
-    return totalArea;
-  }
-
 }

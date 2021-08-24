@@ -66,7 +66,7 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
         if (areasResult[i].area == element.area) {
           areasResult[i].preguntas++;
           areasResult[i].tiempo += element.tiempo!;
-          if (element.resultado! == true) areasResult[i].aciertos++;
+          if (element.resultado! == 1) areasResult[i].aciertos++;
         }
       }
     });

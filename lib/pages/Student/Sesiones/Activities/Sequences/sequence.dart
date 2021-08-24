@@ -274,7 +274,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.secuencia,
-            resultado: true,
+            resultado: 1,
             tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
@@ -284,7 +284,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.secuencia,
-            resultado: false,
+            resultado: 0,
             tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});

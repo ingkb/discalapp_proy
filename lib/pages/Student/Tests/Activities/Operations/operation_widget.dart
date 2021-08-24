@@ -174,12 +174,12 @@ class OperationActivityState extends BaseActivity<OperationActivity> {
     if (resultado == resultadoCorrecto) {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero]![0],
-          resultado: true,
+          resultado: 1,
           tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(new ActivityResult(
           area: operationsActivities[widget.numero]![0],
-          resultado: false,
+          resultado: 0,
           tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
