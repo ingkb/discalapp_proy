@@ -164,7 +164,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.suma,
-            resultado: true,
+            resultado: 1,
             tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
@@ -174,7 +174,7 @@ class AddingApplesActivityState extends BaseActivity<AddingApplesActivity> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.suma,
-            resultado: false,
+            resultado: 0,
             tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});

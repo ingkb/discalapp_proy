@@ -48,7 +48,7 @@ class Actividades {
     //Primero busca los errores de la sesion anterior para agregar actividades de esta area 
     //asegurandose que hay un refuerzo de las areas en las que hay mas dificultades 
     activities.forEach((acti) {
-      if (acti.resultado == false) {
+      if (acti.resultado == 0) {
         totalErrores++;
         sumarActivity(acti.area);
       }

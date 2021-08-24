@@ -135,9 +135,9 @@ class CompareActivity1State extends BaseActivity<CompareActivity1> {
     double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     if(selectedOption == int.parse(compareActivities[widget.numero]![3])){
       
-      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero]![0],resultado: true, tiempo: tiempoActividad));
+      usuarioResultados.addResults(new ActivityResult(area: compareActivities[widget.numero]![0],resultado: 1, tiempo: tiempoActividad));
     }else{
-      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero]![0],resultado: false, tiempo: tiempoActividad));
+      usuarioResultados.addResults(new ActivityResult(area:compareActivities[widget.numero]![0],resultado: 0, tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }

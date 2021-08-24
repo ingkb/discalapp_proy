@@ -87,7 +87,7 @@ class Sesion1State extends State<Sesion1> {
             )
           ],
         ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
         floatingActionButton: btnValidar());
   }
 

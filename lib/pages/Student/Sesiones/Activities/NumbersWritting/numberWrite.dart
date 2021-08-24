@@ -136,7 +136,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.escritura,
-            resultado: true,
+            resultado: 1,
             tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
@@ -146,7 +146,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.escritura,
-            resultado: false,
+            resultado: 0,
             tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});

@@ -9,12 +9,12 @@ class ActivityResult {
 
     String? sesionId;
     int? indice;
-    bool? resultado;
+    double? resultado;
     double? tiempo;
     String? area;
 
     factory ActivityResult.fromJson(Map<String, dynamic> json) => ActivityResult(
-        resultado: json["resultado"] == null ? null : json["resultado"],
+        resultado: json["resultado"] == null ? null : json["resultado"].toDouble(),
         tiempo: json["tiempo"] == null ? null : json["tiempo"].toDouble(),
         area: json["area"] == null ? null : json["area"],
         sesionId: json["sesionId"] == null ? null : json["sesionId"],

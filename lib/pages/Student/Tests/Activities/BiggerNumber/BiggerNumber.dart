@@ -152,10 +152,10 @@ class BiggerNumberActivityState extends BaseActivity<BiggerNumberActivity> {
     double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     if (selectedOption == biggerNumbers[widget.numero]![2]) {
       usuarioResultados.addResults(new ActivityResult(
-          area: Areas.menormayor, resultado: true, tiempo: tiempoActividad));
+          area: Areas.menormayor, resultado: 1, tiempo: tiempoActividad));
     } else {
       usuarioResultados.addResults(new ActivityResult(
-          area: Areas.menormayor, resultado: false, tiempo: tiempoActividad));
+          area: Areas.menormayor, resultado: 0, tiempo: tiempoActividad));
     }
     widget.pasarActividad!(0);
   }

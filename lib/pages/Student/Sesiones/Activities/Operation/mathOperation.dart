@@ -194,7 +194,7 @@ class MathOperationState extends BaseActivity<MathOperation> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: area,
-            resultado: true,
+            resultado: 1,
             tiempo: tiempoActividad));
         showCorrectAnsDialog(context,(){setState(() {});});
       } else {
@@ -202,7 +202,7 @@ class MathOperationState extends BaseActivity<MathOperation> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: area,
-            resultado: false,
+            resultado: 0,
             tiempo: tiempoActividad));
         showWrongAnsDialog(context, (){setState(() {});});
       }

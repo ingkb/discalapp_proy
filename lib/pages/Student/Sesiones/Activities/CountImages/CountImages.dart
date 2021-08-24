@@ -162,7 +162,7 @@ class CountImagesState extends BaseActivity<CountImages> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
-            resultado: true,
+            resultado: 1,
             tiempo: tiempoActividad));
         showCorrectAnsDialog(context, () {
           setState(() {});
@@ -172,7 +172,7 @@ class CountImagesState extends BaseActivity<CountImages> {
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
             area: Areas.conteo,
-            resultado: false,
+            resultado: 0,
             tiempo: tiempoActividad));
         showWrongAnsDialog(context, () {
           setState(() {});
