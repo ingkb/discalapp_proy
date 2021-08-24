@@ -86,7 +86,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
+                color: Colors.blue[700],
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
             decoration: InputDecoration(
                 //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
                 hintText: '?',
@@ -105,7 +107,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
             style: TextStyle(
-                color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
+                color: Colors.blue[700],
+                fontSize: 30,
+                fontWeight: FontWeight.bold),
             decoration: InputDecoration(
                 //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
                 hintText: '?',
@@ -127,7 +131,9 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
-              color: Colors.black, fontSize: 45, fontWeight: FontWeight.w500),
+              color: Colors.blue[700],
+              fontSize: 30,
+              fontWeight: FontWeight.bold),
           decoration: InputDecoration(
               //labelText: 'Respuesta',labelStyle: TextStyle(fontSize: 25)
               hintText: 'Respuesta',
@@ -153,16 +159,16 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget numero(int numero) {
     return Container(
-        height: 60,
-        width: 60,
+        height: 40,
+        width: 40,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: mapaNumeroImagenes[numero]);
   }
 
   Widget signo() {
     return Container(
-        height: 60,
-        width: 60,
+        height: 40,
+        width: 40,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Image(
             image: AssetImage('assets/images/numeros/plus-24844_1280.png')));
@@ -170,8 +176,8 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget flecha() {
     return Container(
-        height: 60,
-        width: 60,
+        height: 45,
+        width: 45,
         padding: EdgeInsets.symmetric(horizontal: 10, vertical: 10),
         child: Image(image: AssetImage('assets/images/numeros/flecha-12.png')));
   }
@@ -189,10 +195,10 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget separador() {
     return Container(
-      width: 170,
+      width: 120,
     );
   }
-  
+
   bool respondido = false;
   @override
   validarResultado() {
@@ -229,6 +235,4 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       }
     }
   }
-
-  
 }
