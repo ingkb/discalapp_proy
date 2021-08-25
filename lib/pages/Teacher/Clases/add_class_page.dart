@@ -122,7 +122,6 @@ class _AddClassgroupState extends State<AddClassgroup> {
 
   _registrarClase() {
     classgroup.teacher = prefs.teacherUserId;
-    print('usuario ' + prefs.teacherUserId);
     classesService.addClassgroup(classgroup).then((value) {
       setState(() {
         Navigator.pop(context, 'classes');

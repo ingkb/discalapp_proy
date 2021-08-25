@@ -14,7 +14,7 @@ class SesionService{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-
+    print(response.body);
     if(response.statusCode == 201){
       return RegisterSesionResponse.fromJson(jsonDecode(response.body));
     }else{

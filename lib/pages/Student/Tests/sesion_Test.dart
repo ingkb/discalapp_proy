@@ -26,8 +26,8 @@ class SesioTestState extends State<SesionTestPage> {
   @override
   void initState() {
     actividadActual = 1;
-    numActividades = 24 + 2 + 16 + 12; 
-    actividades = new ActividadesTest(24, 2, 16, 12, pasarActividad); // 24,2,16,12
+    numActividades = 2 + 2 + 2 + 2;
+    actividades = new ActividadesTest(2, 2, 2, 2, pasarActividad); // 24,2,16,12
     listaActividades = actividades.getActivities();
 
     super.initState();
@@ -114,18 +114,22 @@ class SesioTestState extends State<SesionTestPage> {
             student: usuarioResultados.student!.userId,
             tipo: ModalRoute.of(context)!.settings.arguments as int,
             fecha: DateTime.now(),
-            estado: true))
-        .then((value) {
-      if (value.state == 0) {
+            estado: false))
+        .then((sesionGuardada) {
+      if (sesionGuardada.state == 0) {
         List<ActivityResult> results = usuarioResultados.resultados ?? [];
         results.forEach((element) {
-          element.sesionId = value.sesionId;
+          element.sesionId = sesionGuardada.sesionId;
         });
         activityService
             .addGroupActivityResult(
                 RegisterAcitivityGroupRequest(activities: results))
             .then((value) {
-          print(value.message);
+          if (value.state == 0) {
+            sesionService
+                .updateSesion(sesionGuardada.sesionId, true)
+                .then((value) => null);
+          }
         });
       }
     });

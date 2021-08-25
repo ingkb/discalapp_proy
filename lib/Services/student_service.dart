@@ -41,7 +41,6 @@ class StudentService{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-    print(response.body);
     if(response.statusCode == 201){
       return DefaultResponse.fromJson(jsonDecode(response.body));
     }else{

@@ -43,7 +43,6 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
   getSesions() {
     String userid = widget.student?.userId ?? '';
     sesionsservice.getAllSesion(userid).then((value) {
-      print(userid);
       sesions = value.sesions ?? [];
       if (sesions.length > 1) {
         DateTime firstday = sesions[0].fecha ?? DateTime.now();

@@ -18,7 +18,6 @@ class LoginService{
       'Content-Type': 'application/json; charset=UTF-8',
       }
     );
-    print(response.body);
     if(response.statusCode == 201){
       return StudentLoginResponse.fromJson(jsonDecode(response.body));
     }else{
