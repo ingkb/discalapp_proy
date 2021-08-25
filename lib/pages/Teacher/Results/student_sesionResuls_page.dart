@@ -1,8 +1,6 @@
-import 'package:discalapp_proy/Services/activityResult_service.dart';
-import 'package:discalapp_proy/models/activityResult_model.dart';
+import 'package:discalapp_proy/Services/areaResult_service.dart';
 import 'package:discalapp_proy/models/areaResult_model.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
-import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
@@ -15,24 +13,14 @@ class StudentSesionResult extends StatefulWidget {
 }
 
 class _StudentSesionResultState extends State<StudentSesionResult> {
-  ActivityResultService activityService = new ActivityResultService();
-  List<ActivityResult>? activityResults = [];
 
-  List<AreaResult> areasResult = List.generate(
-      11, (index) => new AreaResult(0, 0, 0, index.toString(), ''));
+  AreaResultService areaResultService = new AreaResultService();
+  List<AreaResult>? areaResults = [];
 
   @override
   void initState() {
     super.initState();
-
-    activityService
-        .getAllActivityResult(widget.sesion!.id ?? ' ')
-        .then((value) {
-      setState(() {
-        this.activityResults = value.activityResults;
-        organize();
-      });
-    });
+    
   }
 
   @override
@@ -47,35 +35,10 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
             child: loaderListResults()));
   }
 
-  //Se crean los resultados de area, luego se reparten las actividades dependiendo de donde coincida el area
-  organize() {
-    areasResult[0].area = Areas.conteo;
-    areasResult[1].area = Areas.suma;
-    areasResult[2].area = Areas.resta;
-    areasResult[3].area = Areas.multiplicacion;
-    areasResult[4].area = Areas.comparacion;
-    areasResult[5].area = Areas.escritura;
-    areasResult[6].area = Areas.rectaNumerica;
-    areasResult[7].area = Areas.secuencia;
-    areasResult[8].area = Areas.puntos;
-    areasResult[9].area = Areas.lineas;
-    areasResult[10].area = Areas.menormayor;
-
-    this.activityResults!.forEach((element) {
-      for (var i = 0; i < 11; i++) {
-        if (areasResult[i].area == element.area) {
-          areasResult[i].preguntas++;
-          areasResult[i].tiempo += element.tiempo!;
-          if (element.resultado! == 1) areasResult[i].aciertos++;
-        }
-      }
-    });
-  }
-
   Widget loaderListResults() {
     return FutureBuilder(
       builder:
-          (context, AsyncSnapshot<SearchAllActivityResultResponse> snapshot) {
+          (context, AsyncSnapshot<SearchAllAreaResultResponse> snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
           return Container();
         }
@@ -88,33 +51,32 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
           );
         }
         if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
-            if (snapshot.data!.activityResults!.isEmpty) {
+            if (snapshot.data!.areaResults!.isEmpty) {
               print('lista empty');
               return Container();
             }
-            this.activityResults = snapshot.data!.activityResults;
-            organize();
+            this.areaResults = snapshot.data!.areaResults!;
             return listResults();
         } else {
           print('data null');
           return Container();
         }
       },
-      future: activityService.getAllActivityResult(widget.sesion!.id ?? ' '),
+      future: areaResultService.getAreaResultsBySesion(widget.sesion!.id ?? ' '),
     );
   }
 
   Widget listResults() {
     List<Widget> results = [];
 
-    this.areasResult.forEach((element) {
+    this.areaResults!.forEach((element) {
       double porcenjateNum = 0;
       String porcentaje = "No";
       try {
-        porcenjateNum = (element.aciertos / element.preguntas);
+        porcenjateNum = (element.resultado! / element.preguntas!);
         porcentaje = (porcenjateNum * 100).toInt().toString() + '%';
       } catch (e) {}
-      if (element.preguntas > 0) {
+      if (element.preguntas! > 0) {
         Widget temp = Container(
           width: 400,
           height: 60,
@@ -123,7 +85,7 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
             children: [
               Row(
                 children: [
-                  Text(element.area,
+                  Text(element.area!,
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   Expanded(child: SizedBox()),

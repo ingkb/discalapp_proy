@@ -1,15 +1,32 @@
 class AreaResult {
-    AreaResult(
-         this.preguntas,
-         this.aciertos,
-         this.tiempo,
+    AreaResult({
+         this.sesionId,
          this.area,
-         this.sesionId
+         this.resultado,
+         this.tiempo,
+         this.preguntas
+    });
+
+    String? sesionId;
+    String? area;
+    int? resultado;
+    double? tiempo;
+    int? preguntas;
+
+    
+    factory AreaResult.fromJson(Map<String, dynamic> json) => AreaResult(
+        sesionId: json["sesionId"],
+        area: json["area"],
+        resultado: json["resultado"],
+        tiempo: json["tiempo"],
+        preguntas: json["preguntas"],
     );
 
-    int preguntas;
-    int aciertos;
-    double tiempo;
-    String sesionId;
-    String area;
+    Map<String, dynamic> toJson() => {
+        "sesionId": sesionId,
+        "area": area,
+        "resultado": resultado,
+        "tiempo": tiempo,
+        "preguntas":preguntas
+    };
 }

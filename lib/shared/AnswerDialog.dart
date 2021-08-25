@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../constants.dart';
-
 showCorrectAnsDialog(BuildContext context, validar()) {
   // set up the button
   Widget okButton = TextButton(
