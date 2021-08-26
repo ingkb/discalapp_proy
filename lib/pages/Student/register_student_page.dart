@@ -1,6 +1,8 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/student_model.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/painting.dart';
 
 class RegisterStudentPage extends StatefulWidget {
   RegisterStudentPage({Key? key}) : super(key: key);
@@ -14,6 +16,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   bool userVerified = false;
   Color colorOPT1 = kAlumnColor;
   Color colorOPT2 = kAlumnColor;
+  double tam1 = 150;
+  double tam2 = 150;
   double borderOPT1 = 1;
   double borderOPT2 = 1;
 
@@ -38,7 +42,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
       body: Center(
           child: Container(
         child: ListView(
-          padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 10, vertical: 50),
           children: [
             //avatarImage(),
             seleccionSexo(),
@@ -55,122 +59,136 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   }
 
   Widget inputEdad() {
-    return TextField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          hintText: 'Edad',
-          labelText: 'Edad',
-          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
-          icon: Icon(Icons.cake)),
-      onChanged: (valor) {
-        setState(() {
-          student!.age = int.parse(valor);
-        });
-      },
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: TextField(
+        keyboardType: TextInputType.number,
+        decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            hintText: 'Edad',
+            labelText: 'Edad',
+            suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
+            icon: Icon(Icons.cake)),
+        onChanged: (valor) {
+          setState(() {
+            student!.age = int.parse(valor);
+          });
+        },
+      ),
     );
   }
 
   Widget inputNombre() {
-    return TextField(
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          hintText: 'Nombre',
-          labelText: 'Nombre',
-          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
-          icon: Icon(Icons.person)),
-      onChanged: (valor) {
-        setState(() {
-          student!.name = valor;
-        });
-      },
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 10),
+      child: TextField(
+        decoration: InputDecoration(
+            focusedBorder: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+              borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
+            ),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.circular(20.0),
+            ),
+            hintText: 'Nombre',
+            labelText: 'Nombre',
+            suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
+            icon: Icon(Icons.person)),
+        onChanged: (valor) {
+          setState(() {
+            student!.name = valor;
+          });
+        },
+      ),
     );
   }
-
-  /* Widget inputGrado() {
-    return TextField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          hintText: 'Grado',
-          labelText: 'Grado',
-          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
-          icon: Icon(Icons.class_)),
-      onChanged: (valor) {
-        setState(() {
-          student!.grade = int.parse(valor);
-        });
-      },
-    );
-  }
- */
 
   Widget seleccionSexo() {
     return Container(
         width: double.infinity,
-        height: 150,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
+        height: 220,
+        child: Column(
           children: [
-            Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: borderOPT1, color: colorOPT1)),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      seleccionarOPT(1);
-                    });
-                  },
-                  child: CircleAvatar(
-                    child: Image(
-                      fit: BoxFit.fitHeight,
-                      height: 500,
-                      image: AssetImage(imagen1),
+            Text("Seleccione su género", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),),
+            SizedBox(height:15),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Column(
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 600),
+                      height: tam1,
+                      width: tam1,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border: Border.all(width: borderOPT1, color: colorOPT1)),
+                      child: TextButton(
+                        onPressed: () {
+                          setState(() {
+                            seleccionarOPT(1);
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: (selectedOption == 1 || selectedOption == 3) ? 60 : 30,
+                          child: Image(
+                            fit: BoxFit.fill,
+                            width: 200,
+                            image: AssetImage(imagen1),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                )),
-            SizedBox(height: 30),
-            Container(
-                height: 150,
-                width: 150,
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(width: borderOPT2, color: colorOPT2)),
-                child: TextButton(
-                  onPressed: () {
-                    setState(() {
-                      seleccionarOPT(2);
-                    });
-                  },
-                  child: CircleAvatar(
-                    child: Image(
-                      fit: BoxFit.fill,
-                      height: 200,
-                      image: AssetImage(imagen2),
+                    selectedOption == 1
+                        ? Text("Hombre",
+                            style: TextStyle(
+                                fontWeight:  FontWeight.w400, fontSize: 18))
+                        : Container()
+                  ],
+                ),
+                SizedBox(width: 15),
+                Column(
+                  children: [
+                    AnimatedContainer(
+                      duration: Duration(milliseconds: 600),
+                      height: tam2,
+                      width: tam2,
+                      decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.all(Radius.circular(20)),
+                          border: Border.all(width: borderOPT2, color: colorOPT2)),
+                      child: TextButton(
+                        clipBehavior: Clip.hardEdge,
+                        onPressed: () {
+                          setState(() {
+                            seleccionarOPT(2);
+                          });
+                        },
+                        child: CircleAvatar(
+                          radius: (selectedOption == 2 || selectedOption == 3)? 60 : 30,
+                          child: Image(
+                            fit: BoxFit.fill,
+                            image: AssetImage(imagen2),
+                          ),
+                        ),
+                      ),
                     ),
-                  ),
-                ))
+                    selectedOption == 2
+                        ? Text("Mujer",
+                            style: TextStyle(
+                                fontWeight:  FontWeight.w400, fontSize: 18))
+                        : Container()
+                  ],
+                )
+              ],
+            ),
           ],
         ));
   }
@@ -183,6 +201,10 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         colorOPT2 = kAlumnColor;
         borderOPT2 = 1;
         selectedOption = 1;
+        tam1 = 150;
+        tam2 = 80;
+        student!.gender="Hombre";
+
         break;
       case 2:
         colorOPT1 = kAlumnColor;
@@ -190,6 +212,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         colorOPT2 = kTeacherColor;
         borderOPT2 = 5;
         selectedOption = 2;
+        tam1 = 80;
+        tam2 = 150;
+        student!.gender="Mujer";
         break;
     }
   }
@@ -205,8 +230,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             primary: kAlumnColor,
           ),
           onPressed: () {
-            if (student!.age != null && student!.name != null)
-              Navigator.pushNamed(context, 'registerStudent2',
+            if (student!.age != null && student!.name != null && student!.gender != null)
+              Navigator.pushReplacementNamed(context, 'registerStudent2',
                   arguments: student);
           },
           child: Text('Siguiente',

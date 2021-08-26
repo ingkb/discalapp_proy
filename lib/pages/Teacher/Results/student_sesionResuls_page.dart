@@ -32,7 +32,36 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
         ),
         body: Container(
             margin: EdgeInsets.only(top: 20, right: 20),
-            child: loaderListResults()));
+            child: Column(
+              children: [
+                widget.sesion!.tipo == 0 ? initialTestResult():Container(),
+                loaderListResults(),
+              ],
+            )
+            )
+        );
+  }
+
+  Widget initialTestResult(){
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Nivel de riesgo:"),
+          risk("Bajo riesgo")
+        ],
+      ),
+    );
+  }
+
+  Widget risk(String nivel){
+    return Container(
+      width: 150,
+      child: Text(nivel, style: TextStyle(fontWeight: FontWeight.bold),),
+      decoration: BoxDecoration(
+        color: Colors.green
+      ),
+    );
   }
 
   Widget loaderListResults() {
