@@ -177,7 +177,7 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
               context,
               MaterialPageRoute(
                 builder: (context) =>
-                    StudentSesionResult(sesion: element),
+                    StudentSesionResult(sesion: element, student: widget.student,),
               ),
             );
             setState(() {});
@@ -194,7 +194,7 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
             size: 30,
           ),
         ),
-        subtitle: Text("Numero: " + element.tipo.toString()),
+        subtitle: Text(numerosString[element.tipo]!),
       ));
       sesiones.add(sesion);
     });
@@ -206,4 +206,12 @@ class _StudentSesionsPageState extends State<StudentSesionsPage> {
             height: 250,
             child: ListView(children: sesiones));
   }
+
+  Map<int,String> numerosString ={
+    0:"Test inicial",
+    1:"Sesión 1",
+    2:"Sesión 2",
+    3:"Sesión 3",
+    4:"Sesión Final"
+  };
 }
