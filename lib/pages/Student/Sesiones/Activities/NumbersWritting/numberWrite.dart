@@ -63,7 +63,7 @@ class NumberWriteState extends BaseActivity<NumberWrite> {
     this.borderWidth3 = 0.1;
 
     var rng = new Random();
-    this.numeroActivi = rng.nextInt(3);
+    this.numeroActivi = rng.nextInt(6);
     this.respuesta = int.parse(numerosARepresentar[numeroActivi!]![4]);
   }
 

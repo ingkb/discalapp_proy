@@ -55,7 +55,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
     return Column(
       children: [
         Container(
-          child: Text("¿Tiene su hijo/a alguna necesidad especial?",style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+          child: Text("¿Tiene alguna necesidad educativa especial?",style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
         ),
         Column(
           children: <Widget>[

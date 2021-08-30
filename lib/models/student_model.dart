@@ -5,13 +5,13 @@ class Student {
       this.password,
       this.age,
       this.classgroup,
-      this.grade});
+      this.gender});
 
   String? userId;
   String? name;
   String? password;
   String? classgroup;
-  int? grade;
+  String? gender;
   int? age;
 
   factory Student.fromJson(Map<String, dynamic> json) => Student(
@@ -20,7 +20,8 @@ class Student {
       password: json["password"],
       age: json["age"],
       classgroup: json["classgroup"],
-      grade: json["grade"]);
+      gender: json["gender"],
+      );
 
   Map<String, dynamic> toJson() => {
         "userId": userId,
@@ -28,6 +29,6 @@ class Student {
         "password": password,
         "age": age,
         "classgroup": classgroup,
-        "grade": grade,
+        "gender": gender,
       };
 }

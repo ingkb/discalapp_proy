@@ -71,6 +71,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
 
   Widget inputGrado() {
     return TextField(
+      keyboardType: TextInputType.number,
       decoration: InputDecoration(
           focusedBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(20.0),
@@ -85,7 +86,7 @@ class _AddClassgroupState extends State<AddClassgroup> {
           icon: Icon(Icons.class_)),
       onChanged: (valor) {
         setState(() {
-          //classgroup.name = valor;
+          classgroup.grade =  int.tryParse(valor);
         });
       },
     );

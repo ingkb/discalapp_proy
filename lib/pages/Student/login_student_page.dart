@@ -35,7 +35,7 @@ class _LoginStudentPageState extends State<LoginStudentPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: kAlumnColor, title: Text('Login de estudiante')),
+          backgroundColor: kAlumnColor, title: Text('Bienvenido estudiante')),
       body: Center(
           child: Container(
         child: ListView(

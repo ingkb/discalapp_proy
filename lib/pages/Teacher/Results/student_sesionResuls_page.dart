@@ -1,26 +1,26 @@
-import 'package:discalapp_proy/Services/areaResult_service.dart';
+import 'package:discalapp_proy/Services/generalArea_service.dart';
 import 'package:discalapp_proy/models/areaResult_model.dart';
 import 'package:discalapp_proy/models/sesion_model.dart';
+import 'package:discalapp_proy/models/student_model.dart';
 import 'package:flutter/material.dart';
 
 import '../../../constants.dart';
 
 class StudentSesionResult extends StatefulWidget {
-  StudentSesionResult({Key? key, this.sesion}) : super(key: key);
+  StudentSesionResult({Key? key, this.sesion, this.student}) : super(key: key);
   final Sesion? sesion;
+  final Student? student;
   @override
   _StudentSesionResultState createState() => _StudentSesionResultState();
 }
 
 class _StudentSesionResultState extends State<StudentSesionResult> {
-
-  AreaResultService areaResultService = new AreaResultService();
+  GeneralAreaService generalAreaService = new GeneralAreaService();
   List<AreaResult>? areaResults = [];
-
+  String resultado = '';
   @override
   void initState() {
     super.initState();
-    
   }
 
   @override
@@ -31,14 +31,51 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
           title: Text('Resultados sesion'),
         ),
         body: Container(
-            margin: EdgeInsets.only(top: 20, right: 20),
+            margin: EdgeInsets.only(top: 20, right: 10, left: 10),
             child: loaderListResults()));
+  }
+
+  Widget initialTestResult() {
+    Color backColor =
+        (this.resultado == "Bajo") ? Colors.green : Colors.orange;
+
+    String textoDetalle = (this.resultado == "Bajo") 
+    ? "Los resultados muestran un desempeño dentro de la normalidad.":
+    "Los resultados muestran un desempeño fuera de la normalidad, existe la posibilidad de que el estudiante presente discalculia.";
+    return Container(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text("Nivel de riesgo:",textAlign: TextAlign.center, style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+          Container(
+            margin: EdgeInsets.symmetric(vertical: 5),
+            width: 150,
+            height: 40,
+            child: Center(
+              child: Text(
+                this.resultado,
+                textAlign: TextAlign.center,
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ),
+            decoration: BoxDecoration(color: backColor,
+            borderRadius:BorderRadius.all(Radius.circular(20))),
+          ),
+          Text(textoDetalle,textAlign: TextAlign.center, style:TextStyle(fontSize: 16,fontWeight: FontWeight.w400)),
+        ],
+      ),
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.only(bottom:10),
+      decoration: BoxDecoration(
+        border: Border.all(color:kTeacherColor,width:1),
+        borderRadius: BorderRadius.all(Radius.circular(20))
+      )
+    );
   }
 
   Widget loaderListResults() {
     return FutureBuilder(
-      builder:
-          (context, AsyncSnapshot<SearchAllAreaResultResponse> snapshot) {
+      builder: (context, AsyncSnapshot<CompareGeneralAreaResponse> snapshot) {
         if (snapshot.connectionState == ConnectionState.none) {
           return Container();
         }
@@ -50,19 +87,28 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
             ),
           );
         }
-        if (snapshot.connectionState == ConnectionState.done && snapshot.data != null) {
-            if (snapshot.data!.areaResults!.isEmpty) {
-              print('lista empty');
-              return Container();
-            }
-            this.areaResults = snapshot.data!.areaResults!;
-            return listResults();
+        if (snapshot.connectionState == ConnectionState.done &&
+            snapshot.data != null) {
+          if (snapshot.data!.areaResults!.isEmpty) {
+            print('lista empty');
+            return Container(child: Text("empty"),);
+          }
+          this.areaResults = snapshot.data!.areaResults!;
+          this.resultado = snapshot.data!.test!;
+          return Column(
+            children: [
+              widget.sesion!.tipo == 0 ? initialTestResult() : Container(),
+              listResults()
+            ],
+          );
         } else {
           print('data null');
           return Container();
         }
       },
-      future: areaResultService.getAreaResultsBySesion(widget.sesion!.id ?? ' '),
+      future: generalAreaService.compararResultado(
+          new CompareGeneralAreaRequest(widget.sesion!.id!,
+              widget.student!.userId!, widget.sesion!.tipo == 0)),
     );
   }
 
@@ -89,7 +135,7 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
                       style:
                           TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
                   Expanded(child: SizedBox()),
-                  Text(element.tiempo.toString())
+                  Text( element.tiempo!.round().toString()+" seg")
                 ],
               ),
               Row(
@@ -106,9 +152,11 @@ class _StudentSesionResultState extends State<StudentSesionResult> {
         results.add(temp);
       }
     });
-    return ListView(
-      children: results,
-    );
+    return 
+       ListView(
+        shrinkWrap: true,
+        children: results,
+      );
   }
 
   Widget barraPorcentaje(double porcentaje) {
