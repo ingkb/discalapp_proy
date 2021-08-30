@@ -99,30 +99,6 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
     );
   }
 
-  /* Widget inputGrado() {
-    return TextField(
-      keyboardType: TextInputType.number,
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          hintText: 'Grado',
-          labelText: 'Grado',
-          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
-          icon: Icon(Icons.class_)),
-      onChanged: (valor) {
-        setState(() {
-          student!.grade = int.parse(valor);
-        });
-      },
-    );
-  }
- */
-
   Widget seleccionSexo() {
     return Container(
         width: double.infinity,
