@@ -1,7 +1,9 @@
 import 'package:discalapp_proy/Services/sesions_service.dart';
 import 'package:discalapp_proy/providers/user_preference.dart';
+import 'package:discalapp_proy/providers/user_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 import '../../constants.dart';
 
 class MenuPage extends StatefulWidget {
@@ -21,23 +23,26 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   buscarSesiones() {
-    final prefs = new PreferenciasUsuario();
+    ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
 
-    if (prefs.userId != '') {
+    if (usuario.student!.userId != '') {
       try {
         SesionService sesionService = new SesionService();
-        sesionService.getAllSesion(prefs.userId).then((value) {
+        sesionService.getAllSesion(usuario.student!.userId!).then((value) {
           if (value.state == 0 && value.sesions!.length > 0) {
             setState(() {
               for (var item in value.sesions!) {
-              if (item.tipo! > mayor && item.estado == true) mayor = item.tipo!;
-            }
+                if (item.tipo! > mayor && item.estado == true)
+                  mayor = item.tipo!;
+              }
             });
           }
         });
       } catch (e) {
         print(e);
       }
+    }else{
+      print("id no encontrado");
     }
   }
 
@@ -141,8 +146,8 @@ class _MenuPageState extends State<MenuPage> {
           //       }
           //     : null,
           onPressed: () {
-                  Navigator.pushNamed(context, direccion, arguments: numSesion);
-                },
+            Navigator.pushNamed(context, direccion, arguments: numSesion);
+          },
           child: Stack(
             fit: StackFit.expand,
             children: [
