@@ -27,9 +27,9 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
 
   String valor = " a";
 
-  List<int> rangeDy1 = [230, 290];
-  List<int> rangeDy2 = [0, 60];
-  List<int> rangeDy3 = [180, 240];
+  double realPos1 = 360*(0.7);
+  double realPos2 = 360*(0.1);
+  double realPos3 = 360*(0.6);
 
   Stopwatch tiempo = Stopwatch();
 
@@ -42,9 +42,10 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
       num1 = 25;
       num2 = 90;
       num3 = 70;
-      rangeDy1 = [230, 290];
-      rangeDy2 = [0, 60];
-      rangeDy3 = [80, 120];
+      
+      realPos1 = 360*(0.75);
+      realPos2 = 360*(0.1);
+      realPos3 = 360*(0.3);
     }
     tiempo.start();
   }
@@ -123,6 +124,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
     if (posY < 10) {
       posY = 10;
     }
+
     return new Offset(posX, posY);
   }
 
@@ -277,24 +279,25 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   }
 
   validarDialog() {
-    bool check1 = (pos.dy > rangeDy1[0] && pos.dy < rangeDy1[1]);
-    bool check2 = (pos2.dy > rangeDy2[0] && pos2.dy < rangeDy2[1]);
-    bool check3 = (pos3.dy > rangeDy3[0] && pos3.dy < rangeDy3[1]);
+    double resul1 = (30 - (pos.dy - realPos1).abs())/30;
+    double resul2 = (30 - (pos2.dy - realPos2).abs())/30;
+    double resul3 = (30 - (pos3.dy - realPos3).abs())/30;
 
+    resul1 = resul1<0?0:resul1;
+    resul2 = resul2<0?0:resul2;
+    resul3 = resul3<0?0:resul3;
+
+
+    double resultado = (resul1 + resul2 + resul3)/3;
+
+    print(resultado);
     tiempo.stop();
     double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
 
-    if (check1 && check2 && check3) {
-      usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica, resultado: 1, tiempo: tiempoActividad));
-    } else {
-      usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica,
-          resultado: 0,
-          tiempo: tiempoActividad));
-    }
+    usuarioResultados.addResults(new ActivityResult(
+          area: Areas.rectaNumerica, resultado: resultado, tiempo: tiempoActividad));
     widget.pasarActividad!(0);
   }
 
