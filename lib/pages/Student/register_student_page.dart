@@ -85,26 +85,6 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
   }
 
   Widget inputNombre() {
-<<<<<<< HEAD
-    return TextField(
-      decoration: InputDecoration(
-          focusedBorder: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-            borderSide: const BorderSide(color: kAlumnColor, width: 2.0),
-          ),
-          border: OutlineInputBorder(
-            borderRadius: BorderRadius.circular(20.0),
-          ),
-          hintText: 'Nombre',
-          labelText: 'Nombre',
-          suffixIcon: userVerified ? Icon(Icons.verified_user) : null,
-          icon: Icon(Icons.person)),
-      onChanged: (valor) {
-        setState(() {
-          student!.name = valor;
-        });
-      },
-=======
     return Container(
       margin: EdgeInsets.symmetric(horizontal: 10),
       child: TextField(
@@ -126,7 +106,6 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
           });
         },
       ),
->>>>>>> 3e4f9f9797a0ae6b655d027b23392c77bc1db450
     );
   }
 
