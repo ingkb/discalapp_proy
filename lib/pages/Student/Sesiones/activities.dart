@@ -4,6 +4,7 @@ import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/CountImages/CountImages.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/Dices/DicesActivity.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/Sequences/sequence.dart';
+import 'package:discalapp_proy/pages/Student/Sesiones/Activities/SetInLine/setInLine2_widget.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
@@ -24,6 +25,7 @@ class Actividades {
   int asociative = 0; // suma, multi
   int dicesnum = 0; // conteo
   int secuennum = 0; // secuencia
+  int rectaNum = 0;
   int totalActividades = 20;
   List<Widget>? actividades;
   int numActual = 0;
@@ -38,6 +40,7 @@ class Actividades {
     numWrite = 0;
     asociative = 0;
     dicesnum = 0;
+    rectaNum = 0;
     secuennum = 0;
   }
 
@@ -48,7 +51,7 @@ class Actividades {
     //Primero busca los errores de la sesion anterior para agregar actividades de esta area 
     //asegurandose que hay un refuerzo de las areas en las que hay mas dificultades 
     activities.forEach((acti) {
-      if (acti.resultado == 0) {
+      if (acti.resultado! < 0.6) {
         totalErrores++;
         sumarActivity(acti.area);
       }
@@ -79,6 +82,9 @@ class Actividades {
       sumarActivity(Areas.secuencia);
       creadas++;
       if (creadas == restante) break;
+      sumarActivity(Areas.rectaNumerica);
+      creadas++;
+      if (creadas == restante) break;
     }
   }
   // Si existe mas de una actividad para una misma area se escoge al azar 
@@ -105,7 +111,7 @@ class Actividades {
       numWrite++;
     }
     if (area == Areas.rectaNumerica) {
-      appleActi++;
+      rectaNum++;
     }
     if (area == Areas.comparacion) {
       dicesnum++;
@@ -175,6 +181,16 @@ class Actividades {
       actividades!.add(SequencesActivity(
           key: keys[numActual],
           pasarActividad: pasarActividadfn,
+          indice: numActual));
+    }
+    
+    for (int i = 1; i <= rectaNum; i++) {
+      this.numActual++;
+      keys[numActual] = GlobalKey<SetInLine2State>();
+      actividades!.add(SetInLine2(
+          key: keys[numActual],
+          pasarActividad: pasarActividadfn,
+          numero: i,
           indice: numActual));
     }
   }

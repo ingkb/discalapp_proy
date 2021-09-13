@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:discalapp_proy/Services/activityResult_service.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
 import 'package:discalapp_proy/providers/user_provider.dart';
@@ -8,15 +9,19 @@ import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-class SetInLine1 extends StatefulWidget {
-  SetInLine1({Key? key, this.pasarActividad, this.numero}) : super(key: key);
+import '../botonContinuar.dart';
+
+class SetInLine2 extends StatefulWidget {
+  SetInLine2({Key? key, this.pasarActividad, this.indice, this.numero})
+      : super(key: key);
   final ValueChanged<int>? pasarActividad;
   final int? numero;
+  final int? indice;
   @override
-  SetInLine1State createState() => SetInLine1State();
+  SetInLine2State createState() => SetInLine2State();
 }
 
-class SetInLine1State extends BaseActivity<SetInLine1> {
+class SetInLine2State extends BaseActivity<SetInLine2> {
   Offset pos = Offset(30, 10);
   Offset pos2 = Offset(30, 110);
   Offset pos3 = Offset(30, 210);
@@ -25,11 +30,11 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   int numMin = 0;
   int num1 = 3, num2 = 9, num3 = 4;
 
-  String valor = " a";
+  bool respondido=false;
 
-  double realPos1 = 360*(0.7);
-  double realPos2 = 360*(0.1);
-  double realPos3 = 360*(0.6);
+  double realPos1 = 360 * (0.7);
+  double realPos2 = 360 * (0.1);
+  double realPos3 = 360 * (0.6);
 
   Stopwatch tiempo = Stopwatch();
 
@@ -42,10 +47,10 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
       num1 = 25;
       num2 = 90;
       num3 = 70;
-      
-      realPos1 = 360*(0.75);
-      realPos2 = 360*(0.1);
-      realPos3 = 360*(0.3);
+
+      realPos1 = 360 * (0.75);
+      realPos2 = 360 * (0.1);
+      realPos3 = 360 * (0.3);
     }
     tiempo.start();
   }
@@ -80,9 +85,13 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
                     fontWeight: FontWeight.w500)),
           ),
           SizedBox(
-            height: 500,
+            height: 450,
             child: Stack(
               children: [
+                numberinLine(num1),
+                numberinLine(num2),
+                numberinLine(num3),
+             
                 getDraggableNumber1(),
                 getDraggableNumber2(),
                 getDraggableNumber3(),
@@ -104,6 +113,7 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
               ],
             ),
           ),
+          botonContinuar(respondido,widget.pasarActividad)
         ],
       ),
     );
@@ -112,19 +122,24 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
   Offset getNewPosition(Offset offset) {
     double posX = offset.dx - 20;
     double posY = offset.dy - 150;
+    double width = MediaQuery.of(context).size.width;
+    double limiteXR = width * 0.45;
     if (posX < 10) {
       posX = 10;
     }
-    if (posX > 160) {
-      posX = 160;
+    if (posX > limiteXR) {
+      posX = limiteXR;
     }
     if (posY > 360) {
       posY = 360;
     }
-    if (posY < 10) {
-      posY = 10;
+    if (posY < 0) {
+      posY = 0;
     }
-
+    double ancho = MediaQuery.of(context).size.width;
+    print("width:"+ancho.toString());
+    print("posY:"+posY.toString());
+    print("posX:"+posX.toString());
     return new Offset(posX, posY);
   }
 
@@ -278,29 +293,63 @@ class SetInLine1State extends BaseActivity<SetInLine1> {
         ));
   }
 
-  validarDialog() {
-    double resul1 = (50 - (pos.dy - realPos1).abs())/50;
-    double resul2 = (50 - (pos2.dy - realPos2).abs())/50;
-    double resul3 = (50 - (pos3.dy - realPos3).abs())/50;
+  Widget numberinLine(int n){
 
-    resul1 = resul1<0?0:resul1;
-    resul2 = resul2<0?0:resul2;
-    resul3 = resul3<0?0:resul3;
+    if(respondido){
+      return  Positioned(
+      top: 360 - n*(360/numMax) + 35,
+      right: 20,
+      child: Text( "- " +n.toString(),style: TextStyle(fontSize: 20,color: Colors.blue[900]),));
+    }else{
+      return Container();
+    }
+  }
+  @override
+  validarResultado() {
+    double resul1 = (50 - (pos.dy - realPos1).abs()) / 50;
+    double resul2 = (50 - (pos2.dy - realPos2).abs()) / 50;
+    double resul3 = (50 - (pos3.dy - realPos3).abs()) / 50;
 
+    print((pos.dy - realPos1));
+    print((pos2.dy - realPos2));
+    print((pos3.dy - realPos3));
 
-    double resultado = (resul1 + resul2 + resul3)/3;
+    resul1 = resul1 < 0 ? 0 : resul1;
+    resul2 = resul2 < 0 ? 0 : resul2;
+    resul3 = resul3 < 0 ? 0 : resul3;
+
+    double resultado = (resul1 + resul2 + resul3) / 3;
+    print(resultado);
 
     tiempo.stop();
     double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
     ActiveUser usuarioResultados =
         Provider.of<ActiveUser>(context, listen: false);
-
+    ActivityResultService activityResultService = new ActivityResultService();
     usuarioResultados.addResults(new ActivityResult(
-          area: Areas.rectaNumerica, resultado: resultado, tiempo: tiempoActividad));
-    widget.pasarActividad!(0);
-  }
+        area: Areas.rectaNumerica,
+        resultado: resultado,
+        tiempo: tiempoActividad));
 
-  validarResultado() {
-    showConfirmationDialog(context, validarDialog);
+    activityResultService.addActivityResult(new ActivityResult(
+        indice: widget.indice,
+        sesionId: usuarioResultados.sesionId,
+        area: Areas.rectaNumerica,
+        resultado: resultado,
+        tiempo: tiempoActividad));
+
+    if (resultado > 0.6) {
+      showCorrectAnsDialog(context, () {
+        setState(() {
+          respondido = true;
+        });
+      });
+    } else {
+      showWrongAnsDialog(context, () {
+        setState(() {
+          respondido = true;
+        });
+      });
+    }
   }
 }

@@ -9,7 +9,7 @@ class AreaResult {
 
     String? sesionId;
     String? area;
-    int? resultado;
+    double? resultado;
     double? tiempo;
     int? preguntas;
 
@@ -17,8 +17,8 @@ class AreaResult {
     factory AreaResult.fromJson(Map<String, dynamic> json) => AreaResult(
         sesionId: json["sesionId"],
         area: json["area"],
-        resultado: json["resultado"],
-        tiempo: json["tiempo"],
+        resultado: json["resultado"].toDouble(),
+        tiempo: json["tiempo"].toDouble(),
         preguntas: json["preguntas"],
     );
 

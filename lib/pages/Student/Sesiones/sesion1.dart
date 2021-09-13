@@ -27,23 +27,24 @@ class Sesion1State extends State<Sesion1> {
   late ActivityResultService activityService;
   late ActiveUser usuario;
   late Sesion lastSesion;
-
+  bool btnValidarActivo = true;
   @override
   void initState() {
     actividadesPreCompletas = 0;
     actividadActual = 1;
     numActividades = 20;
     listaActividades = [
-      marcoActividad('',[Container(
-        height: 200,
-        child: Center(
-          child: Image(
-            image: AssetImage('assets/images/loadingblue.gif'),
-            width: 100,
+      marcoActividad('', [
+        Container(
+          height: 200,
+          child: Center(
+            child: Image(
+              image: AssetImage('assets/images/loadingblue.gif'),
+              width: 100,
+            ),
           ),
-        ),
-      )]),
-      
+        )
+      ]),
     ];
     actividades = new Actividades(pasarActividad);
     iniciarSesion();
@@ -88,7 +89,7 @@ class Sesion1State extends State<Sesion1> {
           ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
-        floatingActionButton: btnValidar());
+        floatingActionButton: (btnValidarActivo)?btnValidar():Container());
   }
 
   List<Widget> emptyList() {
@@ -191,6 +192,13 @@ class Sesion1State extends State<Sesion1> {
 
   validarActividad() {
     actividades.validarResultado(actividadActual + actividadesPreCompletas!);
+    setState(() {
+      btnValidarActivo = false;
+    });
+    if ((actividadActual + actividadesPreCompletas!) >= numActividades) {
+      ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
+      sesionService.updateSesion(usuario.sesionId, true).then((_) => {});
+    }
   }
 
   validarNumActividad() {
@@ -208,6 +216,7 @@ class Sesion1State extends State<Sesion1> {
   pasarActividad(int n) {
     setState(() {
       actividadActual++;
+      btnValidarActivo = true;
       validarNumActividad();
     });
   }
