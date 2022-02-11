@@ -38,7 +38,8 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
         child: ListView(
           padding: EdgeInsets.symmetric(horizontal: 30, vertical: 30),
           children: [
-            radioButton(),
+            SizedBox(height: 20),
+            helpText(),
             SizedBox(height: 20),
             inputUserId(),
             SizedBox(height: 20),
@@ -51,42 +52,11 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
     );
   }
 
-  Widget radioButton() {
-    return Column(
-      children: [
-        Container(
-          child: Text("¿Tiene alguna necesidad educativa especial?",style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
-        ),
-        Column(
-          children: <Widget>[
-            ListTile(
-              title: const Text('Sí'),
-              leading: Radio<Opcion>(
-                value: Opcion.si,
-                groupValue: _character,
-                onChanged: (Opcion? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-            ListTile(
-              title: const Text('No'),
-              leading: Radio<Opcion>(
-                value: Opcion.no,
-                groupValue: _character,
-                onChanged: (Opcion? value) {
-                  setState(() {
-                    _character = value;
-                  });
-                },
-              ),
-            ),
-          ],
-        ),
-      ],
-    );
+  Widget helpText() {
+    return 
+      Container(
+        child: Text("¡Crea tu usuario!",style: TextStyle(fontSize: 20),textAlign: TextAlign.center,),
+      );
   }
 
   Widget avatarImage() {
