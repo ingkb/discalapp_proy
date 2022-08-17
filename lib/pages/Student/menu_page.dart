@@ -41,7 +41,7 @@ class _MenuPageState extends State<MenuPage> {
       } catch (e) {
         print(e);
       }
-    }else{
+    } else {
       print("id no encontrado");
     }
   }
@@ -54,10 +54,11 @@ class _MenuPageState extends State<MenuPage> {
       body: Container(
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/Menu_marco.jpg'),
+                  image:
+                      AssetImage('assets/images/Menu_marcoTutorialVacio.jpg'),
                   fit: BoxFit.fill)),
           child: ListView(
-            children: [botonesTop(), listaNiveles(context)],
+            children: [botonesTop(), CartelTutorial(), listaNiveles(context)],
           )),
     );
   }
@@ -115,7 +116,7 @@ class _MenuPageState extends State<MenuPage> {
   Widget listaNiveles(context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 70),
+        margin: EdgeInsets.only(top: 150),
         width: 200,
         height: 400,
         child: GridView.count(
@@ -128,6 +129,25 @@ class _MenuPageState extends State<MenuPage> {
             botonNivel("Nivel 3", 'sesion1', context, 3),
             botonNivel("Test Final", 'initialTest', context, 4),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget CartelTutorial() {
+    return Container(
+      margin: EdgeInsets.only(top: 50),
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
+      child: TextButton(
+        onPressed: () {
+          Navigator.pushReplacementNamed(context, 'tutorial');
+        },
+        child: Text(
+          'Tutoriales',
+          style:
+              GoogleFonts.permanentMarker(fontSize: 25, color: Colors.black54),
         ),
       ),
     );

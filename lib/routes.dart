@@ -15,6 +15,8 @@ import 'package:discalapp_proy/pages/Teacher/register_teacher_page.dart';
 import 'package:discalapp_proy/pages/initial_page.dart';
 import 'package:flutter/material.dart';
 
+import 'pages/Student/Tutorials/Tutorial_Menu.dart';
+
 
 Map<String, WidgetBuilder> getRoutes(){
 
@@ -33,6 +35,8 @@ Map<String, WidgetBuilder> getRoutes(){
     'initialTest'     :(BuildContext context) => SesionTestPage(),
     'menuStudent'     :(BuildContext context) => MenuPage(),
     'sesion1'         :(BuildContext context) => Sesion1(),
-    'finish'          :(BuildContext context) => FinishPage()
+    'finish'          :(BuildContext context) => FinishPage(),
+    'tutorial'        :(BuildContext context) => TutorialPage()
+
   };
 }
