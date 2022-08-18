@@ -59,9 +59,9 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget listaNiveles(context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 150),
-        width: 200,
-        height: 200,
+        margin: EdgeInsets.only(top: 200),
+        width: 250,
+        height: 150,
         child: GridView.count(
           crossAxisCount: 1,
           mainAxisSpacing: 2,
@@ -84,28 +84,25 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget botonNivel(
       String name, String direccion, BuildContext context, int numSesion) {
     return Container(
-        decoration: BoxDecoration(
-            image: DecorationImage(
-                image: AssetImage('assets/images/opcionDeMenu.png'))),
-        child: TextButton(
-            onPressed: () {
-              Navigator.pushNamed(context, direccion, arguments: numSesion);
-            },
-            child: Stack(
-              fit: StackFit.expand,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.only(top:6, left: 4),
-                  child: Text(
-                    name,
-                    textAlign: TextAlign.left,
-                    style: GoogleFonts.permanentMarker(
-                        fontSize: 20, color: Colors.black54),
-                  ),
-                )
-              ],
-            )),
-      );
+      decoration: BoxDecoration(
+          image: DecorationImage(
+              image: AssetImage('assets/images/opcionDeMenu.png'))),
+      child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, direccion, arguments: numSesion);
+          },
+          child: Stack(
+            fit: StackFit.expand,
+            children: [
+              Text(
+                Name,
+                textAlign: TextAlign.center,
+                style: GoogleFonts.permanentMarker(
+                    fontSize: 25, color: Colors.black54),
+              )
+            ],
+          )),
+    );
   }
 
   Drawer drawer(context) {
