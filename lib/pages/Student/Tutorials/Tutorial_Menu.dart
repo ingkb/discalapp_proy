@@ -37,8 +37,9 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   Widget CartelActividad() {
+    Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: 150),
+      margin: EdgeInsets.only(top: size.height*0.13),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
@@ -60,16 +61,20 @@ class _TutorialPageState extends State<TutorialPage> {
       child: Container(
         margin: EdgeInsets.only(top: 150),
         width: 200,
-        height: 400,
+        height: 200,
         child: GridView.count(
           crossAxisCount: 1,
-          mainAxisSpacing: 0,
+          mainAxisSpacing: 2,
           crossAxisSpacing: 0,
+          childAspectRatio: 3.5,
           children: [
             botonNivel("Sumas", 'menuStudent', context, 1),
             botonNivel("Restas", 'menuStudent', context, 2),
             botonNivel("Multiplicación", 'menuStudent', context, 3),
-            botonNivel("Propiedad Asociativa", 'menuStudent', context, 4),
+            botonNivel("Comparación", 'menuStudent', context, 4),
+            botonNivel("Secuencias", 'menuStudent', context, 5),
+            botonNivel("Prop. Asociativa", 'menuStudent', context, 6),
+            botonNivel("Recta Numérica", 'menuStudent', context, 7),
           ],
         ),
       ),
@@ -77,27 +82,30 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   Widget botonNivel(
-      String Name, String direccion, BuildContext context, int numSesion) {
+      String name, String direccion, BuildContext context, int numSesion) {
     return Container(
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/opcionDeMenu.png'))),
-      child: TextButton(
-          onPressed: () {
-            Navigator.pushNamed(context, direccion, arguments: numSesion);
-          },
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Text(
-                Name,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.permanentMarker(
-                    fontSize: 25, color: Colors.black54),
-              )
-            ],
-          )),
-    );
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                image: AssetImage('assets/images/opcionDeMenu.png'))),
+        child: TextButton(
+            onPressed: () {
+              Navigator.pushNamed(context, direccion, arguments: numSesion);
+            },
+            child: Stack(
+              fit: StackFit.expand,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(top:6, left: 4),
+                  child: Text(
+                    name,
+                    textAlign: TextAlign.left,
+                    style: GoogleFonts.permanentMarker(
+                        fontSize: 20, color: Colors.black54),
+                  ),
+                )
+              ],
+            )),
+      );
   }
 
   Drawer drawer(context) {
