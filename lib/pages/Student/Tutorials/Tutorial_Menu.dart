@@ -39,7 +39,7 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget CartelActividad() {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: size.height*0.13),
+      margin: EdgeInsets.only(top: size.height * 0.13),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
@@ -95,7 +95,7 @@ class _TutorialPageState extends State<TutorialPage> {
             fit: StackFit.expand,
             children: [
               Text(
-                Name,
+                name,
                 textAlign: TextAlign.center,
                 style: GoogleFonts.permanentMarker(
                     fontSize: 25, color: Colors.black54),
