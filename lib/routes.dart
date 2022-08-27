@@ -18,27 +18,24 @@ import 'package:flutter/material.dart';
 
 import 'pages/Student/Tutorials/Tutorial_Menu.dart';
 
-
-Map<String, WidgetBuilder> getRoutes(){
-
+Map<String, WidgetBuilder> getRoutes() {
   return <String, WidgetBuilder>{
-    '/'               :(BuildContext context) => InitialPage(),
-    'registerStudent' :(BuildContext context) => RegisterStudentPage(),
-    'registerStudent2' :(BuildContext context) => RegisterStudentPage2(),
-    'registerTeacher' :(BuildContext context) => RegisterTeacherPage(),
-    'loginStudent'    :(BuildContext context) => LoginStudentPage(), 
-    'loginTeacher'    :(BuildContext context) => LoginTeacherPage(), 
-    'inprogess'       :(BuildContext context) => InProgressPage(), 
-    'classes'         :(BuildContext context) => ClassesPage(),
-    'addclasses'      :(BuildContext context) => AddClassgroup(),
-    'classdetail'     :(BuildContext context) => ClassDetailPage(),
-    'selectclass'     :(BuildContext context) => SelectClassPage(),
-    'initialTest'     :(BuildContext context) => SesionTestPage(),
-    'menuStudent'     :(BuildContext context) => MenuPage(),
-    'sesion1'         :(BuildContext context) => Sesion1(),
-    'finish'          :(BuildContext context) => FinishPage(),
-    'tutorial'        :(BuildContext context) => TutorialPage(),
-    'videoReproducer' :(BuildContext context) => videoReproducer()
-
+    '/': (BuildContext context) => InitialPage(),
+    'registerStudent': (BuildContext context) => RegisterStudentPage(),
+    'registerStudent2': (BuildContext context) => RegisterStudentPage2(),
+    'registerTeacher': (BuildContext context) => RegisterTeacherPage(),
+    'loginStudent': (BuildContext context) => LoginStudentPage(),
+    'loginTeacher': (BuildContext context) => LoginTeacherPage(),
+    'inprogess': (BuildContext context) => InProgressPage(),
+    'classes': (BuildContext context) => ClassesPage(),
+    'addclasses': (BuildContext context) => AddClassgroup(),
+    'classdetail': (BuildContext context) => ClassDetailPage(),
+    'selectclass': (BuildContext context) => SelectClassPage(),
+    'initialTest': (BuildContext context) => SesionTestPage(),
+    'menuStudent': (BuildContext context) => MenuPage(),
+    'sesion1': (BuildContext context) => Sesion1(),
+    'finish': (BuildContext context) => FinishPage(),
+    'tutorial': (BuildContext context) => TutorialPage(),
+    'videoReproducer': (BuildContext context) => VideoList()
   };
 }

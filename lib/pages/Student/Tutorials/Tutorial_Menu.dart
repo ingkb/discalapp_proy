@@ -25,7 +25,7 @@ class _TutorialPageState extends State<TutorialPage> {
                       AssetImage('assets/images/Menu_marcoTutorialVacio.jpg'),
                   fit: BoxFit.fill)),
           child: ListView(
-            children: [CartelActividad(), listaNiveles(context)],
+            children: [botonesTop(), CartelActividad(), listaNiveles(context)],
           )),
     );
   }
@@ -39,7 +39,7 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget CartelActividad() {
     Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: size.height * 0.13),
+      margin: EdgeInsets.only(top: size.height * 0.06),
       decoration: BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
@@ -102,6 +102,45 @@ class _TutorialPageState extends State<TutorialPage> {
               )
             ],
           )),
+    );
+  }
+
+  Widget botonesTop() {
+    return Container(
+      margin: EdgeInsets.only(top: 25, right: 15, left: 15, bottom: 20),
+      child: Row(
+        children: [
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: CircleBorder(), primary: Colors.transparent),
+            child: Container(
+              width: 60,
+              height: 60,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: Image(image: AssetImage('assets/images/botonBack.png')),
+            ),
+            onPressed: () {
+              Navigator.pop(context);
+            },
+          ),
+          Expanded(child: SizedBox()),
+          ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                shape: CircleBorder(), primary: Colors.transparent),
+            child: Container(
+              width: 60,
+              height: 60,
+              alignment: Alignment.center,
+              decoration: BoxDecoration(shape: BoxShape.circle),
+              child: Image(image: AssetImage('assets/images/botonMenu.png')),
+            ),
+            onPressed: () {
+              _openEndDrawer();
+            },
+          ),
+        ],
+      ),
     );
   }
 

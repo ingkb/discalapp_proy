@@ -1,66 +1,58 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import '../../../constants.dart';
-import '../../../providers/user_preference.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class videoReproducer extends StatefulWidget {
-  const videoReproducer({Key? key}) : super(key: key);
-
+/// Creates list of video players
+class VideoList extends StatefulWidget {
   @override
-  State<videoReproducer> createState() => _videoReproducerState();
+  _VideoListState createState() => _VideoListState();
 }
 
-class _videoReproducerState extends State<videoReproducer> {
-  @override
-  Widget build(BuildContext context) {
-      return Scaffold(
-      key: _scaffoldKey,
-      endDrawer: drawer(context),
-      body: Container(
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image:
-                      AssetImage('assets/images/Menu_marcoTutorialVacio.jpg'),
-                  fit: BoxFit.fill)),
-          child: ListView(
-            children: [],
-          )),
-    );
-    
-  }
-    final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-      Drawer drawer(context) {
-    return Drawer(
-        child: ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          child: CircleAvatar(
-            child: Image(
-              image: AssetImage('assets/images/avatar1.png'),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: kAlumnColor,
+class _VideoListState extends State<VideoList> {
+  final List<YoutubePlayerController> _controllers = [
+    'gQDByCdjUXw',
+    'iLnmTe5Q2Qw',
+    '_WoCV4c6XOE',
+    'KmzdUe0RSJo',
+    '6jZDSSZZxjQ',
+    'p2lYr3vM_1w',
+    '7QUtEmBT_-w',
+    '34_PXCzGw1M',
+  ]
+      .map<YoutubePlayerController>(
+        (videoId) => YoutubePlayerController(
+          initialVideoId: videoId,
+          flags: const YoutubePlayerFlags(
+            autoPlay: false,
           ),
         ),
-        ListTile(
-            contentPadding: EdgeInsets.only(left: 10),
-            leading: Icon(
-              Icons.exit_to_app,
-              size: 30,
-              color: kAlumnColor,
-            ),
-            title: Text("Cerrar Sesión"),
-            onTap: () {
-              final prefs = new PreferenciasUsuario();
-              prefs.logOutStudent();
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/');
-            }),
-      ],
-    ));
+      )
+      .toList();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Video List Demo'),
+      ),
+      body: ListView.separated(
+        itemBuilder: (context, index) {
+          return YoutubePlayer(
+            key: ObjectKey(_controllers[index]),
+            controller: _controllers[index],
+            actionsPadding: const EdgeInsets.only(left: 16.0),
+            bottomActions: [
+              CurrentPosition(),
+              const SizedBox(width: 10.0),
+              ProgressBar(isExpanded: true),
+              const SizedBox(width: 10.0),
+              RemainingDuration(),
+              FullScreenButton(),
+            ],
+          );
+        },
+        itemCount: _controllers.length,
+        separatorBuilder: (context, _) => const SizedBox(height: 10.0),
+      ),
+    );
   }
 }
