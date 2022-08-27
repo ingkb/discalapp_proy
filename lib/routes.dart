@@ -1,6 +1,7 @@
 import 'package:discalapp_proy/pages/Student/Sesiones/sesion1.dart';
 import 'package:discalapp_proy/pages/Student/Tests/finish_Page.dart';
 import 'package:discalapp_proy/pages/Student/Tests/sesion_Test.dart';
+import 'package:discalapp_proy/pages/Student/Tutorials/video_reproducer.dart';
 import 'package:discalapp_proy/pages/Student/menu_page.dart';
 import 'package:discalapp_proy/pages/Student/register_student_page2.dart';
 import 'package:discalapp_proy/pages/Student/select_class_page.dart';
@@ -36,7 +37,8 @@ Map<String, WidgetBuilder> getRoutes(){
     'menuStudent'     :(BuildContext context) => MenuPage(),
     'sesion1'         :(BuildContext context) => Sesion1(),
     'finish'          :(BuildContext context) => FinishPage(),
-    'tutorial'        :(BuildContext context) => TutorialPage()
+    'tutorial'        :(BuildContext context) => TutorialPage(),
+    'videoReproducer' :(BuildContext context) => videoReproducer()
 
   };
 }
