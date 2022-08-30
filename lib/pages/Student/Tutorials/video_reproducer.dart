@@ -1,4 +1,5 @@
 import 'package:discalapp_proy/constants.dart';
+import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:flutter/material.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -11,7 +12,6 @@ class VideoList extends StatefulWidget {
 }
 
 class _VideoListState extends State<VideoList> {
-  
   final List<YoutubePlayerController> _controllers = [
     'VumaYtVeJuc', // sumas
     'VeyWehidri4', // restas
@@ -31,7 +31,7 @@ class _VideoListState extends State<VideoList> {
       )
       .toList();
 
-  @override
+/*   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: _scaffoldKey,
@@ -47,25 +47,31 @@ class _VideoListState extends State<VideoList> {
           )),
     );
   }
+ */
+
+  @override
+  Widget build(BuildContext context) {
+    return marcoActividad("Tomate", [Reproductor()]);
+  }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget Reproductor() {
-    var opcion =  ModalRoute.of(context)!.settings.arguments as int;
+    var opcion = ModalRoute.of(context)!.settings.arguments as int;
     return Container(
-      margin: EdgeInsets.only(top: 200),
-      child: YoutubePlayer(
-      key: ObjectKey(_controllers[opcion]),
-      controller: _controllers[opcion],
-      actionsPadding: const EdgeInsets.only(left: 16.0),
-      bottomActions: [
-        CurrentPosition(),
-        const SizedBox(width: 10.0),
-        ProgressBar(isExpanded: true),
-        const SizedBox(width: 10.0),
-        RemainingDuration(),
-        FullScreenButton(),
-      ],
-    ));
+        margin: EdgeInsets.only(top: 200),
+        child: YoutubePlayer(
+          key: ObjectKey(_controllers[opcion]),
+          controller: _controllers[opcion],
+          actionsPadding: const EdgeInsets.only(left: 16.0),
+          bottomActions: [
+            CurrentPosition(),
+            const SizedBox(width: 10.0),
+            ProgressBar(isExpanded: true),
+            const SizedBox(width: 10.0),
+            RemainingDuration(),
+            FullScreenButton(),
+          ],
+        ));
   }
 
   void _openEndDrawer() {
