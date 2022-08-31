@@ -48,33 +48,27 @@ class _VideoListState extends State<VideoList> {
     );
   }
  */
-  @override
-  void initState() {
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Tomate", []);
+    return Reproductor();
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget Reproductor() {
     var opcion = ModalRoute.of(context)!.settings.arguments as int;
-    return  YoutubePlayer(
-          key: ObjectKey(_controllers[opcion]),
-          controller: _controllers[opcion],
-          actionsPadding: const EdgeInsets.only(left: 16.0),
-          bottomActions: [
-            CurrentPosition(),
-            const SizedBox(width: 10.0),
-            ProgressBar(isExpanded: true),
-            const SizedBox(width: 10.0),
-            RemainingDuration(),
-            FullScreenButton(),
-          ],
-        );
+    return YoutubePlayer(
+      key: ObjectKey(_controllers[opcion]),
+      controller: _controllers[opcion],
+      actionsPadding: const EdgeInsets.only(left: 16.0),
+      bottomActions: [
+        CurrentPosition(),
+        const SizedBox(width: 10.0),
+        ProgressBar(isExpanded: true),
+        const SizedBox(width: 10.0),
+        RemainingDuration(),
+        //FullScreenButton(),
+      ],
+    );
   }
-
-
 }

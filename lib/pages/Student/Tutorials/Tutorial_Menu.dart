@@ -1,6 +1,7 @@
 import 'package:discalapp_proy/providers/user_preference.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../constants.dart';
@@ -14,7 +15,13 @@ class TutorialPage extends StatefulWidget {
 
 class _TutorialPageState extends State<TutorialPage> {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: drawer(context),
@@ -73,7 +80,7 @@ class _TutorialPageState extends State<TutorialPage> {
             botonNivel("Multiplicación", 'videoReproducer', context, 2),
             botonNivel("Comparación", 'videoReproducer', context, 3),
             botonNivel("Secuencias", 'videoReproducer', context, 4),
-            botonNivel("Recta Numérica", 'videoReproducer', context, 5),
+            botonNivel("Prop. Asociativa", 'videoReproducer', context, 5),
           ],
         ),
       ),
