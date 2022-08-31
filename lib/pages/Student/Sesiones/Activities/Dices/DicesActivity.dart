@@ -27,19 +27,31 @@ class DicesState extends BaseActivity<DicesActivity> {
   int? ejercicio;
   int? respuesta;
   late ActivityResultService activityResultService;
-
+  AssetImage manosgif = AssetImage('assets/images/manos.gif');
+  bool _visible = false;
+  double _size = 160;
   Stopwatch tiempo = Stopwatch();
   @override
   void initState() {
     getRandom();
     super.initState();
     tiempo.start();
+    manosgif.evict();
+    Future.delayed(const Duration(milliseconds: 700), () {
+      setState(() {
+        _visible = true;
+      });
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Escribe que número representan estos dados",
-        [dicesRow(), respuestaInput(), botonContinuar(respondido, widget.pasarActividad)]);
+    return marcoActividad("Escribe que número representan estos dados", [
+      dicesThrow(),
+      dicesRow(),
+      respuestaInput(),
+      botonContinuar(respondido, widget.pasarActividad)
+    ]);
   }
 
   getRandom() {
@@ -47,11 +59,20 @@ class DicesState extends BaseActivity<DicesActivity> {
     ejercicio = rng.nextInt(20) + 1;
   }
 
+  Widget dicesThrow() {
+    return Image(
+        width: _size, height: _size, image: manosgif);
+  }
+
   Widget dicesRow() {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      dice(ejercicio, 0),
-      dice(ejercicio, 1),
-    ]);
+    return AnimatedOpacity(
+      opacity: _visible ? 1.0 : 0.0,
+      duration: const Duration(milliseconds: 500),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        dice(ejercicio, 0),
+        dice(ejercicio, 1),
+      ]),
+    );
   }
 
   Widget respuestaInput() {
@@ -76,14 +97,14 @@ class DicesState extends BaseActivity<DicesActivity> {
         ));
   }
 
-  bool respondido= false;
+  bool respondido = false;
   @override
   validarResultado() {
     if (!respondido) {
       respondido = true;
       ActiveUser usuarioResultados =
           Provider.of<ActiveUser>(context, listen: false);
-      
+
       tiempo.stop();
       double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
       activityResultService = new ActivityResultService();
@@ -94,7 +115,9 @@ class DicesState extends BaseActivity<DicesActivity> {
             area: Areas.conteo,
             resultado: 1,
             tiempo: tiempoActividad));
-        showCorrectAnsDialog(context, () {setState(() {});});
+        showCorrectAnsDialog(context, () {
+          setState(() {});
+        });
       } else {
         activityResultService.addActivityResult(new ActivityResult(
             indice: widget.indice,
@@ -102,8 +125,16 @@ class DicesState extends BaseActivity<DicesActivity> {
             area: Areas.conteo,
             resultado: 0,
             tiempo: tiempoActividad));
-        showWrongAnsDialog(context, () {setState(() {});});
+        showWrongAnsDialog(context, () {
+          setState(() {});
+        });
       }
     }
+  }
+
+  @override
+  void dispose() {
+    manosgif.evict();
+    super.dispose();
   }
 }
