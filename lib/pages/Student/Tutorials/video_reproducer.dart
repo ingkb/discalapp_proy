@@ -51,15 +51,33 @@ class _VideoListState extends State<VideoList> {
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Tomate", [Reproductor()]);
+    return Reproductor();
+    // return Scaffold(
+    //     appBar: AppBar(
+    //       title: Text("Tutorial titulo"), //dependiendo del numero poner el titulo
+    //     ),
+    //     backgroundColor: kAlumnColor,
+    //     body: ListView(
+    //       children: [
+    //         SizedBox(
+    //           height: 10,
+    //         ),
+    //         AnimatedSwitcher(
+    //           duration: Duration(milliseconds: 1000),
+    //           transitionBuilder: (child, animation) {
+    //             return ScaleTransition(scale: animation, child: child);
+    //           },
+    //           child:marcoActividad("",[Reproductor()])
+    //         )
+    //       ],
+    //     ),
+    //     );
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   Widget Reproductor() {
     var opcion = ModalRoute.of(context)!.settings.arguments as int;
-    return Container(
-        margin: EdgeInsets.only(top: 200),
-        child: YoutubePlayer(
+    return  YoutubePlayer(
           key: ObjectKey(_controllers[opcion]),
           controller: _controllers[opcion],
           actionsPadding: const EdgeInsets.only(left: 16.0),
@@ -71,83 +89,8 @@ class _VideoListState extends State<VideoList> {
             RemainingDuration(),
             FullScreenButton(),
           ],
-        ));
+        );
   }
 
-  void _openEndDrawer() {
-    _scaffoldKey.currentState!.openEndDrawer();
-  }
 
-  Widget botonesTop() {
-    return Container(
-      margin: EdgeInsets.only(top: 25, right: 15, left: 15, bottom: 20),
-      child: Row(
-        children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                shape: CircleBorder(), primary: Colors.transparent),
-            child: Container(
-              width: 60,
-              height: 60,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: Image(image: AssetImage('assets/images/botonBack.png')),
-            ),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          ),
-          Expanded(child: SizedBox()),
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                shape: CircleBorder(), primary: Colors.transparent),
-            child: Container(
-              width: 60,
-              height: 60,
-              alignment: Alignment.center,
-              decoration: BoxDecoration(shape: BoxShape.circle),
-              child: Image(image: AssetImage('assets/images/botonMenu.png')),
-            ),
-            onPressed: () {
-              _openEndDrawer();
-            },
-          ),
-        ],
-      ),
-    );
-  }
-
-  Drawer drawer(context) {
-    return Drawer(
-        child: ListView(
-      // Important: Remove any padding from the ListView.
-      padding: EdgeInsets.zero,
-      children: <Widget>[
-        DrawerHeader(
-          child: CircleAvatar(
-            child: Image(
-              image: AssetImage('assets/images/avatar1.png'),
-            ),
-          ),
-          decoration: BoxDecoration(
-            color: kAlumnColor,
-          ),
-        ),
-        ListTile(
-            contentPadding: EdgeInsets.only(left: 10),
-            leading: Icon(
-              Icons.exit_to_app,
-              size: 30,
-              color: kAlumnColor,
-            ),
-            title: Text("Cerrar Sesión"),
-            onTap: () {
-              final prefs = new PreferenciasUsuario();
-              prefs.logOutStudent();
-              Navigator.pop(context);
-              Navigator.pushReplacementNamed(context, '/');
-            }),
-      ],
-    ));
-  }
 }
