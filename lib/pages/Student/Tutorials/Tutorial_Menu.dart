@@ -59,9 +59,9 @@ class _TutorialPageState extends State<TutorialPage> {
   Widget listaNiveles(context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 200),
+        margin: EdgeInsets.only(top: 130),
         width: 250,
-        height: 150,
+        height: 300,
         child: GridView.count(
           crossAxisCount: 1,
           mainAxisSpacing: 2,

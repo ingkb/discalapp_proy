@@ -48,30 +48,14 @@ class _VideoListState extends State<VideoList> {
     );
   }
  */
+  @override
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
-    return Reproductor();
-    // return Scaffold(
-    //     appBar: AppBar(
-    //       title: Text("Tutorial titulo"), //dependiendo del numero poner el titulo
-    //     ),
-    //     backgroundColor: kAlumnColor,
-    //     body: ListView(
-    //       children: [
-    //         SizedBox(
-    //           height: 10,
-    //         ),
-    //         AnimatedSwitcher(
-    //           duration: Duration(milliseconds: 1000),
-    //           transitionBuilder: (child, animation) {
-    //             return ScaleTransition(scale: animation, child: child);
-    //           },
-    //           child:marcoActividad("",[Reproductor()])
-    //         )
-    //       ],
-    //     ),
-    //     );
+    return marcoActividad("Tomate", []);
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
