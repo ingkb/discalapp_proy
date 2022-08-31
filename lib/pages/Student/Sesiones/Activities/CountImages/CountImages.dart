@@ -22,7 +22,8 @@ class CountImages extends StatefulWidget {
 }
 
 class CountImagesState extends BaseActivity<CountImages> {
-  int? n1, frutaSelect;
+  num? n1, frutaSelect, n2;
+  num? n3;
   int? resultado;
   late ActivityResultService activityResultService;
   bool respondido = false;
@@ -37,8 +38,9 @@ class CountImagesState extends BaseActivity<CountImages> {
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Escribe el número de cajas que ves", [
-      piramide(),
+    return marcoActividad('Escribe el número de frutas que ves', [
+      cuadroTabla(),
+      
       respuestaInput(),
       botonContinuar(respondido, widget.pasarActividad)
     ]);
@@ -63,47 +65,65 @@ class CountImagesState extends BaseActivity<CountImages> {
         ));
   }
 
-  piramide() {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: filas(n1),
+  Widget cuadroTabla() {
+    return Center(
+      child: Container(
+        margin: EdgeInsets.only(top: 50),
+        width: 300,
+        height: 170,
+        child: GridView.count(
+          crossAxisCount: 2,
+          mainAxisSpacing: 5,
+          crossAxisSpacing: 5,
+          children: [piramide(n2), piramide(n3)],
+        ),
+      ),
     );
   }
 
-  List<Widget> filas(int? numero) {
+  piramide(num? numeroFruta) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: filas(numeroFruta),
+    );
+  }
+
+  List<Widget> filas(num? numero) {
     List<Widget> filasCajas = [];
     switch (numero) {
-      case 3:
-        filasCajas.add(fila1());
+      case 2:
         filasCajas.add(fila2());
         break;
-      case 4:
-        filasCajas.add(fila1());
+      case 3:
         filasCajas.add(fila3());
+        break;
+      case 4:
+        filasCajas.add(fila2());
+        filasCajas.add(fila2());
         break;
       case 5:
         filasCajas.add(fila2());
         filasCajas.add(fila3());
         break;
       case 6:
-        filasCajas.add(fila1());
         filasCajas.add(fila2());
-        filasCajas.add(fila3());
+        filasCajas.add(fila2());
+        filasCajas.add(fila2());
         break;
       case 7:
-        filasCajas.add(fila1());
         filasCajas.add(fila2());
-        filasCajas.add(fila4());
+        filasCajas.add(fila2());
+        filasCajas.add(fila3());
         break;
       case 8:
-        filasCajas.add(fila1());
-        filasCajas.add(fila3());
-        filasCajas.add(fila4());
-        break;
-      case 9:
         filasCajas.add(fila2());
         filasCajas.add(fila3());
-        filasCajas.add(fila4());
+        filasCajas.add(fila3());
+        break;
+      case 9:
+        filasCajas.add(fila3());
+        filasCajas.add(fila3());
+        filasCajas.add(fila3());
         break;
       case 10:
         filasCajas.add(fila1());
@@ -141,19 +161,20 @@ class CountImagesState extends BaseActivity<CountImages> {
   Widget imagenCaja() {
     int posicion = 0;
     return Container(
-        height: 80,
-        width: 80,
+        height: 45,
+        width: 45,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Image(
             image: AssetImage(frutasRepresentar[frutaSelect!]![posicion]),
             fit: BoxFit.fill));
   }
 
-
-
   generarNumero() {
     var rng = new Random();
-    n1 = rng.nextInt(8) + 3;
+    n2 = rng.nextInt(7) + 2;
+    n3 = rng.nextInt(7) + 2;
+
+    n1 = n2! + n3!;
     frutaSelect = rng.nextInt(3);
   }
 
