@@ -11,6 +11,8 @@ import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import 'CountImagesMap.dart';
+
 class CountImages extends StatefulWidget {
   CountImages({Key? key, this.pasarActividad, this.indice}) : super(key: key);
   final ValueChanged<int>? pasarActividad;
@@ -20,7 +22,7 @@ class CountImages extends StatefulWidget {
 }
 
 class CountImagesState extends BaseActivity<CountImages> {
-  int? n1;
+  int? n1, frutaSelect;
   int? resultado;
   late ActivityResultService activityResultService;
   bool respondido = false;
@@ -137,16 +139,22 @@ class CountImagesState extends BaseActivity<CountImages> {
   }
 
   Widget imagenCaja() {
+    int posicion = 0;
     return Container(
         height: 80,
         width: 80,
         padding: EdgeInsets.symmetric(horizontal: 10),
-        child: Image(image: AssetImage('assets/images/box.png')));
+        child: Image(
+            image: AssetImage(frutasRepresentar[frutaSelect!]![posicion]),
+            fit: BoxFit.fill));
   }
+
+
 
   generarNumero() {
     var rng = new Random();
     n1 = rng.nextInt(8) + 3;
+    frutaSelect = rng.nextInt(3);
   }
 
   validarResultado() {

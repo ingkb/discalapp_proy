@@ -68,7 +68,7 @@ class _TutorialPageState extends State<TutorialPage> {
       child: Container(
         margin: EdgeInsets.only(top: 130),
         width: 250,
-        height: 300,
+        height: 320,
         child: GridView.count(
           crossAxisCount: 1,
           mainAxisSpacing: 2,

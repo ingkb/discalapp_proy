@@ -160,14 +160,14 @@ class _MenuPageState extends State<MenuPage> {
           image: DecorationImage(
               image: AssetImage('assets/images/notaPapel.png'))),
       child: TextButton(
-          onPressed: (numSesion == mayor + 1)
+        /*   onPressed: (numSesion == mayor + 1)
               ? () {
                   Navigator.pushNamed(context, direccion, arguments: numSesion);
                 }
-              : null,
-          // onPressed: () {
-          //   Navigator.pushNamed(context, direccion, arguments: numSesion);
-          // },
+              : null, */
+           onPressed: () {
+            Navigator.pushNamed(context, direccion, arguments: numSesion);
+           },
           child: Stack(
             fit: StackFit.expand,
             children: [
