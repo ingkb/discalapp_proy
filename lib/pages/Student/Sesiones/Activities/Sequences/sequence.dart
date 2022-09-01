@@ -33,7 +33,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   void initState() {
     super.initState();
     var rng = new Random();
-    this.numeroActivi = rng.nextInt(4);
+    this.numeroActivi = rng.nextInt(5);
     tiempo.start();
   }
 
@@ -51,8 +51,8 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget numero(int numero) {
     return Container(
-        height: 25,
-        width: 25,
+        height: 40,
+        width: 40,
         padding: EdgeInsets.symmetric(horizontal: 2),
         child: mapaNumeroImagenes[numero]);
   }
@@ -231,13 +231,13 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget separador() {
     return Container(
-      width: 125,
+      width: 140,
     );
   }
 
   Widget separadormin() {
     return Container(
-      width: 10,
+      width: 15,
     );
   }
 
