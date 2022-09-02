@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 Widget marcoActividad(String titulo,List<Widget> contenido){
   return Center(
         child: Container(
-      margin: EdgeInsets.only(top: 10, bottom: 20, left: 20, right: 20),
+      margin: EdgeInsets.only(top: 10, bottom: 20, left: 10, right: 10),
       padding: EdgeInsets.only(bottom: 20),
       width: double.infinity,
       child: Column(

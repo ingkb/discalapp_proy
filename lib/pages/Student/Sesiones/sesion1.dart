@@ -75,7 +75,7 @@ class Sesion1State extends State<Sesion1> {
         body: ListView(
           children: [
             SizedBox(
-              height: 10,
+              height: 5,
             ),
             AnimatedSwitcher(
               duration: Duration(milliseconds: 1000),

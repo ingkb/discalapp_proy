@@ -45,7 +45,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
   @override
   // hacer un wd de flecha pero en el dos flechas reutiliza el pt codigo
   Widget build(BuildContext context) {
-    return marcoActividad("Propiedad asociativa", [
+    return marcoActividad("Resuelve la siguiente suma siguiendo las flechas", [
       Column(children: [
         operacionText(),
         // aqui van las dos primeras flechas
@@ -81,7 +81,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
     return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
       Container(
           width: 100,
-          margin: EdgeInsets.only(right: 15, top: 10),
+          margin: EdgeInsets.only(right: 20, top: 10),
           child: TextField(
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
@@ -102,7 +102,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
       signo(),
       Container(
           width: 100,
-          margin: EdgeInsets.only(right: 15, top: 10),
+          margin: EdgeInsets.only(left:20, top: 10),
           child: TextField(
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
@@ -126,7 +126,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
   Widget respuesta3Input() {
     return Container(
         width: 100,
-        margin: EdgeInsets.only(right: 15, top: 10),
+        margin: EdgeInsets.only(right: 15),
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
@@ -159,8 +159,8 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget numero(int numero) {
     return Container(
-        height: 40,
-        width: 40,
+        height: 50,
+        width: 50,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: mapaNumeroImagenes[numero]);
   }
@@ -183,8 +183,11 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
   }
 
   Widget fila1() {
-    return Row(
-        mainAxisAlignment: MainAxisAlignment.center, children: [flecha()]);
+    return Container(
+      margin: EdgeInsets.only(top:20),
+      child: Row(
+          mainAxisAlignment: MainAxisAlignment.center, children: [flecha()]),
+    );
   }
 
   Widget fila2() {
@@ -195,7 +198,7 @@ class AsociativePropietState extends BaseActivity<AsociativeProp> {
 
   Widget separador() {
     return Container(
-      width: 120,
+      width: 125,
     );
   }
 

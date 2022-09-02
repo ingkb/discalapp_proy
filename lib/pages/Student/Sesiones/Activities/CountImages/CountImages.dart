@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:discalapp_proy/Services/activityResult_service.dart';
+import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/models/activityResult_model.dart';
 import 'package:discalapp_proy/pages/Student/Sesiones/Activities/botonContinuar.dart';
 import 'package:discalapp_proy/pages/Student/baseActivity.dart';
@@ -57,7 +58,7 @@ Widget respuesta(){
         child: Text(
           "$n1",
           style: TextStyle(
-              fontSize: 40, color: Colors.black, fontWeight: FontWeight.w500),
+              fontSize: 40, color: kTeacherColor, fontWeight: FontWeight.w500),
         ));
   }
   Widget respuestaInput() {
@@ -86,7 +87,7 @@ Widget respuesta(){
         width: 320,
         height: 200,
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [piramide(n2), piramide(n3)],
         ),
       ),

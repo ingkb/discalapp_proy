@@ -123,7 +123,7 @@ class SetInLine2State extends BaseActivity<SetInLine2> {
     double posX = offset.dx - 20;
     double posY = offset.dy - 150;
     double width = MediaQuery.of(context).size.width;
-    double limiteXR = width * 0.45;
+    double limiteXR = width * 0.46;
     if (posX < 10) {
       posX = 10;
     }
