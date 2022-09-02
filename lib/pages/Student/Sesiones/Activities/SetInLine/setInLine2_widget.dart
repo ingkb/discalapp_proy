@@ -136,10 +136,7 @@ class SetInLine2State extends BaseActivity<SetInLine2> {
     if (posY < 0) {
       posY = 0;
     }
-    double ancho = MediaQuery.of(context).size.width;
-    print("width:"+ancho.toString());
-    print("posY:"+posY.toString());
-    print("posX:"+posX.toString());
+
     return new Offset(posX, posY);
   }
 

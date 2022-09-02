@@ -41,11 +41,25 @@ class CountImagesState extends BaseActivity<CountImages> {
     return marcoActividad('Escribe el número de frutas que ves', [
       cuadroTabla(),
       
-      respuestaInput(),
+      respuesta(),
       botonContinuar(respondido, widget.pasarActividad)
     ]);
   }
 
+Widget respuesta(){
+    return AnimatedContainer(
+      duration: Duration(seconds: 1),
+      child: respondido?textoRespuesta():respuestaInput());
+  }
+   Widget textoRespuesta() {
+    return Container(
+        margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+        child: Text(
+          "$n1",
+          style: TextStyle(
+              fontSize: 40, color: Colors.black, fontWeight: FontWeight.w500),
+        ));
+  }
   Widget respuestaInput() {
     return Container(
         width: 100,
@@ -68,13 +82,11 @@ class CountImagesState extends BaseActivity<CountImages> {
   Widget cuadroTabla() {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 50),
-        width: 300,
-        height: 170,
-        child: GridView.count(
-          crossAxisCount: 2,
-          mainAxisSpacing: 5,
-          crossAxisSpacing: 5,
+        margin: EdgeInsets.only(top: 40),
+        width: 320,
+        height: 200,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [piramide(n2), piramide(n3)],
         ),
       ),
@@ -161,12 +173,12 @@ class CountImagesState extends BaseActivity<CountImages> {
   Widget imagenCaja() {
     int posicion = 0;
     return Container(
-        height: 45,
-        width: 45,
+        height: 60,
+        width: 60,
         padding: EdgeInsets.symmetric(horizontal: 10),
         child: Image(
             image: AssetImage(frutasRepresentar[frutaSelect!]![posicion]),
-            fit: BoxFit.fill));
+            fit: BoxFit.contain));
   }
 
   generarNumero() {

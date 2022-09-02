@@ -40,11 +40,18 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   @override
   Widget build(BuildContext context) {
     return marcoActividad("Completa la secuencia", [
-      fila1(),
-      flechafila1(),
-      fila2(),
-      flechafila2(),
-      fila3(),
+      Container(
+        margin: EdgeInsets.symmetric(horizontal: 10),
+        child: Column(
+          children: [
+            fila1(),
+            flechafila1(),
+            fila2(),
+            flechafila2(),
+            fila3(),
+          ],
+        ),
+      ),
       botonContinuar(respondido, widget.pasarActividad)
     ]);
   }
@@ -52,8 +59,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   Widget numero(int numero) {
     return Container(
         height: 40,
-        width: 40,
-        padding: EdgeInsets.symmetric(horizontal: 2),
+        width: 30,
         child: mapaNumeroImagenes[numero]);
   }
 
@@ -85,14 +91,13 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuestaInput() {
     return Container(
-        width: 50,
-        margin: EdgeInsets.only(right: 15, top: 10),
+        width: 60,
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -108,14 +113,13 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuesta2Input() {
     return Container(
-        width: 50,
-        margin: EdgeInsets.only(left: 5, right: 5, top: 10),
+        width: 60,
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -131,14 +135,13 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuesta3Input() {
     return Container(
-        width: 50,
-        margin: EdgeInsets.only(left: 15, right: 5, top: 10),
+        width: 60,
         child: TextField(
           keyboardType: TextInputType.number,
           textAlign: TextAlign.center,
           style: TextStyle(
               color: Colors.blue[700],
-              fontSize: 20,
+              fontSize: 30,
               fontWeight: FontWeight.bold),
           decoration: InputDecoration(
             border: OutlineInputBorder(
@@ -166,27 +169,23 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       p++;
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: numeros,
     );
   }
 
   Widget convertirNumeaWidg(String numeroOriginal) {
     List<Widget> numeros = [];
-    if (numeroOriginal.length == 1) {
-      numeros.add(SizedBox(width: 20));
-    }
 
     for (var i = 0; i < numeroOriginal.length; i++) {
       numeros.add(numero(int.parse(numeroOriginal[i])));
     }
-
-    if (numeroOriginal.length == 1) {
-      numeros.add(SizedBox(width: 20));
-    }
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: numeros,
+    return Container(
+      width: 60,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: numeros,
+      ),
     );
   }
 
@@ -205,7 +204,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       p--;
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: numeros,
     );
   }
@@ -224,7 +223,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       p++;
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: numeros,
     );
   }
@@ -243,14 +242,14 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget flechafila2() {
     return Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [separadormin(), flechaabajo()]);
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [ flechaabajo(),Expanded(child: Container())]);
   }
 
   Widget flechafila1() {
     return Row(
         mainAxisAlignment: MainAxisAlignment.start,
-        children: [separador(), separador(), flechaabajo()]);
+        children: [Expanded(child: Container()), flechaabajo()]);
   }
 
   bool respondido = false;

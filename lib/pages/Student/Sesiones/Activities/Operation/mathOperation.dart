@@ -58,15 +58,16 @@ class MathOperationState extends BaseActivity<MathOperation> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Container(
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                margin: EdgeInsets.only(right: 10, top: 10),
                 child: Text(
                   "$operacion",
                   style: TextStyle(
-                      fontSize: 35,
+                      fontSize: 60,
                       color: Colors.red,
                       fontWeight: FontWeight.w500),
                 )),
             Column(
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Container(
                     margin: EdgeInsets.symmetric(horizontal: 20, vertical: 10),
