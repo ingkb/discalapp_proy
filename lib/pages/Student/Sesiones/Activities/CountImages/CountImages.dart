@@ -84,7 +84,7 @@ Widget respuesta(){
     return Center(
       child: Container(
         margin: EdgeInsets.only(top: 40),
-        width: 320,
+        width: 360,
         height: 200,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,

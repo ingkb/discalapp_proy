@@ -103,9 +103,9 @@ class Actividades {
       mathOper++;
     }
     if (area == Areas.conteo) {
-      int n1 = rng.nextInt(2);
-      if (n1 == 0) countImg++;
-      if (n1 == 1) dicesnum++;
+      int n1 = rng.nextInt(5);
+      if (n1 >= 2) countImg++;
+      if (n1 < 2) dicesnum++;
     }
     if (area == Areas.escritura) {
       numWrite++;

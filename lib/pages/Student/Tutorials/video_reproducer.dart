@@ -1,6 +1,7 @@
 import 'package:discalapp_proy/constants.dart';
 import 'package:discalapp_proy/shared/ActivityFrame.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 import '../../../providers/user_preference.dart';
@@ -49,9 +50,15 @@ class _VideoListState extends State<VideoList> {
   }
  */
 
+  Future<bool> _onWillPop() async {
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    return true;
+  }
   @override
   Widget build(BuildContext context) {
-    return Reproductor();
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Reproductor());
   }
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
@@ -67,7 +74,7 @@ class _VideoListState extends State<VideoList> {
         ProgressBar(isExpanded: true),
         const SizedBox(width: 10.0),
         RemainingDuration(),
-        //FullScreenButton(),
+        FullScreenButton(),
       ],
     );
   }

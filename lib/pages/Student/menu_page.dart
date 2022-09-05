@@ -15,7 +15,7 @@ class MenuPage extends StatefulWidget {
 
 class _MenuPageState extends State<MenuPage> {
   int mayor = 0;
-
+  Size size = new Size(0, 0);
   @override
   void initState() {
     super.initState();
@@ -48,6 +48,7 @@ class _MenuPageState extends State<MenuPage> {
 
   @override
   Widget build(BuildContext context) {
+    
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: drawer(context),
@@ -58,6 +59,7 @@ class _MenuPageState extends State<MenuPage> {
                       AssetImage('assets/images/Menu_marcoTutorialVacio.jpg'),
                   fit: BoxFit.fill)),
           child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [botonesTop(), CartelTutorial(), listaNiveles(context)],
           )),
     );
@@ -116,7 +118,7 @@ class _MenuPageState extends State<MenuPage> {
   Widget listaNiveles(context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 150),
+        margin: EdgeInsets.only(top: 120),
         width: 200,
         height: 400,
         child: GridView.count(
@@ -135,21 +137,36 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Widget CartelTutorial() {
-    return Container(
-      margin: EdgeInsets.only(top: 50),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
-      child: TextButton(
-        onPressed: () {
-          Navigator.pushReplacementNamed(context, 'tutorial');
-        },
-        child: Text(
-          'Tutoriales',
-          style:
-              GoogleFonts.permanentMarker(fontSize: 25, color: Colors.black54),
+    
+    return Stack(
+      children: [
+        Container(
+          margin: EdgeInsets.only(top: 50, left: 90),
+          width: 200,
+          decoration: BoxDecoration(
+              image: DecorationImage(
+                  fit: BoxFit.fill,
+                  image:
+                      AssetImage('assets/images/cartelTituloTutoriales.png'))),
+          child: TextButton(
+            onPressed: () {
+              Navigator.pushReplacementNamed(context, 'tutorial');
+            },
+            child: Container(
+              margin: EdgeInsets.only(right: 30),
+              child: Text('Tutoriales',
+                  style: GoogleFonts.permanentMarker(
+                      fontSize: 25, color: Colors.black54)),
+            ),
+          ),
         ),
-      ),
+        Positioned(
+            left: 250,
+            top: 63,
+            child: Image(
+                width: 30,
+                image: AssetImage('assets/images/botonBackSinFondo.png')))
+      ],
     );
   }
 
@@ -160,14 +177,14 @@ class _MenuPageState extends State<MenuPage> {
           image: DecorationImage(
               image: AssetImage('assets/images/notaPapel.png'))),
       child: TextButton(
-        /*   onPressed: (numSesion == mayor + 1)
+          /*   onPressed: (numSesion == mayor + 1)
               ? () {
                   Navigator.pushNamed(context, direccion, arguments: numSesion);
                 }
               : null, */
-           onPressed: () {
+          onPressed: () {
             Navigator.pushNamed(context, direccion, arguments: numSesion);
-           },
+          },
           child: Stack(
             fit: StackFit.expand,
             children: [
@@ -226,6 +243,9 @@ class _MenuPageState extends State<MenuPage> {
   }
 
   Drawer drawer(context) {
+     ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
+    String nombre = usuario.student!.name!;
+    int edad = usuario.student!.age!;
     return Drawer(
         child: ListView(
       // Important: Remove any padding from the ListView.
@@ -241,6 +261,14 @@ class _MenuPageState extends State<MenuPage> {
             color: kAlumnColor,
           ),
         ),
+        Column(
+          children:[
+            Text('Nombre: $nombre',textAlign: TextAlign.center, style: TextStyle(height: 2,fontSize: 20),),
+            Text('Edad: $edad',textAlign: TextAlign.center, style: TextStyle(fontSize: 20),)
+            ]
+        ),
+        Container(padding: EdgeInsets.symmetric(horizontal: 30),
+        child: Divider(thickness: 2,)),
         ListTile(
             contentPadding: EdgeInsets.only(left: 10),
             leading: Icon(

@@ -3,8 +3,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
 
 import '../../../constants.dart';
+import '../../../providers/user_provider.dart';
 
 class TutorialPage extends StatefulWidget {
   const TutorialPage({Key? key}) : super(key: key);
@@ -14,14 +16,17 @@ class TutorialPage extends StatefulWidget {
 }
 
 class _TutorialPageState extends State<TutorialPage> {
+  Size size = new Size(0, 0);
   @override
   void initState() {
     super.initState();
+    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   }
 
   @override
   Widget build(BuildContext context) {
-    SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+    size = MediaQuery.of(context).size;
+
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: drawer(context),
@@ -32,7 +37,8 @@ class _TutorialPageState extends State<TutorialPage> {
                       AssetImage('assets/images/Menu_marcoTutorialVacio.jpg'),
                   fit: BoxFit.fill)),
           child: ListView(
-            children: [botonesTop(), CartelActividad(), listaNiveles(context)],
+            physics: const NeverScrollableScrollPhysics(),
+            children: [botonesTop(), cartelActividad(), listaNiveles(context)],
           )),
     );
   }
@@ -43,30 +49,42 @@ class _TutorialPageState extends State<TutorialPage> {
     _scaffoldKey.currentState!.openEndDrawer();
   }
 
-  Widget CartelActividad() {
-    Size size = MediaQuery.of(context).size;
-    return Container(
-      margin: EdgeInsets.only(top: size.height * 0.06),
-      decoration: BoxDecoration(
-          image: DecorationImage(
-              image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
-      child: TextButton(
-        onPressed: () {
-          Navigator.pushNamed(context, 'menuStudent');
-        },
-        child: Text(
-          'Actividades',
-          style:
-              GoogleFonts.permanentMarker(fontSize: 25, color: Colors.black54),
+  Widget cartelActividad() {
+    return Stack(children: [
+      Container(
+        margin: EdgeInsets.only(top: 50, left: 90),
+        width: 200,
+        decoration: BoxDecoration(
+            image: DecorationImage(
+                fit: BoxFit.fill,
+                image: AssetImage('assets/images/cartelTituloTutoriales.png'))),
+        child: TextButton(
+          onPressed: () {
+            Navigator.pushNamed(context, 'menuStudent');
+          },
+          child: Container(
+            margin: EdgeInsets.only(right: 30),
+            child: Text(
+              'Actividades',
+              style: GoogleFonts.permanentMarker(
+                  fontSize: 25, color: Colors.black54),
+            ),
+          ),
         ),
       ),
-    );
+      Positioned(
+          left: 250,
+          top: 63,
+          child: Image(
+              width: 30,
+              image: AssetImage('assets/images/botonBackSinFondo.png')))
+    ]);
   }
 
   Widget listaNiveles(context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 130),
+        margin: EdgeInsets.only(top: 110),
         width: 250,
         height: 320,
         child: GridView.count(
@@ -97,16 +115,11 @@ class _TutorialPageState extends State<TutorialPage> {
           onPressed: () {
             Navigator.pushNamed(context, direccion, arguments: numSesion);
           },
-          child: Stack(
-            fit: StackFit.expand,
-            children: [
-              Text(
-                name,
-                textAlign: TextAlign.center,
-                style: GoogleFonts.permanentMarker(
-                    fontSize: 25, color: Colors.black54),
-              )
-            ],
+          child: Text(
+            name,
+            textAlign: TextAlign.center,
+            style: GoogleFonts.permanentMarker(
+                fontSize: 25, color: Colors.black54),
           )),
     );
   }
@@ -151,6 +164,10 @@ class _TutorialPageState extends State<TutorialPage> {
   }
 
   Drawer drawer(context) {
+    ActiveUser usuario = Provider.of<ActiveUser>(context, listen: false);
+    String nombre = usuario.student!.name!;
+    int edad = usuario.student!.age!;
+
     return Drawer(
         child: ListView(
       // Important: Remove any padding from the ListView.
@@ -166,6 +183,23 @@ class _TutorialPageState extends State<TutorialPage> {
             color: kAlumnColor,
           ),
         ),
+        Column(children: [
+          Text(
+            'Nombre: $nombre',
+            textAlign: TextAlign.center,
+            style: TextStyle(height: 2, fontSize: 20),
+          ),
+          Text(
+            'Edad: $edad',
+            textAlign: TextAlign.center,
+            style: TextStyle(fontSize: 20),
+          )
+        ]),
+        Container(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Divider(
+              thickness: 2,
+            )),
         ListTile(
             contentPadding: EdgeInsets.only(left: 10),
             leading: Icon(
@@ -173,7 +207,10 @@ class _TutorialPageState extends State<TutorialPage> {
               size: 30,
               color: kAlumnColor,
             ),
-            title: Text("Cerrar Sesión"),
+            title: Text(
+              "Cerrar Sesión",
+              style: TextStyle(fontSize: 18),
+            ),
             onTap: () {
               final prefs = new PreferenciasUsuario();
               prefs.logOutStudent();

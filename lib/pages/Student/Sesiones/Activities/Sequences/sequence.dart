@@ -8,6 +8,7 @@ import 'package:discalapp_proy/shared/AnswerDialog.dart';
 import 'package:discalapp_proy/shared/Areas.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import '../../../baseActivity.dart';
 import '../botonContinuar.dart';
@@ -24,31 +25,88 @@ class SequencesActivity extends StatefulWidget {
 }
 
 class SequencesActivityState extends BaseActivity<SequencesActivity> {
-  int? respuesta1, respuesta2, respuesta3;
   int? numeroActivi;
   late ActivityResultService activityResultService;
   Stopwatch tiempo = Stopwatch();
 
+  Map<int, Offset> posicionesValidas = {
+    0: Offset(280, 4),
+    1: Offset(142, 135),
+    2: Offset(5, 265),
+    3: Offset(0, 360),
+    4: Offset(95, 360),
+    5: Offset(185, 360),
+    6: Offset(280, 360),
+  };
+  Map<int, Offset> posFichas = {
+    1: Offset(0, 0),
+    2: Offset(0, 0),
+    3: Offset(0, 0),
+    4: Offset(0, 0),
+  };
+
+   Map<int, Function(Offset ofs)> updateFunctions = {};
+
+  int valor1 = 0;
+  int valor2 = 0;
+  int valor3 = 0;
+  int valor4 = 0;
+  int valorUltimo = 0;
+
+  List<int> ordenFichas = [1,2,3,4];
   @override
   void initState() {
-    super.initState();
     var rng = new Random();
     this.numeroActivi = rng.nextInt(5);
+
+    posFichas[1] = posicionesValidas[3]!;
+    posFichas[2] = posicionesValidas[4]!;
+    posFichas[3] = posicionesValidas[5]!;
+    posFichas[4] = posicionesValidas[6]!;
+
+    valor1 = int.parse(secuenciaARepresentar[numeroActivi!]![2]);
+    valor2 = int.parse(secuenciaARepresentar[numeroActivi!]![4]);
+    valor3 = int.parse(secuenciaARepresentar[numeroActivi!]![6]);
+    valorUltimo = int.parse(secuenciaARepresentar[numeroActivi!]![8]);
+
+    valor4 = rng.nextInt(valorUltimo - valor1) + valor1;
+
+    updateFunctions = {
+      1:(Offset ofs){posFichas[1] = getNewPosition(ofs);},
+      2:(Offset ofs){posFichas[2] = getNewPosition(ofs);},
+      3:(Offset ofs){posFichas[3] = getNewPosition(ofs);},
+      4:(Offset ofs){posFichas[4] = getNewPosition(ofs);},
+    };
+
+    ordenFichas.shuffle();
+
     tiempo.start();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return marcoActividad("Completa la secuencia", [
+    return marcoActividad("Ubica las fichas en las casillas, debe sobrar una ficha", [
       Container(
         margin: EdgeInsets.symmetric(horizontal: 10),
-        child: Column(
+        child: Stack(
           children: [
-            fila1(),
-            flechafila1(),
-            fila2(),
-            flechafila2(),
-            fila3(),
+            Container(
+              margin: EdgeInsets.only(bottom: 100),
+              child: Column(
+                children: [
+                  fila1(),
+                  flechafila1(),
+                  fila2(),
+                  flechafila2(),
+                  fila3(),
+                ],
+              ),
+            ),
+            getDraggableNumber1(ordenFichas[0], valor1, updateFunctions[ordenFichas[0]]!),
+            getDraggableNumber1(ordenFichas[1], valor2, updateFunctions[ordenFichas[1]]!),
+            getDraggableNumber1(ordenFichas[2], valor3, updateFunctions[ordenFichas[2]]!),
+            getDraggableNumber1(ordenFichas[3], valor4, updateFunctions[ordenFichas[3]]!),
           ],
         ),
       ),
@@ -56,11 +114,76 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     ]);
   }
 
+  Offset getNewPosition(Offset offset) {
+    double screenW = MediaQuery.of(context).size.width;
+
+    int closestPosition = 0;
+    double closestDistance = 9999;
+
+    double posX = offset.dx - 20;
+    double posY = offset.dy - 140;
+    posicionesValidas.forEach((key, value) {
+      double difX = (posX - value.dx).abs();
+      double difY = (posY - value.dy).abs();
+
+      double difT = (difX + difY) / 2;
+      if (difT < closestDistance) {
+        closestDistance = difT;
+        closestPosition = key;
+      }
+    });
+
+    return posicionesValidas[closestPosition]!;
+  }
+
+  void updatePos1(Offset ofs) {
+    posFichas[1] = getNewPosition(ofs);
+  }
+
+  void updatePos2(Offset ofs) {
+    posFichas[2] = getNewPosition(ofs);
+  }
+
+  void updatePos3(Offset ofs) {
+    posFichas[3] = getNewPosition(ofs);
+  }
+
+  void updatePos4(Offset ofs) {
+    posFichas[4] = getNewPosition(ofs);
+  }
+
+  Widget getDraggableNumber1(int id, int valor, Function(Offset) f) {
+    Widget fichaV = Container(
+      // lo que se ve cuando se sostiene
+      height: 60,
+      width: 60,
+      alignment: Alignment.center,
+      child: Text("$valor",
+          style: GoogleFonts.fredokaOne(fontSize: 40, color: Colors.white)),
+      decoration: BoxDecoration(
+          color: Colors.transparent,
+          image: DecorationImage(image: AssetImage('assets/images/ficha.png'))),
+    );
+    return Positioned(
+        top: posFichas[id]!.dy,
+        left: posFichas[id]!.dx,
+        child: Draggable(
+          //Elemento arrastrable
+          feedback: fichaV,
+          child: fichaV,
+          childWhenDragging: Container(),
+
+          onDragEnd: (details) {
+            setState(() {
+              f(details.offset);
+            });
+          },
+          data: "num1", dragAnchorStrategy: childDragAnchorStrategy,
+        ));
+  }
+
   Widget numero(int numero) {
-    return Container(
-        height: 40,
-        width: 30,
-        child: mapaNumeroImagenes[numero]);
+    return Container(height: 40, width: 30, child: mapaNumeroImagenes[numero]);
   }
 
   Widget flechaDerecha() {
@@ -91,68 +214,12 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
 
   Widget respuestaInput() {
     return Container(
-        width: 60,
-        child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.blue[700],
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderSide: BorderSide(width: 3.0, color: Colors.red)),
-          ),
-          onChanged: (valor) {
-            setState(() {
-              respuesta1 = int.tryParse(valor);
-            });
-          },
-        ));
-  }
-
-  Widget respuesta2Input() {
-    return Container(
-        width: 60,
-        child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.blue[700],
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderSide: BorderSide(width: 3.0, color: Colors.red)),
-          ),
-          onChanged: (valor) {
-            setState(() {
-              respuesta2 = int.tryParse(valor);
-            });
-          },
-        ));
-  }
-
-  Widget respuesta3Input() {
-    return Container(
-        width: 60,
-        child: TextField(
-          keyboardType: TextInputType.number,
-          textAlign: TextAlign.center,
-          style: TextStyle(
-              color: Colors.blue[700],
-              fontSize: 30,
-              fontWeight: FontWeight.bold),
-          decoration: InputDecoration(
-            border: OutlineInputBorder(
-                borderSide: BorderSide(width: 3.0, color: Colors.red)),
-          ),
-          onChanged: (valor) {
-            setState(() {
-              respuesta3 = int.tryParse(valor);
-            });
-          },
-        ));
+        width: 70,
+        height: 70,
+        decoration: BoxDecoration(
+            border: Border.all(width: 1, color: Color.fromARGB(255, 4, 133, 0)),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
+        child: SizedBox.expand());
   }
 
   Widget fila1() {
@@ -198,7 +265,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
         numeros.add(convertirNumeaWidg(numeroOriginal));
       } else {
         numeros.add(flechaizquierda());
-        numeros.add(respuesta2Input());
+        numeros.add(respuestaInput());
         numeros.add(flechaizquierda());
       }
       p--;
@@ -218,7 +285,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
         String numeroOriginal = secuenciaARepresentar[numeroActivi!]![p];
         numeros.add(convertirNumeaWidg(numeroOriginal));
       } else {
-        numeros.add(respuesta3Input());
+        numeros.add(respuestaInput());
       }
       p++;
     }
@@ -243,7 +310,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   Widget flechafila2() {
     return Row(
         mainAxisAlignment: MainAxisAlignment.end,
-        children: [ flechaabajo(),Expanded(child: Container())]);
+        children: [flechaabajo(), Expanded(child: Container())]);
   }
 
   Widget flechafila1() {
@@ -255,9 +322,7 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   bool respondido = false;
   @override
   validarResultado() {
-    String respuestacorrecta1 = secuenciaARepresentar[numeroActivi!]![2];
-    String respuestacorrecta2 = secuenciaARepresentar[numeroActivi!]![4];
-    String respuestacorrecta3 = secuenciaARepresentar[numeroActivi!]![6];
+
     if (!respondido) {
       respondido = true;
       ActiveUser usuarioResultados =
@@ -266,9 +331,9 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
       tiempo.stop();
       double tiempoActividad = tiempo.elapsedMilliseconds / 1000;
 
-      if (respuesta1 == int.parse(respuestacorrecta1) &&
-          respuesta2 == int.parse(respuestacorrecta2) &&
-          respuesta3 == int.parse(respuestacorrecta3)) {
+      if (posFichas[ordenFichas[0]] == posicionesValidas[0] &&
+          posFichas[ordenFichas[1]] == posicionesValidas[1] &&
+          posFichas[ordenFichas[2]] == posicionesValidas[2]) {
         activityResultService.addActivityResult(new ActivityResult(
             indice: widget.indice,
             sesionId: usuarioResultados.sesionId,
