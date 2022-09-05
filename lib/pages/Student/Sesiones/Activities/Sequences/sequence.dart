@@ -70,6 +70,9 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
     valorUltimo = int.parse(secuenciaARepresentar[numeroActivi!]![8]);
 
     valor4 = rng.nextInt(valorUltimo - valor1) + valor1;
+    if(valor4==valor1 || valor4==valor2 || valor4==valor3){
+      valor4 +=5;
+    }
 
     updateFunctions = {
       1:(Offset ofs){posFichas[1] = getNewPosition(ofs);},
@@ -115,7 +118,6 @@ class SequencesActivityState extends BaseActivity<SequencesActivity> {
   }
 
   Offset getNewPosition(Offset offset) {
-    double screenW = MediaQuery.of(context).size.width;
 
     int closestPosition = 0;
     double closestDistance = 9999;
