@@ -14,6 +14,7 @@ class RegisterStudentPage extends StatefulWidget {
 class _RegisterStudentPageState extends State<RegisterStudentPage> {
   Student? student;
   bool userVerified = false;
+  bool edadValid = true, nombreValid = true, generoValid = true;
   Color colorOPT1 = kAlumnColor;
   Color colorOPT2 = kAlumnColor;
   double tam1 = 150;
@@ -46,10 +47,19 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
           children: [
             //avatarImage(),
             seleccionSexo(),
+            generoValid
+                ? Container()
+                : lengthError("Seleccione el género del estudiante", 60),
             SizedBox(height: 20),
             inputEdad(),
+            edadValid
+                ? Container()
+                : lengthError("Ingresa la edad del estudiante", 50),
             SizedBox(height: 20),
             inputNombre(),
+            nombreValid
+                ? Container()
+                : lengthError("Ingresa el nombre del estudiante", 50),
             SizedBox(height: 20),
             nextPage()
           ],
@@ -77,7 +87,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             icon: Icon(Icons.cake)),
         onChanged: (valor) {
           setState(() {
-            student!.age = int.parse(valor);
+            student!.age = int.tryParse(valor);
+            edadValid = (valor.length>0 && student!.age! > 0);
           });
         },
       ),
@@ -103,6 +114,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         onChanged: (valor) {
           setState(() {
             student!.name = valor;
+            nombreValid = (valor.length>0);
           });
         },
       ),
@@ -115,8 +127,11 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         height: 220,
         child: Column(
           children: [
-            Text("Seleccione su género", style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),),
-            SizedBox(height:15),
+            Text(
+              "Seleccione su género",
+              style: TextStyle(fontSize: 22, fontWeight: FontWeight.w400),
+            ),
+            SizedBox(height: 15),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -129,7 +144,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: Border.all(width: borderOPT1, color: colorOPT1)),
+                          border:
+                              Border.all(width: borderOPT1, color: colorOPT1)),
                       child: TextButton(
                         onPressed: () {
                           setState(() {
@@ -137,7 +153,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                           });
                         },
                         child: CircleAvatar(
-                          radius: (selectedOption == 1 || selectedOption == 3) ? 60 : 30,
+                          radius: (selectedOption == 1 || selectedOption == 3)
+                              ? 60
+                              : 30,
                           child: Image(
                             fit: BoxFit.fill,
                             width: 200,
@@ -149,7 +167,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     selectedOption == 1
                         ? Text("Hombre",
                             style: TextStyle(
-                                fontWeight:  FontWeight.w400, fontSize: 18))
+                                fontWeight: FontWeight.w400, fontSize: 18))
                         : Container()
                   ],
                 ),
@@ -163,7 +181,8 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                       decoration: BoxDecoration(
                           color: Colors.white,
                           borderRadius: BorderRadius.all(Radius.circular(20)),
-                          border: Border.all(width: borderOPT2, color: colorOPT2)),
+                          border:
+                              Border.all(width: borderOPT2, color: colorOPT2)),
                       child: TextButton(
                         clipBehavior: Clip.hardEdge,
                         onPressed: () {
@@ -172,7 +191,9 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                           });
                         },
                         child: CircleAvatar(
-                          radius: (selectedOption == 2 || selectedOption == 3)? 60 : 30,
+                          radius: (selectedOption == 2 || selectedOption == 3)
+                              ? 60
+                              : 30,
                           child: Image(
                             fit: BoxFit.fill,
                             image: AssetImage(imagen2),
@@ -183,7 +204,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
                     selectedOption == 2
                         ? Text("Mujer",
                             style: TextStyle(
-                                fontWeight:  FontWeight.w400, fontSize: 18))
+                                fontWeight: FontWeight.w400, fontSize: 18))
                         : Container()
                   ],
                 )
@@ -203,7 +224,7 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         selectedOption = 1;
         tam1 = 150;
         tam2 = 80;
-        student!.gender="Hombre";
+        student!.gender = "Hombre";
 
         break;
       case 2:
@@ -214,9 +235,18 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
         selectedOption = 2;
         tam1 = 80;
         tam2 = 150;
-        student!.gender="Mujer";
+        student!.gender = "Mujer";
         break;
     }
+  }
+
+  Widget lengthError(String msg, double marginleft) {
+    return Container(
+        margin: EdgeInsets.only(left: marginleft, top: 5),
+        child: Text(
+          msg,
+          style: TextStyle(color: Colors.red),
+        ));
   }
 
   Widget nextPage() {
@@ -230,12 +260,23 @@ class _RegisterStudentPageState extends State<RegisterStudentPage> {
             primary: kAlumnColor,
           ),
           onPressed: () {
-            if (student!.age != null && student!.name != null && student!.gender != null)
-              Navigator.pushReplacementNamed(context, 'registerStudent2',
-                  arguments: student);
+            seguirRegistro();
           },
           child: Text('Siguiente',
               style: TextStyle(fontSize: 25, color: Colors.white))),
     );
+  }
+
+  seguirRegistro() {
+    if (student!.age == null || student!.age! < 1) {
+      edadValid = false;
+    } else if (student!.name == null || student!.name!.length == 0) {
+      nombreValid = false;
+    } else if (student!.gender == null) {
+      generoValid = false;
+    } else {
+      Navigator.pushReplacementNamed(context, 'registerStudent2',
+          arguments: student);
+    }
   }
 }

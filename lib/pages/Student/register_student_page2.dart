@@ -21,6 +21,8 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
   late RegisterService registerService;
   bool userVerified = false;
   Opcion? _character = Opcion.no;
+  bool passValid = true;
+  bool userValid = true;
   @override
   void initState() {
     super.initState();
@@ -42,8 +44,10 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
             helpText(),
             SizedBox(height: 20),
             inputUserId(),
+            userValid?Container():lengthError(),
             SizedBox(height: 20),
             inputPassword(),
+            passValid?Container():lengthError(),
             SizedBox(height: 20),
             submitRegister()
           ],
@@ -86,6 +90,7 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
       onChanged: (valor) {
         setState(() {
           userID = valor;
+          userValid = (valor.length>=3);
         });
       },
     );
@@ -109,9 +114,15 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
       onChanged: (valor) {
         setState(() {
           passwd = valor;
+          passValid = (valor.length>=3);
         });
       },
     );
+  }
+  Widget lengthError(){
+    return Container(
+      margin: EdgeInsets.only(left:40,top: 5),
+      child: Text('Ingresa al menos 3 caracteres',style: TextStyle(color: Colors.red),));
   }
 
   Widget submitRegister() {
@@ -133,17 +144,24 @@ class _RegisterStudentPage2State extends State<RegisterStudentPage2> {
   }
 
   _registrarEstudiante() {
+
     var stud = ModalRoute.of(context)!.settings.arguments as Student;
-    stud.userId = userID;
-    stud.password = passwd;
-    final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
-    registerService.registerStudent(stud).then((value) {
-      if (value.state == 0) {
-        usuarioTemporal.student = stud;
-        Navigator.pushReplacementNamed(context, 'selectclass');
-      } else {
-        Navigator.pop(context);
-      }
-    });
+    if(userID!.length<3){
+      userValid = false;
+    }else if(passwd!.length<3){
+      passValid = false;
+    }else{
+      stud.userId = userID;
+      stud.password = passwd;
+      final usuarioTemporal = Provider.of<ActiveUser>(context, listen: false);
+      registerService.registerStudent(stud).then((value) {
+        if (value.state == 0) {
+          usuarioTemporal.student = stud;
+          Navigator.pushReplacementNamed(context, 'selectclass');
+        } else {
+          Navigator.pop(context);
+        }
+      });
+    }
   }
 }
